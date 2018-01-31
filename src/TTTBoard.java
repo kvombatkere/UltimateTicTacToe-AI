@@ -5,58 +5,89 @@
 
 //Imports
 import java.io.*;
-import java.util.*;
 import java.awt.*;
+import java.util.*;
 
 //Class to specify the physical tic-tac-toe board and display
 public class TTTBoard {
 	
 	//Specify class variables
-	private String [][] mainBoard; //Use 2D String array for board
+	
+	//Use 2D char array for board
+	public char [][] mainBoard; 
+	//variable to keep track of next player to move (X or O)
+	public char nextPlayer;
+	//boolean to keep track of game
+	public boolean gameOver;
+	//Counter to keep track of moves starting from 1 through 9
+	public int moveCounter;
 	
 	
 	//Constructor to instantiate 3x3 board (always fixed size)
 	//Instantiates to initial state with all squares blank
 	public TTTBoard(){
-		mainBoard = new String [3][3];
+		mainBoard = new char [3][3];
+		newBoard();
+	}
+	
+	//Function to Reset the board and start a new game
+	public void newBoard() {
+		System.err.println("\n----------------------------------------------");
+		System.err.println("Setting up new Tic Tac Toe Board!");
 		for(int i=0; i<3; i++){
 			for(int j=0; j<3; j++) {
-				mainBoard[i][j] = " ";
+				mainBoard[i][j] = ' ';
 			}
 		}
+		//Set up the new board and assign X to play first
+		nextPlayer = 'X';
+		System.err.println(nextPlayer + " to move next..");
+		//Reset required variables
+		gameOver = false;
+		moveCounter = 0;
 	}
+	
 	
 	//Method to Display the board with some basic board formatting
 	//Prints to Std.err
 	public void displayBoard() {
-		System.err.println("Displaying Tic Tac Toe Board Current State\n");
+		System.err.println("----------------------------------------------");
+		System.err.println("Displaying Tic Tac Toe Board Current State:\n");
 		
 		for(int i=0; i<3; i++){
 			for(int j=0; j<3; j++) {
 				System.err.print(" " + (mainBoard[i][j]) + " ");
 				if(j != 2) {
-					System.err.print("||");
+					System.err.print("|");
 				}
 			}
 			if(i != 2) {
-				System.err.println("\n==============");
+				System.err.println("\n------------");
 			}
-		}	
+		}
+		System.err.println();
 	}
 	
 	
 	//Method to add an X or an O to position specified by digits 1-9
-	public void move(String moveChar, int pos) {
+	public void move(char moveChar, int pos) {
+		//View applicable actions, legal moves available
+		this.applicableActions();
+		
 		Point boardPos = new Point();
 		
 		//Get the coordinate values from the corresponding function
-		boardPos = getCoordinates(pos);
+		boardPos = this.getCoordinates(pos);
 		
 		//Execute the move on the TTT Board
 		//Note that only valid moves in valid positions are executed
 		if(boardPos != null) {
 			mainBoard[boardPos.x][boardPos.y] = moveChar;
+			moveCounter++; //Increment move counter
 		}
+		
+		//Call the method to check for win and toggle the player
+		this.togglePlayer();
 	}
 	
 	
@@ -88,19 +119,113 @@ public class TTTBoard {
 		return coord;		
 	}
 	
+	//Method to return the board position (1-9) given the XY coordinates of the grid
+	public int getboardPosition(int xval, int yval) {
+		int bPos = 0; //Initialize the int value (1-9) to return
+		
+		if(xval == 0) {
+			if(yval == 0) bPos = 1;
+			if(yval == 1) bPos = 2;
+			if(yval == 2) bPos = 3;
+		}
+		if(xval == 1) {
+			if(yval == 0) bPos = 4;
+			if(yval == 1) bPos = 5;
+			if(yval == 2) bPos = 6;
+		}
+		if(xval == 2) {
+			if(yval == 0) bPos = 7;
+			if(yval == 1) bPos = 8;
+			if(yval == 2) bPos = 9;
+		}
+		return bPos;
+	}
+	
+	
+	//Result method to check if the last move won the game -> must be called after every move
+	//Check all possible terminal states and toggle the next player
+	public void togglePlayer() {
+		char checkChar = nextPlayer; //The character to check for co-linearity
+		
+		//Define and check each of 8 terminal states that bring a win for nextPlayer
+		//Horizontal line check
+		if(mainBoard[0][0] == checkChar && mainBoard[0][1] == checkChar && mainBoard[0][2] == checkChar) {gameOver = true;}
+		if(mainBoard[1][0] == checkChar && mainBoard[1][1] == checkChar && mainBoard[1][2] == checkChar) {gameOver = true;}
+		if(mainBoard[2][0] == checkChar && mainBoard[2][1] == checkChar && mainBoard[2][2] == checkChar) {gameOver = true;}
+		
+		//Vertical line check
+		if(mainBoard[0][0] == checkChar && mainBoard[1][0] == checkChar && mainBoard[2][0] == checkChar) {gameOver = true;}
+		if(mainBoard[0][1] == checkChar && mainBoard[1][1] == checkChar && mainBoard[2][1] == checkChar) {gameOver = true;}
+		if(mainBoard[0][2] == checkChar && mainBoard[1][2] == checkChar && mainBoard[2][2] == checkChar) {gameOver = true;}
+		
+		//Diagonal check
+		if(mainBoard[0][0] == checkChar && mainBoard[1][1] == checkChar && mainBoard[2][2] == checkChar) {gameOver = true;}
+		if(mainBoard[0][2] == checkChar && mainBoard[1][1] == checkChar && mainBoard[2][0] == checkChar) {gameOver = true;}
+		
+		if(gameOver) {
+			System.err.println("Game Over! " + nextPlayer + " wins in "+ moveCounter +" moves!");
+		}
+		
+		//Check if board is full i.e. a draw if gameOver is still false
+		if(moveCounter == 9) {
+			gameOver = true;
+			System.err.println("Game Ended in a Draw!");
+		}
+		
+		
+		//Toggle the player if game is still valid
+		if(!gameOver) {
+			if(nextPlayer == 'X') {nextPlayer = 'O';}
+			else{nextPlayer = 'X';}
+			
+			System.err.println(nextPlayer + " to move next..");
+		}
+		
+	}
+	
+	
+	//Method to return set of applicable actions in a given state
+	//This basically returns all the empty board positions, since that is what the player must choose from
+	public int[] applicableActions() {
+		//Use an array of length 10 with all values initialized to 0
+		int[] possibleMoves = new int [10];
+		
+		//Fill array with the possible move if the square is empty
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++) {
+				//Check if square is blank
+				if(mainBoard[i][j] == ' ') {
+					int legalMove = this.getboardPosition(i,j);
+					possibleMoves[legalMove] = legalMove; //Update corresponding array value with non-zero position
+				}
+			}
+		}
+		
+		//Print out array to see non-zero values - comment out later
+		System.err.println("Available Moves: " + Arrays.toString(possibleMoves));
+		
+		return possibleMoves;	
+	}
+	
 	
 	//Main method to run some tests - comment out later
 	public static void main(String[] args) throws IOException{
 		TTTBoard B1 = new TTTBoard();
 		
-		B1.move("X",1);
-		B1.move("O",3);
-		B1.move("X",5);
-		B1.move("O",6);
-		B1.move("X",7);
-
-		//B1.move("O",17);
-
+		B1.move('X',1);
+		B1.move('O',3);
+		B1.move('X',5);
+		B1.move('O',6);
+		B1.move('X',7);
+		B1.move('O',9);
+		B1.displayBoard();	
+		
+		B1.newBoard();
+		B1.displayBoard();	
+		
+		B1.move('X',5);
+		B1.move('O',6);
+		B1.move('X',2);
 		B1.displayBoard();	
 	}
 }
