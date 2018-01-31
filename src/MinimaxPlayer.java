@@ -9,7 +9,7 @@ import java.util.*;
 import java.awt.*;
 
 //Main class to implement state space search using regular minimax
-public class Minimax extends TTTBoard{
+public class MinimaxPlayer extends TTTBoard{
 	
 
 }
