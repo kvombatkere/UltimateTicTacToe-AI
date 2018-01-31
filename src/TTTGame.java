@@ -8,34 +8,124 @@ import java.io.*;
 import java.util.*;
 import java.awt.*;
 
-//Main Class that runs the game with IO
+//Main Class that runs the game with IO loop
+@SuppressWarnings("unused")
 public class TTTGame {
-	//Define class variables
-	
-	//Variable to keep track if X or O has won
-	static boolean Xwins = false;
-	static boolean Owins = false;
-	
-	
 	
 	//Main method to run the game
+	@SuppressWarnings("resource")
 	public static void main(String[] args) {
-		//Set up input stream
-		Scanner playerInput = new Scanner(System.in);
-		
-		//Print Basic Introduction messages
-		System.out.println("===============================================================================================================");
-		System.out.println("Initialized a new game of Tic Tac Toe! (Note that X always plays first)");
-		System.out.println("Please choose if you want to play \"X\" or \"O\" by typing the desired character:");
-
 		
 		//Instantiate the board
 		TTTBoard Game = new TTTBoard();
 		
-		//Define main game playing loop
-		while(Xwins == false || Owins == false) {
+		//Main outer loop always runs
+		while(true) {
 			
-		}
+			//boolean to keep track of who plays first
+			boolean computerFirst = false;
+			//Integer to record the board position specified by the opponent and computer
+			int compMovePos = 0;
+			int oppMovePos = 0; 
+			
+			//Boolean to check if a move is legal before playing it
+			boolean isMoveLegal;
+			
+			//Set up input stream using System in
+			Scanner playerInput = new Scanner(System.in);
+			
+			//Print Basic Introduction messages
+			System.err.println("===============================================================================================================");
+			System.err.println("Initialized a new game of Tic Tac Toe! (Note that X always plays first)");
+			System.err.println("Please choose if you want to play \"X\" or \"O\" by typing the desired character:");
+	
+			char inputChar = playerInput.next().charAt(0); //Read the first character of any input string
+			boolean legalInput = false; //Boolean to keep track of input legality
+			
+			if((inputChar == 'o') || (inputChar == 'O') || (inputChar == 'x') || (inputChar == 'X')) {
+				legalInput = true;
+			}
+			
+			//Handle illegal inputs
+			while(!legalInput) {
+				System.err.println("Illegal Input. Please try again.");
+				inputChar = playerInput.next().charAt(0); //Read the first character of any input string
+				if((inputChar == 'o') || (inputChar == 'O') || (inputChar == 'x') || (inputChar == 'X')) {
+					legalInput = true;
+				}
+			}
+			
+			inputChar = Character.toUpperCase(inputChar); //Make input upper case in case input was lower case
+			
+			//Set up a New Board
+			Game.newBoard(inputChar);
 
+			//Input is an O -> Computer plays first with X
+			if(inputChar == 'O') {
+				Game.compChar = 'X';
+				computerFirst = true;
+			}
+			// Input is a X -> Computer plays second with O
+			else {
+				Game.compChar = 'O';
+				computerFirst = false;
+				}
+			
+			
+			//Instantiate Minimax computer player
+			Minimax compPlayer = new Minimax();
+			
+			if(computerFirst) {
+				
+				//code to generate first computer move
+			}
+			
+			//Define main game playing loop
+			while(Game.gameOver == false) {
+				
+				Game.displayBoard(); //Display the board
+	
+				
+				//Opponent plays
+				System.err.println("It is your turn to play, please select a position (1-9) to place a " + inputChar);
+				oppMovePos = playerInput.nextInt();
+				
+				//Check if move is legal
+				isMoveLegal = Game.ismoveAllowed(oppMovePos);
+				while(!isMoveLegal) {
+					System.err.println("That is an illegal move, please choose another board position (1-9)");
+					oppMovePos = playerInput.nextInt();
+					isMoveLegal = Game.ismoveAllowed(oppMovePos);
+				}
+				
+				if(isMoveLegal) { //If the move is legal execute it on the board
+					Game.move(inputChar, oppMovePos);
+				}
+				
+				Game.displayBoard(); //Display the board
+				//check if game is over to break out of inner while loop
+				if(Game.gameOver) {break;}
+				
+				System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + Game.compChar);
+				// Insert code to generate move using minimax here...
+				
+				//For now I just configured it so a human can control both (to test functionality)
+				oppMovePos = playerInput.nextInt();
+				
+				//Check if move is legal
+				isMoveLegal = Game.ismoveAllowed(oppMovePos);
+				while(!isMoveLegal) {
+					System.err.println("That is an illegal move, please choose another board position (1-9)");
+					oppMovePos = playerInput.nextInt();
+					isMoveLegal = Game.ismoveAllowed(oppMovePos);
+				}
+				
+				if(isMoveLegal) { //If the move is legal execute it on the board
+					Game.move(Game.compChar, oppMovePos);
+				}
+				
+				Game.displayBoard(); //Display the board
+			}
+		}
 	}	
 }

@@ -9,6 +9,7 @@ import java.awt.*;
 import java.util.*;
 
 //Class to specify the physical tic-tac-toe board and display
+@SuppressWarnings("unused")
 public class TTTBoard {
 	
 	//Specify class variables
@@ -21,30 +22,43 @@ public class TTTBoard {
 	public boolean gameOver;
 	//Counter to keep track of moves starting from 1 through 9
 	public int moveCounter;
+	//character to keep track of what the computer is playing
+	public char compChar;
 	
 	
 	//Constructor to instantiate 3x3 board (always fixed size)
 	//Instantiates to initial state with all squares blank
 	public TTTBoard(){
-		mainBoard = new char [3][3];
-		newBoard();
+		this.mainBoard = new char [3][3];
 	}
 	
 	//Function to Reset the board and start a new game
-	public void newBoard() {
+	//Takes the opponents character as the input
+	public void newBoard(char oppChar) {
 		System.err.println("\n----------------------------------------------");
 		System.err.println("Setting up new Tic Tac Toe Board!");
 		for(int i=0; i<3; i++){
 			for(int j=0; j<3; j++) {
-				mainBoard[i][j] = ' ';
+				this.mainBoard[i][j] = ' ';
 			}
 		}
-		//Set up the new board and assign X to play first
-		nextPlayer = 'X';
-		System.err.println(nextPlayer + " to move next..");
 		//Reset required variables
-		gameOver = false;
-		moveCounter = 0;
+		this.gameOver = false;
+		this.moveCounter = 0;
+		
+		//Character the computer plays with
+		if(oppChar == 'O') {
+			this.compChar = 'X';
+			System.err.println("Computer to move first and play with " + this.compChar);
+		}
+		else {
+			this.compChar = 'O';
+			System.err.println("You are to move first and play with " + oppChar);
+		}
+		
+		//Set up the new board and assign X to play first
+		this.nextPlayer = 'X';
+		
 	}
 	
 	
@@ -82,8 +96,8 @@ public class TTTBoard {
 		//Execute the move on the TTT Board
 		//Note that only valid moves in valid positions are executed
 		if(boardPos != null) {
-			mainBoard[boardPos.x][boardPos.y] = moveChar;
-			moveCounter++; //Increment move counter
+			this.mainBoard[boardPos.x][boardPos.y] = moveChar;
+			this.moveCounter++; //Increment move counter
 		}
 		
 		//Call the method to check for win and toggle the player
@@ -167,16 +181,16 @@ public class TTTBoard {
 		}
 		
 		//Check if board is full i.e. a draw if gameOver is still false
-		if(moveCounter == 9) {
-			gameOver = true;
+		if(this.moveCounter == 9) {
+			this.gameOver = true;
 			System.err.println("Game Ended in a Draw!");
 		}
 		
 		
 		//Toggle the player if game is still valid
-		if(!gameOver) {
-			if(nextPlayer == 'X') {nextPlayer = 'O';}
-			else{nextPlayer = 'X';}
+		if(!this.gameOver) {
+			if(this.nextPlayer == 'X') {nextPlayer = 'O';}
+			else{this.nextPlayer = 'X';}
 			
 			System.err.println(nextPlayer + " to move next..");
 		}
@@ -194,7 +208,7 @@ public class TTTBoard {
 		for(int i=0; i<3; i++){
 			for(int j=0; j<3; j++) {
 				//Check if square is blank
-				if(mainBoard[i][j] == ' ') {
+				if(this.mainBoard[i][j] == ' ') {
 					int legalMove = this.getboardPosition(i,j);
 					possibleMoves[legalMove] = legalMove; //Update corresponding array value with non-zero position
 				}
@@ -202,9 +216,26 @@ public class TTTBoard {
 		}
 		
 		//Print out array to see non-zero values - comment out later
-		System.err.println("Available Moves: " + Arrays.toString(possibleMoves));
+		//System.err.println("Available Moves: " + Arrays.toString(possibleMoves));
 		
 		return possibleMoves;	
+	}
+	
+	//Method to check if a board position (1-9) is legal/allowed
+	//Returns true or false
+	public boolean ismoveAllowed(int pos) {
+		int [] possibilities = this.applicableActions();	
+		//Deal with illegal moves outside of 1-9 range first
+		if(pos < 1 || pos > 9) {
+			return false;
+		}
+		
+		//possibilities[pos] = 0 for illegal moves
+		if(possibilities[pos] == pos) {
+			return true;
+		}
+		
+		return false;	
 	}
 	
 	
@@ -220,12 +251,13 @@ public class TTTBoard {
 		B1.move('O',9);
 		B1.displayBoard();	
 		
-		B1.newBoard();
+		B1.newBoard('X');
 		B1.displayBoard();	
 		
 		B1.move('X',5);
 		B1.move('O',6);
 		B1.move('X',2);
 		B1.displayBoard();	
+		System.out.println(B1.ismoveAllowed(5));
 	}
 }
