@@ -98,6 +98,7 @@ public class TTTBoard {
 		B1.move("X",5);
 		B1.move("O",6);
 		B1.move("X",7);
+		B1.move("O",9 );
 
 		//B1.move("O",17);
 
