@@ -124,7 +124,6 @@ public class TTTGame {
 					Game.move(Game.compChar, oppMovePos);
 				}
 				
-				Game.displayBoard(); //Display the board
 			}
 		}
 	}	
