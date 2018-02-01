@@ -289,4 +289,34 @@ public class TTTBoard {
 //		System.out.println(B1.ismoveAllowed(5));
 //	}
 	
+<<<<<<< HEAD
+=======
+	//Main method to run some tests - comment out later
+	public static void main(String[] args) throws IOException{
+		TTTBoard B1 = new TTTBoard();
+		
+
+
+		//B1.move("O",17);
+
+
+		B1.move('X',1);
+		B1.move('O',3);
+		B1.move('X',5);
+		B1.move('O',6);
+		B1.move('X',7);
+		B1.move('O',9);
+		B1.displayBoard();	
+		
+		B1.newBoard('X');
+		B1.displayBoard();	
+		
+		B1.move('X',5);
+		B1.move('O',6);
+		B1.move('X',2);
+
+		B1.displayBoard();	
+		System.out.println(B1.ismoveAllowed(5));
+	}
+>>>>>>> cbcb854e327cbf2226f758b80c01d32cc2842bad
 }
