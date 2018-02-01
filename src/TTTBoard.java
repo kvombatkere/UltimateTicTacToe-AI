@@ -3,13 +3,9 @@
 //CSC 442: AI Project 01 - Tic Tac Toe
 //Project Partners: Rebecca Ho Van Dyke + Avram Webberman
 
-//Imports
-import java.io.*;
 import java.awt.*;
-import java.util.*;
 
 //Class to specify the physical tic-tac-toe board and display
-@SuppressWarnings("unused")
 public class TTTBoard {
 	
 	//Specify class variables
@@ -18,8 +14,10 @@ public class TTTBoard {
 	public char [][] mainBoard; 
 	//variable to keep track of next player to move (X or O)
 	public char nextPlayer;
-	//boolean to keep track of game
+	//boolean to keep track of game and whether its a draw
 	public boolean gameOver;
+	public boolean gameDrawn;
+	
 	//Counter to keep track of moves starting from 1 through 9
 	public int moveCounter;
 	//character to keep track of what the computer is playing
@@ -44,6 +42,7 @@ public class TTTBoard {
 		}
 		//Reset required variables
 		this.gameOver = false;
+		this.gameDrawn = false;
 		this.moveCounter = 0;
 		
 		//Character the computer plays with
@@ -157,33 +156,19 @@ public class TTTBoard {
 	
 	
 	//Result method to check if the last move won the game -> must be called after every move
-	//Check all possible terminal states and toggle the next player
+	//Check all possible terminal states and toggle the next player + print I/O to System.err
 	public void togglePlayer() {
-		char checkChar = nextPlayer; //The character to check for co-linearity
+		//Check if the game is in a terminal state
+		this.gameOver = this.terminalState(this);
 		
-		//Define and check each of 8 terminal states that bring a win for nextPlayer
-		//Horizontal line check
-		if(mainBoard[0][0] == checkChar && mainBoard[0][1] == checkChar && mainBoard[0][2] == checkChar) {gameOver = true;}
-		if(mainBoard[1][0] == checkChar && mainBoard[1][1] == checkChar && mainBoard[1][2] == checkChar) {gameOver = true;}
-		if(mainBoard[2][0] == checkChar && mainBoard[2][1] == checkChar && mainBoard[2][2] == checkChar) {gameOver = true;}
-		
-		//Vertical line check
-		if(mainBoard[0][0] == checkChar && mainBoard[1][0] == checkChar && mainBoard[2][0] == checkChar) {gameOver = true;}
-		if(mainBoard[0][1] == checkChar && mainBoard[1][1] == checkChar && mainBoard[2][1] == checkChar) {gameOver = true;}
-		if(mainBoard[0][2] == checkChar && mainBoard[1][2] == checkChar && mainBoard[2][2] == checkChar) {gameOver = true;}
-		
-		//Diagonal check
-		if(mainBoard[0][0] == checkChar && mainBoard[1][1] == checkChar && mainBoard[2][2] == checkChar) {gameOver = true;}
-		if(mainBoard[0][2] == checkChar && mainBoard[1][1] == checkChar && mainBoard[2][0] == checkChar) {gameOver = true;}
-		
-		if(gameOver) {
-			System.err.println("Game Over! " + nextPlayer + " wins in "+ moveCounter +" moves!");
-		}
-		
-		//Check if board is full i.e. a draw if gameOver is still false
-		if(this.moveCounter == 9) {
-			this.gameOver = true;
-			System.err.println("Game Ended in a Draw!");
+		//Print output if game is over
+		if(this.gameOver) {
+			if(this.gameDrawn) {
+				System.err.println("Game Ended in a Draw!");
+			}
+			else {
+				System.err.println("Game Over! " + nextPlayer + " wins in "+ moveCounter +" moves!");
+			}
 		}
 		
 		
@@ -191,12 +176,57 @@ public class TTTBoard {
 		if(!this.gameOver) {
 			if(this.nextPlayer == 'X') {nextPlayer = 'O';}
 			else{this.nextPlayer = 'X';}
-			
+			//Display who's move it iss
 			System.err.println(nextPlayer + " to move next..");
 		}
 		
 	}
 	
+	//Method to check terminal states separately
+	//Returns true if the current board state is terminal and false otherwise
+	public boolean terminalState(TTTBoard currentGame) {
+		boolean gameTerminated = false;
+		char checkChar = currentGame.nextPlayer; //The character to check for co-linearity
+		
+		//Define and check each of 8 terminal states that bring a win for nextPlayer
+		//Horizontal line check
+		if(currentGame.mainBoard[0][0] == checkChar && currentGame.mainBoard[0][1] == checkChar && currentGame.mainBoard[0][2] == checkChar) {
+			return gameTerminated = true;
+			}
+		if(currentGame.mainBoard[1][0] == checkChar && currentGame.mainBoard[1][1] == checkChar && currentGame.mainBoard[1][2] == checkChar) {
+			return gameTerminated = true;
+			}
+		if(currentGame.mainBoard[2][0] == checkChar && currentGame.mainBoard[2][1] == checkChar && currentGame.mainBoard[2][2] == checkChar) {
+			return gameTerminated = true;
+			}
+		
+		//Vertical line check
+		if(currentGame.mainBoard[0][0] == checkChar && currentGame.mainBoard[1][0] == checkChar && currentGame.mainBoard[2][0] == checkChar) {
+			return gameTerminated = true;
+			}
+		if(currentGame.mainBoard[0][1] == checkChar && currentGame.mainBoard[1][1] == checkChar && currentGame.mainBoard[2][1] == checkChar) {
+			return gameTerminated = true;
+			}
+		if(currentGame.mainBoard[0][2] == checkChar && currentGame.mainBoard[1][2] == checkChar && currentGame.mainBoard[2][2] == checkChar) {
+			return gameTerminated = true;
+			}
+		
+		//Diagonal check
+		if(currentGame.mainBoard[0][0] == checkChar && currentGame.mainBoard[1][1] == checkChar && currentGame.mainBoard[2][2] == checkChar) {
+			return gameTerminated = true;
+			}
+		if(currentGame.mainBoard[0][2] == checkChar && currentGame.mainBoard[1][1] == checkChar && currentGame.mainBoard[2][0] == checkChar) {
+			return gameTerminated = true;
+			}
+		
+		//Check if the game ended in a draw, i.e. 9 moves have been played ONLY if gameTerminated is still false
+		if(currentGame.moveCounter == 9) {
+			this.gameDrawn = true;
+			gameTerminated = true;
+		}
+		
+		return gameTerminated;	
+	}
 	
 	//Method to return set of applicable actions in a given state
 	//This basically returns all the empty board positions, since that is what the player must choose from
@@ -238,26 +268,25 @@ public class TTTBoard {
 		return false;	
 	}
 	
+//	//Main method to run some tests - comment out later
+//	public static void main(String[] args) throws IOException{
+//		TTTBoard B1 = new TTTBoard();
+//		B1.move('X',1);
+//		B1.move('O',3);
+//		B1.move('X',5);
+//		B1.move('O',6);
+//		B1.move('X',7);
+//		B1.move('O',9);
+//		B1.displayBoard();	
+//		
+//		B1.newBoard('X');
+//		B1.displayBoard();	
+//		
+//		B1.move('X',5);
+//		B1.move('O',6);
+//		B1.move('X',2);
+//		B1.displayBoard();	
+//		System.out.println(B1.ismoveAllowed(5));
+//	}
 	
-	//Main method to run some tests - comment out later
-	public static void main(String[] args) throws IOException{
-		TTTBoard B1 = new TTTBoard();
-		
-		B1.move('X',1);
-		B1.move('O',3);
-		B1.move('X',5);
-		B1.move('O',6);
-		B1.move('X',7);
-		B1.move('O',9);
-		B1.displayBoard();	
-		
-		B1.newBoard('X');
-		B1.displayBoard();	
-		
-		B1.move('X',5);
-		B1.move('O',6);
-		B1.move('X',2);
-		B1.displayBoard();	
-		System.out.println(B1.ismoveAllowed(5));
-	}
 }

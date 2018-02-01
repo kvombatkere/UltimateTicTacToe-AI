@@ -73,7 +73,7 @@ public class TTTGame {
 			
 			
 			//Instantiate Minimax computer player
-			MinimaxPlayer compPlayer = new MinimaxPlayer();
+			MinimaxPlayer compPlayer = new MinimaxPlayer(Game);
 			
 			if(computerFirst) {
 				
