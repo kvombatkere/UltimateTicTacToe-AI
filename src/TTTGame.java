@@ -74,7 +74,8 @@ public class TTTGame {
 			
 			//Instantiate Minimax computer player
 			MinimaxPlayer compPlayer = new MinimaxPlayer(Game);
-			
+					
+			//Check if computer plays first
 			if(computerFirst) {
 				
 				//code to generate first computer move
@@ -99,7 +100,7 @@ public class TTTGame {
 				}
 				
 				if(isMoveLegal) { //If the move is legal execute it on the board
-					Game.move(inputChar, oppMovePos);
+					Game.moveResult(inputChar, oppMovePos);
 				}
 				
 				Game.displayBoard(); //Display the board
@@ -121,7 +122,7 @@ public class TTTGame {
 				}
 				
 				if(isMoveLegal) { //If the move is legal execute it on the board
-					Game.move(Game.compChar, oppMovePos);
+					Game.moveResult(Game.compChar, oppMovePos);
 				}
 				
 			}
