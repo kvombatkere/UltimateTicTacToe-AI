@@ -72,21 +72,21 @@ public class TTTBoard {
 		System.err.println("----------------------------------------------");
 		System.err.println("Displaying Tic Tac Toe Board Current State:\n");
 		
-		this.printBoard();
+		for(int i=0; i<3; i++) {
+			printRow(i);
+			if(i != 2) {
+				System.err.println("\n------------");
+			}
+		}
 		
 		System.err.println();
 	}
 	
-	public void printBoard() {
-		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++) {
-				System.err.print(" " + (mainBoard[i][j]) + " ");
-				if(j != 2) {
-					System.err.print("|");
-				}
-			}
-			if(i != 2) {
-				System.err.println("\n------------");
+	public void printRow(int n) {
+		for(int j=0; j<3; j++) {
+			System.err.print(" " + (mainBoard[n][j]) + " ");
+			if(j != 2) {
+				System.err.print("|");
 			}
 		}
 	}
