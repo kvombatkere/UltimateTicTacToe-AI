@@ -30,16 +30,21 @@ public class TTTBoard {
 		this.mainBoard = new char [3][3];
 	}
 	
-	//Function to Reset the board and start a new game
-	//Takes the opponents character as the input
-	public void newBoard(char oppChar) {
-		System.err.println("\n----------------------------------------------");
-		System.err.println("Setting up new Tic Tac Toe Board!");
+	//clear board (fill with spaces)
+	public void clearBoard() {
 		for(int i=0; i<3; i++){
 			for(int j=0; j<3; j++) {
 				this.mainBoard[i][j] = ' ';
 			}
 		}
+	}
+	
+	//Function to Reset the board and start a new game
+	//Takes the opponents character as the input
+	public void newBoard(char oppChar) {
+		System.err.println("\n----------------------------------------------");
+		System.err.println("Setting up new Tic Tac Toe Board!");
+		this.clearBoard();
 		//Reset required variables
 		this.gameOver = false;
 		this.gameDrawn = false;
@@ -67,6 +72,12 @@ public class TTTBoard {
 		System.err.println("----------------------------------------------");
 		System.err.println("Displaying Tic Tac Toe Board Current State:\n");
 		
+		this.printBoard();
+		
+		System.err.println();
+	}
+	
+	public void printBoard() {
 		for(int i=0; i<3; i++){
 			for(int j=0; j<3; j++) {
 				System.err.print(" " + (mainBoard[i][j]) + " ");
@@ -78,7 +89,6 @@ public class TTTBoard {
 				System.err.println("\n------------");
 			}
 		}
-		System.err.println();
 	}
 	
 	
