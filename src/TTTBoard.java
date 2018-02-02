@@ -93,7 +93,7 @@ public class TTTBoard implements Cloneable{
 	
 	
 	//Method to add an X or an O to position specified by digits 1-9
-	//Method that computes the RESULT(s,a) function
+	//Method that computes the RESULT(s,a) function and executes the action physically
 	public TTTBoard moveResult(char moveChar, int pos) {
 		//View applicable actions, legal moves available
 		this.applicableActions();
@@ -112,6 +112,8 @@ public class TTTBoard implements Cloneable{
 		
 		//Call the method to check for win and toggle the player
 		this.togglePlayer();
+		System.err.println(this);
+
 		
 		//Note that toggle player check for terminal state first and also toggles nextPlayer
 		return this; //Return the resulting board state
@@ -177,12 +179,7 @@ public class TTTBoard implements Cloneable{
 		
 		//Print output if game is over
 		if(this.gameOver) {
-			if(this.gameDrawn) {
-				System.err.println("Game Ended in a Draw!");
-			}
-			else {
-				System.err.println("Game Over! " + nextPlayer + " wins in "+ moveCounter +" moves!");
-			}
+			this.printGameresult();
 		}
 		
 		
@@ -190,10 +187,19 @@ public class TTTBoard implements Cloneable{
 		if(!this.gameOver) {
 			if(this.nextPlayer == 'X') {nextPlayer = 'O';}
 			else{this.nextPlayer = 'X';}
-			//Display who's move it iss
-			System.err.println(nextPlayer + " to move next..");
+			//Display who's move it is
+			//System.err.println(nextPlayer + " to move next..");
 		}
 		
+	}
+	
+	public void printGameresult() {
+		if(this.gameDrawn) {
+			System.err.println("Game Ended in a Draw!");
+		}
+		else {
+			System.err.println("Game Over! " + nextPlayer + " wins in "+ moveCounter +" moves!");
+		}			
 	}
 	
 	//Method to check terminal states separately
@@ -286,6 +292,30 @@ public class TTTBoard implements Cloneable{
 	public Object clone()throws CloneNotSupportedException{
 		return super.clone();  
 	}
+	
+	
+	//Method to enable copying of object (clone alternative)
+	public static TTTBoard copyGame(TTTBoard originalBoard) {
+		//Instantiate copy
+		TTTBoard gameCopy = new TTTBoard();
+		
+		//Copy over all state variables
+		gameCopy.compChar = originalBoard.compChar;
+		gameCopy.nextPlayer = originalBoard.nextPlayer;
+
+		gameCopy.gameDrawn = originalBoard.gameDrawn;
+		gameCopy.gameOver = originalBoard.gameOver;
+		
+		gameCopy.moveCounter = originalBoard.moveCounter;
+		gameCopy.mainBoard = originalBoard.mainBoard;
+		
+		return gameCopy;
+	}
+	
+	
+	//Transition Model State Space Search Methods
+	//Method to just return the resulting state
+	
 	
 //	//Main method to run some tests - comment out later
 //	public static void main(String[] args) throws IOException{
