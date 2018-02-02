@@ -6,7 +6,7 @@
 import java.awt.*;
 
 //Class to specify the physical tic-tac-toe board and display
-public class TTTBoard {
+public class TTTBoard implements Cloneable{
 	
 	//Specify class variables
 	
@@ -83,7 +83,8 @@ public class TTTBoard {
 	
 	
 	//Method to add an X or an O to position specified by digits 1-9
-	public void move(char moveChar, int pos) {
+	//Method that computes the RESULT(s,a) function
+	public TTTBoard moveResult(char moveChar, int pos) {
 		//View applicable actions, legal moves available
 		this.applicableActions();
 		
@@ -101,6 +102,9 @@ public class TTTBoard {
 		
 		//Call the method to check for win and toggle the player
 		this.togglePlayer();
+		
+		//Note that toggle player check for terminal state first and also toggles nextPlayer
+		return this; //Return the resulting board state
 	}
 	
 	
@@ -159,7 +163,7 @@ public class TTTBoard {
 	//Check all possible terminal states and toggle the next player + print I/O to System.err
 	public void togglePlayer() {
 		//Check if the game is in a terminal state
-		this.gameOver = this.terminalState(this);
+		this.gameOver = this.terminalState();
 		
 		//Print output if game is over
 		if(this.gameOver) {
@@ -184,43 +188,43 @@ public class TTTBoard {
 	
 	//Method to check terminal states separately
 	//Returns true if the current board state is terminal and false otherwise
-	public boolean terminalState(TTTBoard currentGame) {
+	public boolean terminalState() {
 		boolean gameTerminated = false;
-		char checkChar = currentGame.nextPlayer; //The character to check for co-linearity
+		char checkChar = this.nextPlayer; //The character to check for co-linearity
 		
 		//Define and check each of 8 terminal states that bring a win for nextPlayer
 		//Horizontal line check
-		if(currentGame.mainBoard[0][0] == checkChar && currentGame.mainBoard[0][1] == checkChar && currentGame.mainBoard[0][2] == checkChar) {
+		if(this.mainBoard[0][0] == checkChar && this.mainBoard[0][1] == checkChar && this.mainBoard[0][2] == checkChar) {
 			return gameTerminated = true;
 			}
-		if(currentGame.mainBoard[1][0] == checkChar && currentGame.mainBoard[1][1] == checkChar && currentGame.mainBoard[1][2] == checkChar) {
+		if(this.mainBoard[1][0] == checkChar && this.mainBoard[1][1] == checkChar && this.mainBoard[1][2] == checkChar) {
 			return gameTerminated = true;
 			}
-		if(currentGame.mainBoard[2][0] == checkChar && currentGame.mainBoard[2][1] == checkChar && currentGame.mainBoard[2][2] == checkChar) {
+		if(this.mainBoard[2][0] == checkChar && this.mainBoard[2][1] == checkChar && this.mainBoard[2][2] == checkChar) {
 			return gameTerminated = true;
 			}
 		
 		//Vertical line check
-		if(currentGame.mainBoard[0][0] == checkChar && currentGame.mainBoard[1][0] == checkChar && currentGame.mainBoard[2][0] == checkChar) {
+		if(this.mainBoard[0][0] == checkChar && this.mainBoard[1][0] == checkChar && this.mainBoard[2][0] == checkChar) {
 			return gameTerminated = true;
 			}
-		if(currentGame.mainBoard[0][1] == checkChar && currentGame.mainBoard[1][1] == checkChar && currentGame.mainBoard[2][1] == checkChar) {
+		if(this.mainBoard[0][1] == checkChar && this.mainBoard[1][1] == checkChar && this.mainBoard[2][1] == checkChar) {
 			return gameTerminated = true;
 			}
-		if(currentGame.mainBoard[0][2] == checkChar && currentGame.mainBoard[1][2] == checkChar && currentGame.mainBoard[2][2] == checkChar) {
+		if(this.mainBoard[0][2] == checkChar && this.mainBoard[1][2] == checkChar && this.mainBoard[2][2] == checkChar) {
 			return gameTerminated = true;
 			}
 		
 		//Diagonal check
-		if(currentGame.mainBoard[0][0] == checkChar && currentGame.mainBoard[1][1] == checkChar && currentGame.mainBoard[2][2] == checkChar) {
+		if(this.mainBoard[0][0] == checkChar && this.mainBoard[1][1] == checkChar && this.mainBoard[2][2] == checkChar) {
 			return gameTerminated = true;
 			}
-		if(currentGame.mainBoard[0][2] == checkChar && currentGame.mainBoard[1][1] == checkChar && currentGame.mainBoard[2][0] == checkChar) {
+		if(this.mainBoard[0][2] == checkChar && this.mainBoard[1][1] == checkChar && this.mainBoard[2][0] == checkChar) {
 			return gameTerminated = true;
 			}
 		
 		//Check if the game ended in a draw, i.e. 9 moves have been played ONLY if gameTerminated is still false
-		if(currentGame.moveCounter == 9) {
+		if(this.moveCounter == 9) {
 			this.gameDrawn = true;
 			gameTerminated = true;
 		}
@@ -266,6 +270,11 @@ public class TTTBoard {
 		}
 		
 		return false;	
+	}
+	
+	//Method to enable cloning of the object
+	public Object clone()throws CloneNotSupportedException{
+		return super.clone();  
 	}
 	
 //	//Main method to run some tests - comment out later
