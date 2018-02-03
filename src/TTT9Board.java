@@ -9,9 +9,9 @@ public class TTT9Board {
 	public TTTBoard [][] boardArray;
 	public char [][] gameStatus; //use this array to track win/lose/draw statuses of each board
 	//X=x won, O=o won, d=draw, n=not terminated
-	
+	public boolean firstMove = true;
 	public char nextPlayer;
-	public int nextBoardIndex;
+	public int nextBoardIndex = 1;
 	public char overallGameStatus;
 	
 	//constructor
@@ -90,26 +90,50 @@ public class TTT9Board {
 	}
 	
 	//make move
-	public void makeMove(char player, int boardIndex, int boardPos) {
+	public boolean makeMove(char player, int boardIndex, int boardPos) {
+		boolean isValid = false;
+
 		///if this board is not terminated and it's the correct board or if the correct board is already terminated
-		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(nextBoardIndex-1)/3][(nextBoardIndex-1)%3] != 'n'))) {
+		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n') || this.firstMove)) {
+			if(this.firstMove) {
+				this.firstMove = false;
+			}
+//		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && (boardIndex == this.nextBoardIndex)){ //|| (gameStatus[(nextBoardIndex-1)/3][(nextBoardIndex-1)%3] != 'n'))) {			
 			//check if move is available using TTTBoard check
 			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
+				isValid = true;
+			}
+			
+			else {
+				isValid = false;
+				System.err.println("Move is invalid...please select a valid move...");
 			}
 		}
 		
-		//check if you won
-		checkWin(this.nextPlayer, boardIndex);
+		if(isValid) {
+			//check if you won
+			System.err.println(player + " just moved");
+			System.err.println(boardIndex);
+			System.err.println(boardPos);
+			checkWin(this.nextPlayer, boardIndex);
+			
+			//if not, toggle nextPlayer and wait for another move
+			if(this.nextPlayer=='X') {
+				this.nextPlayer = 'O';
+			}
+			else {
+				this.nextPlayer = 'X';
+			}
+		}
 		
-		//if not, toggle nextPlayer and wait for another move
-		if(this.nextPlayer=='X') {
-			this.nextPlayer = 'O';
+		else if(!isValid) {
+			System.err.println("Please enter a valid move");
+			
 		}
-		else {
-			this.nextPlayer = 'X';
-		}
+		
+		return isValid;
 	} //end makeMove()
 	
 	//check win
@@ -156,6 +180,10 @@ public class TTT9Board {
 		TTT9Board testBoard = new TTT9Board();
 		testBoard.displayBoard();
 		testBoard.printWinStatus();
+		testBoard.makeMove('O', 4, 8);
+		testBoard.displayBoard();
+		testBoard.makeMove('X', 8, 2);
+		testBoard.displayBoard();
 	}
 	
 } //end class TTT9Board
