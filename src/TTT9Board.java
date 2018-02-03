@@ -1,4 +1,3 @@
-import java.awt.Point;
 
 //Rebecca Van Dyke, Avi Webberman, Karan Vombatkere
 //February 2018
@@ -13,6 +12,7 @@ public class TTT9Board {
 	
 	public char nextPlayer;
 	public int nextBoardIndex;
+	public char overallGameStatus;
 	
 	//constructor
 	public TTT9Board() {
@@ -31,6 +31,8 @@ public class TTT9Board {
 			}
 		}
 		this.nextPlayer = 'X';
+		
+		this.overallGameStatus = 'n';
 	}
 	
 	//clear board
@@ -67,7 +69,7 @@ public class TTT9Board {
 			}
 		}
 		
-		System.err.println();
+		System.err.println("\n");
 	}
 	
 	//print status
@@ -89,13 +91,11 @@ public class TTT9Board {
 	
 	//make move
 	public void makeMove(char player, int boardIndex, int boardPos) {
-		//check if move is available
-		Point board = TTTBoard.getCoordinates(boardIndex);
-		Point intendedNextBoard = TTTBoard.getCoordinates(nextBoardIndex);
 		///if this board is not terminated and it's the correct board or if the correct board is already terminated
-		if((gameStatus[board.x][board.y] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[intendedNextBoard.x][intendedNextBoard.y] != 'n'))) {
-			if(boardArray[board.x][board.y].ismoveAllowed(boardPos)) {
-				boardArray[board.x][board.y].moveResult(player, boardPos);
+		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(nextBoardIndex-1)/3][(nextBoardIndex-1)%3] != 'n'))) {
+			//check if move is available using TTTBoard check
+			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
+				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
 			}
 		}
@@ -110,20 +110,44 @@ public class TTT9Board {
 		else {
 			this.nextPlayer = 'X';
 		}
-	}
+	} //end makeMove()
 	
 	//check win
 	public char checkWin(char player, int boardIndex) {
-		//if you win one board, you win the game
-		
 		//game will only terminate on the last board you played on
-		return 'n';
-	}
+		TTTBoard lastBoard = this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3];
+		
+		//if you win one board, you win the game
+		if(lastBoard.terminalState()) {
+			//if it terminated and it's not a draw, the player who just played must have won
+			if(!lastBoard.gameDrawn) {
+				this.overallGameStatus = player;
+				this.printGameResult();
+			}
+			
+			//if that board is a draw, check if there are still boards to be played on
+			else {
+				this.overallGameStatus = 'd';
+				for(int i=0; i<3; i++) {
+					for(int j=0; j<3; j++) {
+						if(this.gameStatus[i][j] == 'n') {
+							this.overallGameStatus = 'n';
+						}
+					}
+				}
+				if(this.overallGameStatus != 'n') {
+					this.printGameResult();
+				}
+			}
+		}
+		
+		//if all boards are full, game is a draw
+		return this.overallGameStatus;
+		
+	} //end method checkWin()
 	
-	//check super TTT win
-	public char checkSuperTTTWin() {
-		//must win TTT on results board
-		return 'n';
+	public void printGameResult() {
+		
 	}
 	
 	
@@ -133,4 +157,5 @@ public class TTT9Board {
 		testBoard.displayBoard();
 		testBoard.printWinStatus();
 	}
+	
 } //end class TTT9Board
