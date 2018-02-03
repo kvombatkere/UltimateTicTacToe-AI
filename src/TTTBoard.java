@@ -221,40 +221,61 @@ public class TTTBoard implements Serializable{
 		
 		return gameTerminated;	
 	}
+	
 	public static boolean check3InRow(char checkChar, char [][] board) {
 		//Define and check each of 8 terminal states that bring a win for nextPlayer
-				//Horizontal line check
-				if(board[0][0] == checkChar && board[0][1] == checkChar && board[0][2] == checkChar) {
-					return true;
-					}
-				if(board[1][0] == checkChar && board[1][1] == checkChar && board[1][2] == checkChar) {
-					return true;
-					}
-				if(board[2][0] == checkChar && board[2][1] == checkChar && board[2][2] == checkChar) {
-					return true;
-					}
+		
+		//Horizontal line check
+		for(int i=0; i<3; i++) {
+			if(board[i][0] == checkChar && board[i][1] == checkChar && board[i][2] == checkChar) {
+				return true;
+			}
+		}
 				
-				//Vertical line check
-				if(board[0][0] == checkChar && board[1][0] == checkChar && board[2][0] == checkChar) {
-					return true;
-					}
-				if(board[0][1] == checkChar && board[1][1] == checkChar && board[2][1] == checkChar) {
-					return true;
-					}
-				if(board[0][2] == checkChar && board[1][2] == checkChar && board[2][2] == checkChar) {
-					return true;
-					}
+		//Vertical line check
+		for(int i=0; i<3; i++) {
+			if(board[0][i] == checkChar && board[1][i] == checkChar && board[2][i] == checkChar) {
+				return true;
+			}
+		}
 				
-				//Diagonal check
-				if(board[0][0] == checkChar && board[1][1] == checkChar && board[2][2] == checkChar) {
-					return true;
-					}
-				if(board[0][2] == checkChar && board[1][1] == checkChar && board[2][0] == checkChar) {
-					return true;
-					}
-				else {
-					return false;
-				}
+		//Diagonal check
+		if(board[0][0] == checkChar && board[1][1] == checkChar && board[2][2] == checkChar) {
+			return true;
+			}
+		if(board[0][2] == checkChar && board[1][1] == checkChar && board[2][0] == checkChar) {
+			return true;
+			}
+		
+		return false;
+	}
+	
+	//checks if a win is still possible for the next player
+	public static boolean winPossible(char checkChar, char blankChar, char [][] board) {
+		//must have 3 in a row of checkChar or blanks
+		//Horizontal line check
+		for(int i=0; i<3; i++) {
+			if((board[i][0] == checkChar)||(board[i][0] == blankChar) && ((board[i][1] == checkChar)||(board[i][1] == blankChar)) && ((board[i][2] == checkChar)||(board[i][2] == blankChar))) {
+				return true;
+			}
+		}
+		
+		//Vertical line check
+		for(int i=0; i<3; i++) {
+			if(((board[0][i] == checkChar)||(board[0][i] == blankChar)) && ((board[1][i] == checkChar)||(board[1][i] == blankChar)) && ((board[2][i] == checkChar)||(board[2][i] == blankChar))) {
+				return true;
+			}
+		}
+		
+		//Diagonal check
+		if(((board[0][0] == checkChar)||(board[0][0] == blankChar)) && ((board[1][1] == checkChar)||(board[1][1] == blankChar)) && ((board[2][2] == checkChar)||(board[2][2] == blankChar))) {
+			return true;
+			}
+		if(((board[0][2] == checkChar)||(board[0][2] == blankChar)) && ((board[1][1] == checkChar)||(board[1][1] == blankChar)) && ((board[2][0] == checkChar)||(board[2][0] == blankChar))) {
+			return true;
+			}
+			
+		return false;
 	}
 	
 	//Method to return set of applicable actions in a given state
