@@ -9,10 +9,11 @@ public class TTT9Board {
 	public TTTBoard [][] boardArray;
 	public char [][] gameStatus; //use this array to track win/lose/draw statuses of each board
 	//X=x won, O=o won, d=draw, n=not terminated
-	
+	public boolean firstMove = true;
 	public char nextPlayer;
-	public int nextBoardIndex;
+	public int nextBoardIndex = 1;
 	public char overallGameStatus;
+	public int moveCounter;
 	
 	//constructor
 	public TTT9Board() {
@@ -42,6 +43,7 @@ public class TTT9Board {
 				this.boardArray[i][j].clearBoard();
 			}
 		}
+		this.moveCounter = 0;
 	}
 	
 	//print board
@@ -90,26 +92,80 @@ public class TTT9Board {
 	}
 	
 	//make move
-	public void makeMove(char player, int boardIndex, int boardPos) {
+	public boolean makeMove(char player, int boardIndex, int boardPos) {
+		boolean isValid = false;
+
 		///if this board is not terminated and it's the correct board or if the correct board is already terminated
-		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(nextBoardIndex-1)/3][(nextBoardIndex-1)%3] != 'n'))) {
+		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n') || this.firstMove)) {
+			if(this.firstMove) {
+				this.firstMove = false;
+			}
+//		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && (boardIndex == this.nextBoardIndex)){ //|| (gameStatus[(nextBoardIndex-1)/3][(nextBoardIndex-1)%3] != 'n'))) {			
 			//check if move is available using TTTBoard check
 			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
+<<<<<<< HEAD
+				isValid = true;
+			}
+			
+			else {
+				isValid = false;
+				System.err.println("Move is invalid...please select a valid move...");
 			}
 		}
 		
-		//check if you won
-		checkWin(this.nextPlayer, boardIndex);
+		if(isValid) {
+			//check if you won
+			System.err.println(player + " just moved");
+			System.err.println(boardIndex);
+			System.err.println(boardPos);
+			checkWin(this.nextPlayer, boardIndex);
+			
+			//if not, toggle nextPlayer and wait for another move
+			if(this.nextPlayer=='X') {
+				this.nextPlayer = 'O';
+			}
+			else {
+				this.nextPlayer = 'X';
+			}
+		}
 		
-		//if not, toggle nextPlayer and wait for another move
-		if(this.nextPlayer=='X') {
-			this.nextPlayer = 'O';
+		else if(!isValid) {
+			System.err.println("Please enter a valid move");
+			
+		}
+		
+		return isValid;
+=======
+				
+				this.moveCounter++;
+				
+				//check if you won
+				checkWin(this.nextPlayer, boardIndex);
+				
+				//display the board
+				this.displayBoard();
+				
+				//if not, toggle nextPlayer and wait for another move
+				if(this.nextPlayer=='X') {
+					this.nextPlayer = 'O';
+				}
+				else {
+					this.nextPlayer = 'X';
+				}
+			}
+			else {
+				//move is not made
+				System.err.println("Illegal move");
+			}
 		}
 		else {
-			this.nextPlayer = 'X';
+			//move is not made
+			System.err.println("Illegal move");
 		}
+		
+>>>>>>> 00677a681dff21c4f1c9395c0e1ffc0818dcdca4
 	} //end makeMove()
 	
 	//check win
@@ -128,6 +184,7 @@ public class TTT9Board {
 			//if that board is a draw, check if there are still boards to be played on
 			else {
 				this.overallGameStatus = 'd';
+				//if all boards are full, game is a draw
 				for(int i=0; i<3; i++) {
 					for(int j=0; j<3; j++) {
 						if(this.gameStatus[i][j] == 'n') {
@@ -141,13 +198,24 @@ public class TTT9Board {
 			}
 		}
 		
-		//if all boards are full, game is a draw
 		return this.overallGameStatus;
 		
 	} //end method checkWin()
 	
 	public void printGameResult() {
-		
+		switch(this.overallGameStatus) {
+		case 'X':
+			System.err.println("Game Over! X wins in "+ moveCounter +" moves!");
+			break;
+		case 'O':
+			System.err.println("Game Over! O wins in "+ moveCounter +" moves!");
+			break;
+		case 'd':
+			System.err.println("Game Ended in a Draw!");
+			break;
+		default:
+			System.err.println("Error, invalid game status");
+		}
 	}
 	
 	
@@ -156,6 +224,10 @@ public class TTT9Board {
 		TTT9Board testBoard = new TTT9Board();
 		testBoard.displayBoard();
 		testBoard.printWinStatus();
+		testBoard.makeMove('O', 4, 8);
+		testBoard.displayBoard();
+		testBoard.makeMove('X', 8, 2);
+		testBoard.displayBoard();
 	}
 	
 } //end class TTT9Board

@@ -7,7 +7,7 @@ public class MainGame {
 		Scanner input = new Scanner(System.in);
 		char gameVersion = ' ';
 		
-		//main loop containing option to play all three gmaes
+		//main loop containing option to play all three games
 		while(true) {
 
 			//loop to ensure valid input from user
