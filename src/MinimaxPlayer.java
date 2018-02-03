@@ -24,6 +24,8 @@ public class MinimaxPlayer{
 	int recursionNum;
 	int totalStates;
 	
+	boolean stopSearch;
+	
 	//Constructor
 	public MinimaxPlayer(TTTBoard currGame) {
 		this.currentGame = currGame;
@@ -35,20 +37,20 @@ public class MinimaxPlayer{
 	public int getStateUtility(TTTBoard stateBoard) {
 		int stateUtility = 0;
 		
-		System.err.println("Terminal State Utility check");
+		//System.err.println("Terminal State Utility check");
 
 		//Check if game is drawn
 		if(stateBoard.gameDrawn) {
-			return stateUtility = 1;
+			return stateUtility = 0;
 		}
 		//Check if computer wins
 		if(stateBoard.nextPlayer == stateBoard.compChar) {
-			return stateUtility = 2;
+			return stateUtility = 10;
 		}
 		
 		//If opponent (human) wins
 		else {
-			return stateUtility = 0;
+			return stateUtility = -10;
 		}
 	}
 	
@@ -56,10 +58,11 @@ public class MinimaxPlayer{
 	//Method to find the optimal move using state-space search and return position
 	public int minimaxDecision(){
 		int bestMove = 0;
-		int bestmoveUtility = -10;
-		int moveUtility = -10;
+		int bestmoveUtility = -100;
+		int moveUtility = -100;
 		
 		totalStates = 0;
+		
 		searchStateBoard = (TTTBoard) TTTBoard.deepClone(currentGame);
 		
 		
@@ -72,16 +75,21 @@ public class MinimaxPlayer{
 			//Note that this needs to be done for each action considered
 			if(possibleMoves[i] != 0) { //We consider only legal moves
 				recursionNum = 0;
-				
-				searchStateBoard = (TTTBoard) TTTBoard.deepClone(currentGame);
 
+				searchStateBoard = (TTTBoard) TTTBoard.deepClone(currentGame);
+				System.err.println("minimaxDecision call for move: " + possibleMoves[i]);
+				
+				int a = possibleMoves[i]; //Candidate action
+				
 				//Call the recursive state space process
-				moveUtility = this.minValue(searchStateBoard);
-				System.err.println("minimaxDecision Utility = " + moveUtility);
+				moveUtility = this.minValue(searchStateBoard.moveResult(searchStateBoard.nextPlayer, a));
+				
+				System.err.println("minimaxDecision Utility for move: " + possibleMoves[i]+ " is = " + moveUtility);
 				
 				//Choose the best utility action
-				if(moveUtility >= bestmoveUtility) {
+				if(moveUtility > bestmoveUtility) {
 					bestMove = possibleMoves[i];
+					bestmoveUtility = moveUtility;
 				}
 				
 				System.err.println("Current Best Move = " + bestMove + ". Recursive Call Count = " + recursionNum +". Total States checked = " + totalStates);
@@ -104,54 +112,59 @@ public class MinimaxPlayer{
 		}
 			
 		int v = -100; //Assign v -inf value
-		
-		TTTBoard tempBoard = (TTTBoard) TTTBoard.deepClone(stateBoard);
-		//First get the list of possible actions
-		int [] possibleMoves = tempBoard.applicableActions();
-		System.err.println("List of Actions Remaining (max)= " + Arrays.toString(possibleMoves));
 
 		//iterate through all the applicable actions to create game tree
-		for(int i=1; i < possibleMoves.length; i++) {
+		for(int i=1; i <10; i++) {
 			
-			if(possibleMoves[i] != 0) { //We consider only legal moves
+			TTTBoard tempBoard = (TTTBoard) TTTBoard.deepClone(stateBoard);
+			//First get the list of possible actions
+			int [] possibleMoves = tempBoard.applicableActions();
+			//System.err.println("List of Actions Remaining (max)= " + Arrays.toString(possibleMoves));
+			
+			if(possibleMoves[i] != 0) { //We consider only legal moves/states	
+				
 				int a = possibleMoves[i]; //Candidate action
-				System.err.println("maxValue function, evaluating move: " + a + ". Current utility value = " + v);
+				//System.err.println("maxValue function, evaluating move: " + a + ". Current utility value = " + v);
 
 				//Note that moveResult automatically toggles the nextplayer state
 				v = Math.max(v, this.minValue(tempBoard.moveResult(tempBoard.nextPlayer, a)));
+				System.err.println("Max value Utility current value = " + v);
+
 			}
 		}
-		
-
 		return v;	
 	}
 	
-	//Max value function for minimax -> returns a utility value
+	
+	//Min value function for minimax -> returns a utility value
 	public int minValue(TTTBoard stateBoard) {
 		//Check if it is in a terminal state and return the utility value
 		recursionNum++;
-
+		
 		if(stateBoard.terminalState()) {
 			totalStates++;
 			return this.getStateUtility(stateBoard);
 		}
 			
 		int v = 100; //Assign v +inf value
-		
-		TTTBoard tempBoard = (TTTBoard) TTTBoard.deepClone(stateBoard);
-		//First get the list of possible actions
-		int [] possibleMoves = tempBoard.applicableActions();
-		System.err.println("List of Actions Remaining (min)= " + Arrays.toString(possibleMoves));
 
 		//iterate through all the applicable actions to create game tree
-		for(int i=1; i < possibleMoves.length; i++) {
+		for(int i=1; i < 10; i++) {
+			
+			TTTBoard tempBoard = (TTTBoard) TTTBoard.deepClone(stateBoard);
+			//First get the list of possible actions
+			int [] possibleMoves = tempBoard.applicableActions();
+			//System.err.println("List of Actions Remaining (min)= " + Arrays.toString(possibleMoves));
 			
 			if(possibleMoves[i] != 0) { //We consider only legal moves
+				
 				int a = possibleMoves[i]; //Candidate action
-				System.err.println("minValue function, evaluating move: " + a + ". Current utility value = " + v);
+				//System.err.println("minValue function, evaluating move: " + a + ". Current utility value = " + v);
 
 				//Note that moveResult automatically toggles the nextplayer state
 				v = Math.min(v, this.maxValue(tempBoard.moveResult(tempBoard.nextPlayer, a)));
+				System.err.println("Min value Utility current value = " + v);
+
 			}
 		}
 		

@@ -96,10 +96,7 @@ public class TTTBoard implements Serializable{
 	
 	//Method to add an X or an O to position specified by digits 1-9
 	//Method that computes the RESULT(s,a) function and executes the action physically
-	public TTTBoard moveResult(char moveChar, int pos) {
-		//View applicable actions, legal moves available
-		this.applicableActions();
-		
+	public TTTBoard moveResult(char moveChar, int pos) {		
 		Point boardPos = new Point();
 		
 		//Get the coordinate values from the corresponding function
@@ -110,13 +107,13 @@ public class TTTBoard implements Serializable{
 		if(boardPos != null) {
 			this.mainBoard[boardPos.x][boardPos.y] = moveChar;
 			this.moveCounter++; //Increment move counter
+			
+			//Call the method to check for win and toggle the player
+			this.togglePlayer();
 		}
 		
-		//Call the method to check for win and toggle the player
-		this.togglePlayer();
-		
 		//Note that toggle player check for terminal state first and also toggles nextPlayer
-		return this; //Return the resulting board state
+		return this; //Return the resulting game state
 	}
 	
 	
@@ -221,6 +218,7 @@ public class TTTBoard implements Serializable{
 		
 		return gameTerminated;	
 	}
+	
 	public static boolean check3InRow(char checkChar, char [][] board) {
 		//Define and check each of 8 terminal states that bring a win for nextPlayer
 				//Horizontal line check
