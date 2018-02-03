@@ -5,48 +5,48 @@ public class MainGame {
 	
 	public static void main(String[] args) throws CloneNotSupportedException {
 		Scanner input = new Scanner(System.in);
-		char gameVersion = 'x';
+		char gameVersion = ' ';
 		
+		//main loop containing option to play all three gmaes
 		while(true) {
 
-		
-		while(gameVersion != '1' && gameVersion != '2' && gameVersion != '3' && gameVersion != 'q') {
+			//loop to ensure valid input from user
+			while(gameVersion != '1' && gameVersion != '2' && gameVersion != '3' && gameVersion != 'q') {
+				
+				System.err.println("What type of Tic-Tac-Toe would you like to play? (Enter 'q' to quit)");
+				System.err.println("(1) Traditional");
+				System.err.println("(2) Advanced");
+				System.err.println("(3) Ultimate");
+				
+				gameVersion = input.next().charAt(0);
+	
+				if(gameVersion != '1' && gameVersion != '2' && gameVersion != '3' && gameVersion != 'q') {
+					System.err.println("Please enter a valid option");
+				}
 			
-			System.err.println("What type of Tic-Tac-Toe would you like to play? (Enter 'q' to quit)");
-			System.err.println("(1) Traditional");
-			System.err.println("(2) Advanced");
-			System.err.println("(3) Ultimate");
-			
-			gameVersion = input.next().charAt(0);
-
-			if(gameVersion != '1' && gameVersion != '2' && gameVersion != '3' && gameVersion != 'q') {
-				System.err.println("Please enter a valid option");
 			}
 		
-		}
-		
-
-		if (gameVersion == '1') {
-			TTTGame.main(null);
-		}
-		
-		else if (gameVersion == '2') {
-			//Call main method of version 2 
+			//makes call to play selected game or quit
+			if (gameVersion == '1') {
+				TTTGame.main(null);
+			}
 			
-		}
-		
-		else if (gameVersion == '3') {
-			//Call main method of version 3
-		}
-		
-		else if (gameVersion == 'q') {
-			System.err.println("Thanks for playing!..Quitting...");
-			break;
-		}
+			else if (gameVersion == '2') {
+				//Call main method of version 2 
+				
+			}
+			
+			else if (gameVersion == '3') {
+				//Call main method of version 3
+			}
+			
+			else if (gameVersion == 'q') {
+				System.err.println("Thanks for playing!..Quitting...");
+				break;
+			}
 
-		
-		
-	}
+				
+		}
 	}
 	
 }
