@@ -11,7 +11,7 @@ public class SuperTTTBoard extends TTT9Board{
 		//game will only terminate on the last board you played on
 		TTTBoard lastBoard = this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3];
 		
-		//if you win one board, update gameStatus and check if you won the whole game
+		//is the last board played on in a terminal state now?
 		if(lastBoard.terminalState()) {
 			//if it terminated and it's not a draw, the player who just played must have won
 			if(!lastBoard.gameDrawn) {
@@ -24,17 +24,14 @@ public class SuperTTTBoard extends TTT9Board{
 				}
 			}
 			
-			//if that board is a draw, check if a win is still possible
+			//else if that board is a draw
 			else {
-				this.overallGameStatus = 'd';
-				for(int i=0; i<3; i++) {
-					for(int j=0; j<3; j++) {
-						if(this.gameStatus[i][j] == 'n') {
-							this.overallGameStatus = 'n';
-						}
-					}
-				}
-				if(this.overallGameStatus != 'n') {
+				//update game status of board just played on
+				this.gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] = 'd';
+				//check if a win is impossible
+				if(!(TTTBoard.winPossible('X', 'n', this.gameStatus) || TTTBoard.winPossible('O', 'n', this.gameStatus))) {
+					//if no one can win, entire game is a draw
+					this.overallGameStatus = 'd';
 					this.printGameResult();
 				}
 			}
