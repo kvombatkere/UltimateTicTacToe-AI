@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.awt.Point;
 
 //Rebecca Van Dyke, Avi Webberman, Karan Vombatkere
 //February 2018
@@ -12,6 +12,7 @@ public class TTT9Board {
 	//X=x won, O=o won, d=draw, n=not terminated
 	
 	public char nextPlayer;
+	public int nextBoardIndex;
 	
 	//constructor
 	public TTT9Board() {
@@ -87,10 +88,43 @@ public class TTT9Board {
 	}
 	
 	//make move
+	public void makeMove(char player, int boardIndex, int boardPos) {
+		//check if move is available
+		Point board = TTTBoard.getCoordinates(boardIndex);
+		Point intendedNextBoard = TTTBoard.getCoordinates(nextBoardIndex);
+		///if this board is not terminated and it's the correct board or if the correct board is already terminated
+		if((gameStatus[board.x][board.y] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[intendedNextBoard.x][intendedNextBoard.y] != 'n'))) {
+			if(boardArray[board.x][board.y].ismoveAllowed(boardPos)) {
+				boardArray[board.x][board.y].moveResult(player, boardPos);
+				this.nextBoardIndex=boardPos;
+			}
+		}
+		
+		//check if you won
+		checkWin(this.nextPlayer, boardIndex);
+		
+		//if not, toggle nextPlayer and wait for another move
+		if(this.nextPlayer=='X') {
+			this.nextPlayer = 'O';
+		}
+		else {
+			this.nextPlayer = 'X';
+		}
+	}
 	
 	//check win
+	public char checkWin(char player, int boardIndex) {
+		//if you win one board, you win the game
+		
+		//game will only terminate on the last board you played on
+		return 'n';
+	}
 	
 	//check super TTT win
+	public char checkSuperTTTWin() {
+		//must win TTT on results board
+		return 'n';
+	}
 	
 	
 	//main method for testing
