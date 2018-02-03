@@ -4,9 +4,11 @@
 //Project Partners: Rebecca Ho Van Dyke + Avram Webberman
 
 import java.awt.*;
+import java.io.*;
 
 //Class to specify the physical tic-tac-toe board and display
-public class TTTBoard implements Cloneable{
+@SuppressWarnings("serial")
+public class TTTBoard implements Serializable{
 	
 	//Specify class variables
 	
@@ -112,8 +114,6 @@ public class TTTBoard implements Cloneable{
 		
 		//Call the method to check for win and toggle the player
 		this.togglePlayer();
-		System.err.println(this);
-
 		
 		//Note that toggle player check for terminal state first and also toggles nextPlayer
 		return this; //Return the resulting board state
@@ -298,34 +298,26 @@ public class TTTBoard implements Cloneable{
 	}
 	
 	//Method to enable cloning of the object
-	public Object clone()throws CloneNotSupportedException{
-		return super.clone();  
-	}
+	//Code Source: https://alvinalexander.com/java/java-deep-clone-example-source-code
+	/**
+	 * This method makes a "deep clone" of any Java object it is given.
+	 */
+	 public static Object deepClone(Object object) {
+	   try {
+	     ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	     ObjectOutputStream oos = new ObjectOutputStream(baos);
+	     oos.writeObject(object);
+	     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+	     ObjectInputStream ois = new ObjectInputStream(bais);
+	     return ois.readObject();
+	   }
+	   catch (Exception e) {
+	     e.printStackTrace();
+	     return null;
+	   }
+	 }
 	
-	
-	//Method to enable copying of object (clone alternative)
-	public static TTTBoard copyGame(TTTBoard originalBoard) {
-		//Instantiate copy
-		TTTBoard gameCopy = new TTTBoard();
-		
-		//Copy over all state variables
-		gameCopy.compChar = originalBoard.compChar;
-		gameCopy.nextPlayer = originalBoard.nextPlayer;
-
-		gameCopy.gameDrawn = originalBoard.gameDrawn;
-		gameCopy.gameOver = originalBoard.gameOver;
-		
-		gameCopy.moveCounter = originalBoard.moveCounter;
-		gameCopy.mainBoard = originalBoard.mainBoard;
-		
-		return gameCopy;
-	}
-	
-	
-	//Transition Model State Space Search Methods
-	//Method to just return the resulting state
-	
-	
+	 
 //	//Main method to run some tests - comment out later
 //	public static void main(String[] args) throws IOException{
 //		TTTBoard B1 = new TTTBoard();
