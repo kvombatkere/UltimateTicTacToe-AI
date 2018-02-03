@@ -13,6 +13,7 @@ public class TTT9Board {
 	public char nextPlayer;
 	public int nextBoardIndex = 1;
 	public char overallGameStatus;
+	public int moveCounter;
 	
 	//constructor
 	public TTT9Board() {
@@ -42,6 +43,7 @@ public class TTT9Board {
 				this.boardArray[i][j].clearBoard();
 			}
 		}
+		this.moveCounter = 0;
 	}
 	
 	//print board
@@ -103,6 +105,7 @@ public class TTT9Board {
 			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
+<<<<<<< HEAD
 				isValid = true;
 			}
 			
@@ -134,6 +137,35 @@ public class TTT9Board {
 		}
 		
 		return isValid;
+=======
+				
+				this.moveCounter++;
+				
+				//check if you won
+				checkWin(this.nextPlayer, boardIndex);
+				
+				//display the board
+				this.displayBoard();
+				
+				//if not, toggle nextPlayer and wait for another move
+				if(this.nextPlayer=='X') {
+					this.nextPlayer = 'O';
+				}
+				else {
+					this.nextPlayer = 'X';
+				}
+			}
+			else {
+				//move is not made
+				System.err.println("Illegal move");
+			}
+		}
+		else {
+			//move is not made
+			System.err.println("Illegal move");
+		}
+		
+>>>>>>> 00677a681dff21c4f1c9395c0e1ffc0818dcdca4
 	} //end makeMove()
 	
 	//check win
@@ -152,6 +184,7 @@ public class TTT9Board {
 			//if that board is a draw, check if there are still boards to be played on
 			else {
 				this.overallGameStatus = 'd';
+				//if all boards are full, game is a draw
 				for(int i=0; i<3; i++) {
 					for(int j=0; j<3; j++) {
 						if(this.gameStatus[i][j] == 'n') {
@@ -165,13 +198,24 @@ public class TTT9Board {
 			}
 		}
 		
-		//if all boards are full, game is a draw
 		return this.overallGameStatus;
 		
 	} //end method checkWin()
 	
 	public void printGameResult() {
-		
+		switch(this.overallGameStatus) {
+		case 'X':
+			System.err.println("Game Over! X wins in "+ moveCounter +" moves!");
+			break;
+		case 'O':
+			System.err.println("Game Over! O wins in "+ moveCounter +" moves!");
+			break;
+		case 'd':
+			System.err.println("Game Ended in a Draw!");
+			break;
+		default:
+			System.err.println("Error, invalid game status");
+		}
 	}
 	
 	
