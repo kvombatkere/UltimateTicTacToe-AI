@@ -101,7 +101,7 @@ public class TTTBoard implements Cloneable{
 		Point boardPos = new Point();
 		
 		//Get the coordinate values from the corresponding function
-		boardPos = this.getCoordinates(pos);
+		boardPos = getCoordinates(pos);
 		
 		//Execute the move on the TTT Board
 		//Note that only valid moves in valid positions are executed
@@ -122,7 +122,7 @@ public class TTTBoard implements Cloneable{
 	
 	//Method to return the coordinates of the board position from a pos value of 1-9
 	//Mostly to detect errors and get easy calls from 
-	public Point getCoordinates(int boardPos) {
+	public static Point getCoordinates(int boardPos) {
 		Point coord = new Point(); //Initialize the coordinates
 		
 		//Assign the correct x and y values as per the position
@@ -149,7 +149,7 @@ public class TTTBoard implements Cloneable{
 	}
 	
 	//Method to return the board position (1-9) given the XY coordinates of the grid
-	public int getboardPosition(int xval, int yval) {
+	public static int getboardPosition(int xval, int yval) {
 		int bPos = 0; //Initialize the int value (1-9) to return
 		
 		if(xval == 0) {
@@ -208,44 +208,53 @@ public class TTTBoard implements Cloneable{
 		boolean gameTerminated = false;
 		char checkChar = this.nextPlayer; //The character to check for co-linearity
 		
-		//Define and check each of 8 terminal states that bring a win for nextPlayer
-		//Horizontal line check
-		if(this.mainBoard[0][0] == checkChar && this.mainBoard[0][1] == checkChar && this.mainBoard[0][2] == checkChar) {
-			return gameTerminated = true;
-			}
-		if(this.mainBoard[1][0] == checkChar && this.mainBoard[1][1] == checkChar && this.mainBoard[1][2] == checkChar) {
-			return gameTerminated = true;
-			}
-		if(this.mainBoard[2][0] == checkChar && this.mainBoard[2][1] == checkChar && this.mainBoard[2][2] == checkChar) {
-			return gameTerminated = true;
-			}
-		
-		//Vertical line check
-		if(this.mainBoard[0][0] == checkChar && this.mainBoard[1][0] == checkChar && this.mainBoard[2][0] == checkChar) {
-			return gameTerminated = true;
-			}
-		if(this.mainBoard[0][1] == checkChar && this.mainBoard[1][1] == checkChar && this.mainBoard[2][1] == checkChar) {
-			return gameTerminated = true;
-			}
-		if(this.mainBoard[0][2] == checkChar && this.mainBoard[1][2] == checkChar && this.mainBoard[2][2] == checkChar) {
-			return gameTerminated = true;
-			}
-		
-		//Diagonal check
-		if(this.mainBoard[0][0] == checkChar && this.mainBoard[1][1] == checkChar && this.mainBoard[2][2] == checkChar) {
-			return gameTerminated = true;
-			}
-		if(this.mainBoard[0][2] == checkChar && this.mainBoard[1][1] == checkChar && this.mainBoard[2][0] == checkChar) {
-			return gameTerminated = true;
-			}
+		//pulled check 3 in row to separate
+		if(check3InRow(checkChar, this.mainBoard)) {
+			gameTerminated = true;
+		}
 		
 		//Check if the game ended in a draw, i.e. 9 moves have been played ONLY if gameTerminated is still false
-		if(this.moveCounter == 9) {
+		else if(this.moveCounter == 9) {
 			this.gameDrawn = true;
 			gameTerminated = true;
 		}
 		
 		return gameTerminated;	
+	}
+	public static boolean check3InRow(char checkChar, char [][] board) {
+		//Define and check each of 8 terminal states that bring a win for nextPlayer
+				//Horizontal line check
+				if(board[0][0] == checkChar && board[0][1] == checkChar && board[0][2] == checkChar) {
+					return true;
+					}
+				if(board[1][0] == checkChar && board[1][1] == checkChar && board[1][2] == checkChar) {
+					return true;
+					}
+				if(board[2][0] == checkChar && board[2][1] == checkChar && board[2][2] == checkChar) {
+					return true;
+					}
+				
+				//Vertical line check
+				if(board[0][0] == checkChar && board[1][0] == checkChar && board[2][0] == checkChar) {
+					return true;
+					}
+				if(board[0][1] == checkChar && board[1][1] == checkChar && board[2][1] == checkChar) {
+					return true;
+					}
+				if(board[0][2] == checkChar && board[1][2] == checkChar && board[2][2] == checkChar) {
+					return true;
+					}
+				
+				//Diagonal check
+				if(board[0][0] == checkChar && board[1][1] == checkChar && board[2][2] == checkChar) {
+					return true;
+					}
+				if(board[0][2] == checkChar && board[1][1] == checkChar && board[2][0] == checkChar) {
+					return true;
+					}
+				else {
+					return false;
+				}
 	}
 	
 	//Method to return set of applicable actions in a given state
@@ -259,7 +268,7 @@ public class TTTBoard implements Cloneable{
 			for(int j=0; j<3; j++) {
 				//Check if square is blank
 				if(this.mainBoard[i][j] == ' ') {
-					int legalMove = this.getboardPosition(i,j);
+					int legalMove = getboardPosition(i,j);
 					possibleMoves[legalMove] = legalMove; //Update corresponding array value with non-zero position
 				}
 			}
