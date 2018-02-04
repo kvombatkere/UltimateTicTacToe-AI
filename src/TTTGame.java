@@ -71,24 +71,21 @@ public class TTTGame {
 				computerFirst = false;
 				}
 			
-			
 			//Instantiate Minimax computer player
 			MinimaxPlayer compPlayer = new MinimaxPlayer(Game);
 					
-			//Check if computer plays first
+			
+			//Check if computer plays first -> preprogrammed first move
 			if(computerFirst) {
-				//code to generate first computer move
 				System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + Game.compChar);
-				// Call minimax function to find best move
 				compMovePos = 9;
 				Game.moveResult(Game.compChar, compMovePos);
 			}
 			
+			Game.displayBoard(); //Display the board
+
 			//Define main game playing loop
 			while(Game.gameOver == false) {
-				
-				Game.displayBoard(); //Display the board
-	
 				
 				//Opponent plays
 				System.err.println("It is your turn to play, please select a position (1-9) to place a " + inputChar);
@@ -104,34 +101,33 @@ public class TTTGame {
 				
 				if(isMoveLegal) { //If the move is legal execute it on the board
 					Game.moveResult(inputChar, oppMovePos);
+					System.err.println(Game.nextPlayer + " to move next..");  //Display who's move it is next
 				}
 				
 				Game.displayBoard(); //Display the board
+				
 				//check if game is over to break out of inner while loop
 				if(Game.gameOver) {break;}
 				
 				System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + Game.compChar);
 				// Call minimax function to find best move
 				compMovePos = compPlayer.minimaxDecision();
+				
+				//Output move
 				System.err.println("Computer Move: " + compMovePos);
+				//System.out.println(compMovePos);
 
-				Game.moveResult(Game.compChar, compMovePos);
+				Game.moveResult(Game.compChar, compMovePos);	
 				
-				Game.displayBoard(); //Display the board
-
-//				//For now I just configured it so a human can control both (to test functionality)
-//				oppMovePos = playerInput.nextInt();
-//				
-//				//Check if move is legal
-//				isMoveLegal = Game.ismoveAllowed(oppMovePos);
-//				while(!isMoveLegal) {
-//					System.err.println("That is an illegal move, please choose another board position (1-9)");
-//					oppMovePos = playerInput.nextInt();
-//					isMoveLegal = Game.ismoveAllowed(oppMovePos);
-//				}
-//				if(isMoveLegal) {Game.moveResult(Game.compChar, oppMovePos);}
+				//Display who's move it is
+				if(!Game.gameOver) {System.err.println(Game.nextPlayer + " to move next..");}
 				
-				
+				Game.displayBoard(); //Display the board				
+			}
+			
+			//Print result if game is over
+			if(Game.gameOver) {
+				Game.printGameresult();
 			}
 		}
 	}	
