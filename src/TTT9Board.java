@@ -105,10 +105,7 @@ public class TTT9Board {
 			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
-<<<<<<< HEAD
 
-=======
->>>>>>> 1540c5b6b7556ba5511da73b62e743ee9a513682
 				isValid = true;
 			}
 			
