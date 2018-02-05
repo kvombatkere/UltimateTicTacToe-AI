@@ -105,7 +105,6 @@ public class TTT9Board {
 			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
-<<<<<<< HEAD
 				isValid = true;
 			}
 			
@@ -137,35 +136,7 @@ public class TTT9Board {
 		}
 		
 		return isValid;
-=======
-				
-				this.moveCounter++;
-				
-				//check if you won
-				checkWin(this.nextPlayer, boardIndex);
-				
-				//display the board
-				this.displayBoard();
-				
-				//if not, toggle nextPlayer and wait for another move
-				if(this.nextPlayer=='X') {
-					this.nextPlayer = 'O';
-				}
-				else {
-					this.nextPlayer = 'X';
-				}
-			}
-			else {
-				//move is not made
-				System.err.println("Illegal move");
-			}
-		}
-		else {
-			//move is not made
-			System.err.println("Illegal move");
-		}
-		
->>>>>>> 00677a681dff21c4f1c9395c0e1ffc0818dcdca4
+
 	} //end makeMove()
 	
 	//check win
