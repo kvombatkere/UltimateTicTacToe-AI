@@ -48,6 +48,7 @@ public class MinimaxPlayer{
 		int bestMove = 0;
 		int moveUtility = -100;
 		totalStates = 0;
+		recursionNum = 0;
 		
 		searchStateBoard = (TTTBoard) TTTBoard.deepClone(currentGame);
 		
@@ -55,13 +56,12 @@ public class MinimaxPlayer{
 		int [] possibleMoves = searchStateBoard.applicableActions();
 		
 		int v = this.maxValue(searchStateBoard, -100, 100);
-		System.err.println("Total States examined to find initial max v: " + totalStates);
+		//System.err.println("Total States examined to find initial max v: " + totalStates);
 
 		//iterate through all the applicable actions to create game tree
 		for(int i=1; i < possibleMoves.length; i++) {
 			//Make a copy of the current game state to perform State Space Search on - this needs to be done for each action considered
 			if(possibleMoves[i] != 0) { //We consider only legal moves
-				recursionNum = 0;
 
 				searchStateBoard = (TTTBoard) TTTBoard.deepClone(currentGame);
 				
@@ -72,12 +72,13 @@ public class MinimaxPlayer{
 				
 				//System.err.println("minimaxDecision Utility for move: " + possibleMoves[i]+ " is = " + moveUtility);
 				
-				//Choose the best utility action
+				//Choose the best utility action and return immediately
 				if(moveUtility == v) {
 					
 					bestMove = possibleMoves[i];
 					
 					System.err.println("Total Number of States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
+					System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
 					return bestMove;
 				}				
 			}

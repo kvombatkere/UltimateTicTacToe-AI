@@ -108,12 +108,18 @@ public class TTTBoard implements Serializable{
 			this.mainBoard[boardPos.x][boardPos.y] = moveChar;
 			this.moveCounter++; //Increment move counter
 			
-			//Call the method to check for win and toggle the player
-			this.togglePlayer();
-		}
+			//Check if the last move won the game -> must be done after every move
+			//Check all possible terminal states and switch the next player + print I/O to System.err
+			this.gameOver = this.terminalState();	
+			
+			//Switch the nextplayer variable if game is still valid
+			if(!this.gameOver) {
+				if(this.nextPlayer == 'X') {nextPlayer = 'O';}
+				else{this.nextPlayer = 'X';}
+			}
 		
-		//Note that toggle player check for terminal state first and also toggles nextPlayer
-		return this; //Return the resulting game state
+		}
+		return this; //Return the resulting game state		
 	}
 	
 	
@@ -165,21 +171,6 @@ public class TTTBoard implements Serializable{
 			if(yval == 2) bPos = 9;
 		}
 		return bPos;
-	}
-	
-	
-	//Result method to check if the last move won the game -> must be called after every move
-	//Check all possible terminal states and toggle the next player + print I/O to System.err
-	public void togglePlayer() {
-		//Check if the game is in a terminal state
-		this.gameOver = this.terminalState();	
-		
-		//Toggle the player if game is still valid
-		if(!this.gameOver) {
-			if(this.nextPlayer == 'X') {nextPlayer = 'O';}
-			else{this.nextPlayer = 'X';}
-		}
-		
 	}
 	
 	public void printGameresult() {
@@ -286,7 +277,6 @@ public class TTTBoard implements Serializable{
 		
 		//Print out array to see non-zero values - comment out later
 		//System.err.println("Available Moves: " + Arrays.toString(possibleMoves));
-		
 		return possibleMoves;	
 	}
 	
