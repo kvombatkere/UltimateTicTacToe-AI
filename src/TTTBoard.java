@@ -96,10 +96,7 @@ public class TTTBoard implements Serializable{
 	
 	//Method to add an X or an O to position specified by digits 1-9
 	//Method that computes the RESULT(s,a) function and executes the action physically
-	public TTTBoard moveResult(char moveChar, int pos) {
-		//View applicable actions, legal moves available
-		this.applicableActions();
-		
+	public TTTBoard moveResult(char moveChar, int pos) {		
 		Point boardPos = new Point();
 		
 		//Get the coordinate values from the corresponding function
@@ -110,13 +107,13 @@ public class TTTBoard implements Serializable{
 		if(boardPos != null) {
 			this.mainBoard[boardPos.x][boardPos.y] = moveChar;
 			this.moveCounter++; //Increment move counter
+			
+			//Call the method to check for win and toggle the player
+			this.togglePlayer();
 		}
 		
-		//Call the method to check for win and toggle the player
-		this.togglePlayer();
-		
 		//Note that toggle player check for terminal state first and also toggles nextPlayer
-		return this; //Return the resulting board state
+		return this; //Return the resulting game state
 	}
 	
 	
@@ -175,20 +172,12 @@ public class TTTBoard implements Serializable{
 	//Check all possible terminal states and toggle the next player + print I/O to System.err
 	public void togglePlayer() {
 		//Check if the game is in a terminal state
-		this.gameOver = this.terminalState();
-		
-		//Print output if game is over
-		if(this.gameOver) {
-			this.printGameresult();
-		}
-		
+		this.gameOver = this.terminalState();	
 		
 		//Toggle the player if game is still valid
 		if(!this.gameOver) {
 			if(this.nextPlayer == 'X') {nextPlayer = 'O';}
 			else{this.nextPlayer = 'X';}
-			//Display who's move it is
-			//System.err.println(nextPlayer + " to move next..");
 		}
 		
 	}
@@ -318,6 +307,7 @@ public class TTTBoard implements Serializable{
 		return false;	
 	}
 	
+	
 	//Method to enable cloning of the object
 	//Code Source: https://alvinalexander.com/java/java-deep-clone-example-source-code
 	/**
@@ -337,7 +327,6 @@ public class TTTBoard implements Serializable{
 	     return null;
 	   }
 	 }
-	
 	 
 //	//Main method to run some tests - comment out later
 //	public static void main(String[] args) throws IOException{

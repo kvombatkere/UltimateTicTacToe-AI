@@ -1,10 +1,10 @@
 //Karan Vombatkere, Rebecca Ho Van Dyke, Avram Webberman
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
-//Minimax with Alpha Beta Pruning
+//Minimax without Alpha Beta Pruning
 
-//Main class to implement state space search using Minimax with Alpha-Beta Pruning
-public class MinimaxPlayer{
+public class basicMinimax {
+
 	//Define the various class variables
 	//Note the minimax player must take a TTTBoard as an instance variable object
 	TTTBoard currentGame;
@@ -17,14 +17,14 @@ public class MinimaxPlayer{
 	int totalStates;
 		
 	//Constructor
-	public MinimaxPlayer(TTTBoard currGame) {
+	public basicMinimax(TTTBoard currGame) {
 		this.currentGame = currGame;
 		System.err.println("Computer Player Instantiated!");
 	}
 	
 	
 	//Specify the framework for minimax in terms of min, max and utility of states
-	public int getStateUtility(TTTBoard stateBoard) {		
+	public int getStateUtility(TTTBoard stateBoard) {
 		//System.err.println("Terminal State Utility check");
 
 		//Check if game is drawn
@@ -46,6 +46,7 @@ public class MinimaxPlayer{
 	//Method to find the optimal move using state-space search and return position
 	public int minimaxDecision(){
 		int bestMove = 0;
+		int bestmoveUtility = -100;
 		int moveUtility = -100;
 		totalStates = 0;
 		
@@ -53,9 +54,6 @@ public class MinimaxPlayer{
 		
 		//First get the list of possible actions
 		int [] possibleMoves = searchStateBoard.applicableActions();
-		
-		int v = this.maxValue(searchStateBoard, -100, 100);
-		System.err.println("Total States examined to find initial max v: " + totalStates);
 
 		//iterate through all the applicable actions to create game tree
 		for(int i=1; i < possibleMoves.length; i++) {
@@ -68,27 +66,26 @@ public class MinimaxPlayer{
 				int a = possibleMoves[i]; //Candidate action
 				
 				//Call the recursive state space process
-				moveUtility = this.minValue(searchStateBoard.moveResult(searchStateBoard.nextPlayer, a),-100,100);
+				moveUtility = this.minValue(searchStateBoard.moveResult(searchStateBoard.nextPlayer, a));
 				
 				//System.err.println("minimaxDecision Utility for move: " + possibleMoves[i]+ " is = " + moveUtility);
 				
 				//Choose the best utility action
-				if(moveUtility == v) {
-					
+				if(moveUtility > bestmoveUtility) {
 					bestMove = possibleMoves[i];
-					
-					System.err.println("Total Number of States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
-					return bestMove;
+					bestmoveUtility = moveUtility;
 				}				
 			}
 			
 		}
+		
+		System.err.println("Total Number of States Searched = " + totalStates);
 		return bestMove;
 	}
 	
 	
 	//Max value function for minimax -> returns a utility value
-	public int maxValue(TTTBoard stateBoard, int alpha, int beta) {
+	public int maxValue(TTTBoard stateBoard) {
 		//Check if it is in a terminal state and return the utility value
 		recursionNum++;
 
@@ -112,13 +109,8 @@ public class MinimaxPlayer{
 				//System.err.println("maxValue function, evaluating move: " + a + ". Current utility value = " + v);
 
 				//Note that moveResult automatically toggles the nextplayer state
-				v = Math.max(v, this.minValue(tempBoard.moveResult(tempBoard.nextPlayer, a), alpha, beta));
-				
-				if(v >= beta) {
-					return v;
-				}
-				
-				alpha = Math.max(alpha, v);
+				v = Math.max(v, this.minValue(tempBoard.moveResult(tempBoard.nextPlayer, a)));
+
 			}
 		}
 		return v;	
@@ -126,7 +118,7 @@ public class MinimaxPlayer{
 	
 	
 	//Min value function for minimax -> returns a utility value
-	public int minValue(TTTBoard stateBoard, int alpha, int beta) {
+	public int minValue(TTTBoard stateBoard) {
 		//Check if it is in a terminal state and return the utility value
 		recursionNum++;
 		
@@ -150,18 +142,10 @@ public class MinimaxPlayer{
 				//System.err.println("minValue function, evaluating move: " + a + ". Current utility value = " + v);
 
 				//Note that moveResult automatically toggles the nextplayer state
-				v = Math.min(v, this.maxValue(tempBoard.moveResult(tempBoard.nextPlayer, a), alpha, beta));
-				
-				if(v <= alpha) {
-					return v;
-				}
-				
-				beta = Math.min(beta, v);
+				v = Math.min(v, this.maxValue(tempBoard.moveResult(tempBoard.nextPlayer, a)));
 			}
 		}
 		
 		return v;	
 	}
-	
-	
 }
