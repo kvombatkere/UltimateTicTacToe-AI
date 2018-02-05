@@ -3,7 +3,7 @@
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
 
-public class TTT9Board {
+public abstract class TTT9Board {
 	
 	//class variables
 	public TTTBoard [][] boardArray;
@@ -11,7 +11,7 @@ public class TTT9Board {
 	//X=x won, O=o won, d=draw, n=not terminated
 	public boolean firstMove = true;
 	public char nextPlayer;
-	public int nextBoardIndex = 1;
+	public int nextBoardIndex;
 	public char overallGameStatus;
 	public int moveCounter;
 	
@@ -34,6 +34,7 @@ public class TTT9Board {
 		this.nextPlayer = 'X';
 		
 		this.overallGameStatus = 'n';
+		this.nextBoardIndex = 1;
 	}
 	
 	//clear board
@@ -91,10 +92,16 @@ public class TTT9Board {
 		}
 	}
 	
+	//isvalid method
+	
+	
+	
 	//make move
+	//TODO make it return the board not a boolean
 	public boolean makeMove(char player, int boardIndex, int boardPos) {
 		boolean isValid = false;
 
+		//TODO change terminated to full (use applicable actions)
 		///if this board is not terminated and it's the correct board or if the correct board is already terminated
 		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n') || this.firstMove)) {
 			if(this.firstMove) {
@@ -105,10 +112,6 @@ public class TTT9Board {
 			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
-<<<<<<< HEAD
-
-=======
->>>>>>> 31ff250a288d8027b75067c3c606e9f07b327009
 				isValid = true;
 			}
 			
@@ -123,7 +126,7 @@ public class TTT9Board {
 			System.err.println(player + " just moved");
 			System.err.println(boardIndex);
 			System.err.println(boardPos);
-			checkWin(this.nextPlayer, boardIndex);
+			this.checkWin(this.nextPlayer, boardIndex);
 			
 			//if not, toggle nextPlayer and wait for another move
 			if(this.nextPlayer=='X') {
@@ -144,38 +147,7 @@ public class TTT9Board {
 	} //end makeMove()
 	
 	//check win
-	public char checkWin(char player, int boardIndex) {
-		//game will only terminate on the last board you played on
-		TTTBoard lastBoard = this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3];
-		
-		//if you win one board, you win the game
-		if(lastBoard.terminalState()) {
-			//if it terminated and it's not a draw, the player who just played must have won
-			if(!lastBoard.gameDrawn) {
-				this.overallGameStatus = player;
-				this.printGameResult();
-			}
-			
-			//if that board is a draw, check if there are still boards to be played on
-			else {
-				this.overallGameStatus = 'd';
-				//if all boards are full, game is a draw
-				for(int i=0; i<3; i++) {
-					for(int j=0; j<3; j++) {
-						if(this.gameStatus[i][j] == 'n') {
-							this.overallGameStatus = 'n';
-						}
-					}
-				}
-				if(this.overallGameStatus != 'n') {
-					this.printGameResult();
-				}
-			}
-		}
-		
-		return this.overallGameStatus;
-		
-	} //end method checkWin()
+	public abstract char checkWin(char player, int boardIndex);
 	
 	public void printGameResult() {
 		switch(this.overallGameStatus) {
@@ -196,13 +168,13 @@ public class TTT9Board {
 	
 	//main method for testing
 	public static void main(String [] args) {
-		TTT9Board testBoard = new TTT9Board();
+		/*TTT9Board testBoard = new TTT9Board();
 		testBoard.displayBoard();
 		testBoard.printWinStatus();
 		testBoard.makeMove('O', 4, 8);
 		testBoard.displayBoard();
 		testBoard.makeMove('X', 8, 2);
-		testBoard.displayBoard();
+		testBoard.displayBoard(); */
 	}
 	
 } //end class TTT9Board
