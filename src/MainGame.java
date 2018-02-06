@@ -33,6 +33,7 @@ public class MainGame {
 			
 			else if (gameVersion == '2') {
 				//Call main method of version 2 
+				AdvancedTTTGame.main(null);
 				
 			}
 			
