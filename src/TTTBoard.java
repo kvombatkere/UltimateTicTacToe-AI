@@ -1,7 +1,7 @@
-//Karan Vombatkere
+//Karan Vombatkere, Rebecca Ho Van Dyke, Avram Webberman
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
-//Project Partners: Rebecca Ho Van Dyke + Avram Webberman
+//Basic Tic Tac Toe Board implementation class
 
 import java.awt.*;
 import java.io.*;
@@ -9,7 +9,6 @@ import java.io.*;
 //Class to specify the physical tic-tac-toe board and display
 @SuppressWarnings("serial")
 public class TTTBoard implements Serializable{
-	
 	//Specify class variables
 	
 	//Use 2D char array for board
@@ -121,7 +120,6 @@ public class TTTBoard implements Serializable{
 		}
 		return this; //Return the resulting game state		
 	}
-	
 	
 	//Method to return the coordinates of the board position from a pos value of 1-9
 	//Mostly to detect errors and get easy calls from 
@@ -317,26 +315,5 @@ public class TTTBoard implements Serializable{
 	     return null;
 	   }
 	 }
-	 
-//	//Main method to run some tests - comment out later
-//	public static void main(String[] args) throws IOException{
-//		TTTBoard B1 = new TTTBoard();
-//		B1.move('X',1);
-//		B1.move('O',3);
-//		B1.move('X',5);
-//		B1.move('O',6);
-//		B1.move('X',7);
-//		B1.move('O',9);
-//		B1.displayBoard();	
-//		
-//		B1.newBoard('X');
-//		B1.displayBoard();	
-//		
-//		B1.move('X',5);
-//		B1.move('O',6);
-//		B1.move('X',2);
-//		B1.displayBoard();	
-//		System.out.println(B1.ismoveAllowed(5));
-//	}
-
+	
 }
