@@ -3,6 +3,7 @@
 //CSC 442: AI Project 01 - Tic Tac Toe
 //Minimax with Alpha Beta Pruning
 
+
 //Main class to implement state space search using Minimax with Alpha-Beta Pruning
 public class MinimaxPlayer{
 	//Define the various class variables
@@ -22,11 +23,9 @@ public class MinimaxPlayer{
 		System.err.println("Computer Player Instantiated!");
 	}
 	
-	
 	//Specify the framework for minimax in terms of min, max and utility of states
 	public int getStateUtility(TTTBoard stateBoard) {		
 		//System.err.println("Terminal State Utility check");
-
 		//Check if game is drawn
 		if(stateBoard.gameDrawn) {
 			return 0;
@@ -159,10 +158,8 @@ public class MinimaxPlayer{
 				
 				beta = Math.min(beta, v);
 			}
-		}
-		
+		}		
 		return v;	
 	}
-	
-	
+		
 }

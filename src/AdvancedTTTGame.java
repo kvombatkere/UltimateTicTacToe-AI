@@ -5,7 +5,7 @@ public class AdvancedTTTGame {
 	TTT9Board board;
 	char compChar;
 	public AdvancedTTTGame() {
-		board = new TTT9Board();
+		board = new AdvancedTTTBoard();
 	}
 	
 	public static void main(String[] args) throws CloneNotSupportedException {
