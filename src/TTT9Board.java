@@ -92,11 +92,9 @@ public abstract class TTT9Board {
 		}
 	}
 	
-	//isvalid method
 	
 	
-	
-	//make move
+	//check if move is allowed in game class
 	//TODO make it return the board not a boolean
 	public boolean makeMove(char player, int boardIndex, int boardPos) {
 		boolean isValid = false;
@@ -165,6 +163,31 @@ public abstract class TTT9Board {
 		}
 	}
 	
+	public int [][] applicableActions(){
+		//each row has vector of applicable actions for corresponding board index following the convention set in TTTBoard
+		int [][] possibleMoves = new int [10][10];
+		
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++) {
+				possibleMoves[i=j+1] = this.boardArray[i][j].applicableActions();
+			}
+		}
+		
+		return possibleMoves;
+	}
+	
+	public boolean isMoveAllowed(int boardIndex, int pos) {
+		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n') || this.firstMove)) {
+			if(this.firstMove) {
+				this.firstMove = false;
+			
+				if(this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(pos)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 	//main method for testing
 	public static void main(String [] args) {
