@@ -2,8 +2,9 @@ import java.util.Scanner;
 
 public class AdvancedTTTGame {
 	
-	TTT9Board board;
+	AdvancedTTTBoard board;
 	char compChar;
+	
 	public AdvancedTTTGame() {
 		board = new AdvancedTTTBoard();
 	}
@@ -76,7 +77,7 @@ public class AdvancedTTTGame {
 			if(computerFirst) {
 				//computer makes first move
 				System.err.println("Computer playing first");
-				game.board.makeMove('X', compMove[0], compMove[1]);
+				game.board.moveResult('X', compMove[0], compMove[1]);
 				
 			}
 			
@@ -94,7 +95,8 @@ public class AdvancedTTTGame {
 				
 				
 				System.out.println(oppMove);
-				while(game.board.makeMove(inputChar, Character.getNumericValue(oppMove.charAt(0)), Character.getNumericValue(oppMove.charAt(2))) == false ) {
+				//check if entered move is valid
+				while(game.board.moveResult(inputChar, Character.getNumericValue(oppMove.charAt(0)), Character.getNumericValue(oppMove.charAt(2))) == false ) {
 					oppMove = input.nextLine();
 				}
 				
@@ -104,7 +106,7 @@ public class AdvancedTTTGame {
 				System.err.println("Computer Move: " + compMove[0] + " " + compMove[1]);
 					
 				//make move selected by heuristic minimax algorithm
-				game.board.makeMove(game.compChar, compMove[0], compMove[1]);
+				game.board.moveResult(game.compChar, compMove[0], compMove[1]);
 				
 				game.board.displayBoard();				
 				

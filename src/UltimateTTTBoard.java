@@ -39,6 +39,11 @@ public class UltimateTTTBoard extends TTT9Board{
 		//if all boards are full, game is a draw
 		return this.overallGameStatus;
 	}
+	
+	public int[][] applicableActions(){
+		int[][] possibleMoves = new int [10][10];
+		return possibleMoves;
+	}
 
 	
 	

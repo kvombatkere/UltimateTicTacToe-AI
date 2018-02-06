@@ -1,3 +1,9 @@
+import java.awt.Point;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 //Rebecca Van Dyke, Avi Webberman, Karan Vombatkere
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
@@ -97,7 +103,7 @@ public abstract class TTT9Board {
 	
 	//make move
 	//TODO make it return the board not a boolean
-	public boolean makeMove(char player, int boardIndex, int boardPos) {
+	public TTT9Board moveResult(char player, int boardIndex, int boardPos) {
 		boolean isValid = false;
 
 		//TODO change terminated to full (use applicable actions)
@@ -111,10 +117,7 @@ public abstract class TTT9Board {
 			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
-<<<<<<< HEAD
 
-=======
->>>>>>> 5646aea272c1c438524b7fd7a5595f30ea52ccf9
 				isValid = true;
 			}
 			
@@ -145,7 +148,7 @@ public abstract class TTT9Board {
 			
 		}
 		
-		return isValid;
+		return this;
 
 	} //end makeMove()
 	
@@ -168,6 +171,29 @@ public abstract class TTT9Board {
 		}
 	}
 	
+	//Method to return set of applicable actions in a given state
+	public abstract int[][] applicableActions();
+	
+	
+	//Method to enable cloning of the object
+	//Code Source: https://alvinalexander.com/java/java-deep-clone-example-source-code
+	/**
+	 * This method makes a "deep clone" of any Java object it is given.
+	 */
+	 public static Object deepClone(Object object) {
+	   try {
+	     ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	     ObjectOutputStream oos = new ObjectOutputStream(baos);
+	     oos.writeObject(object);
+	     ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+	     ObjectInputStream ois = new ObjectInputStream(bais);
+	     return ois.readObject();
+	   }
+	   catch (Exception e) {
+	     e.printStackTrace();
+	     return null;
+	   }
+	 }
 	
 	//main method for testing
 	public static void main(String [] args) {
