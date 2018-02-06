@@ -3,30 +3,46 @@ public class AdvancedMinimaxPlayer {
 	
 	TTT9Board currentGame;
 	TTT9Board searchStateBoard;
+	final int depthCutoff = 10;
+	AdvancedTTTGame game;
 	
-	public AdvancedMinimaxPlayer(TTT9Board currBoard) {
-		this.currentGame = currBoard;
+	
+	public AdvancedMinimaxPlayer(AdvancedTTTGame game) {
+		this.currentGame = game.board;
+		this.game = game;
 	}
 	
 	public int getStateUtility(TTT9Board stateBoard) {
+		
 		//Check if game is drawn
-		if(stateBoard.overallGameStatus == 'n') {
+		if(stateBoard.overallGameStatus == 'd') {
 			return 0;
 		}
 		//Check if computer wins
-		if(stateBoard.overallGameStatus == ' ') {
+		else if(stateBoard.overallGameStatus == 'X' && this.game.compChar == 'X') {
+			return 10;
+		}
+		
+		else if(stateBoard.overallGameStatus == 'O' && this.game.compChar == 'O') {
 			return 10;
 		}
 		
 		//Check if human wins
-		else if(stateBoard.overallGameStatus == '_') {
+		else if(stateBoard.overallGameStatus == 'X' && this.game.compChar == 'O') {
 			return -10;
 		}
 		
-		//If opponent (human) wins
-		else { 
+		else if(stateBoard.overallGameStatus == 'O' && this.game.compChar == 'X') {
+			return -10;
+		}
+
+		else if (stateBoard.overallGameStatus == 'n') { 
 			int utility = heuristic_evaluation(stateBoard);
 			return utility;
+		}
+		
+		else {
+			return 0;
 		}
 	}
 

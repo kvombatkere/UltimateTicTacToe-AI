@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class AdvancedTTTGame {
 	
 	TTT9Board board;
-	
+	char compChar;
 	public AdvancedTTTGame() {
 		board = new TTT9Board();
 	}
@@ -20,10 +20,11 @@ public class AdvancedTTTGame {
 			//String to record the board (index 0 of string) and position (index 2 of string) specified by the opponent
 			String oppMove = "";
 			
-			//integer array to record board and position of computer's move
+			//integer array to record board and position of computer's move (set to default optimal first move)
 			int[] compMove = {2,2};
 			
-			char compChar = ' ';
+			//compChar = ' ';
+			
 			//Boolean to check if a move is legal before playing it
 			boolean isMoveLegal;
 			
@@ -55,21 +56,22 @@ public class AdvancedTTTGame {
 			
 			if(inputChar == 'O') {
 				computerFirst = true;
-				compChar = 'X';
+				game.compChar = 'X';
 			}
 			
 			else if (inputChar == 'X') {
 				computerFirst = false;
-				compChar = 'O';
+				game.compChar = 'O';
 			}
 			
 			else {
 				System.err.println("Oh god this should never happen please help");
+				game.compChar = 'N';
 			}
 			
 			
 			//Instantiate Minimax computer player
-			AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game.board);
+			AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
 			
 			if(computerFirst) {
 				//computer makes first move
@@ -84,24 +86,25 @@ public class AdvancedTTTGame {
 				game.board.displayBoard();
 				
 				//Opponent plays
+				
 				System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
 						+ "the position on that board(1-9) " + inputChar);
 				
 				oppMove = input.nextLine();
-			
+				
 				
 				System.out.println(oppMove);
 				while(game.board.makeMove(inputChar, Character.getNumericValue(oppMove.charAt(0)), Character.getNumericValue(oppMove.charAt(2))) == false ) {
 					oppMove = input.nextLine();
 				}
 				
-				System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + compChar);
+				System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + game.compChar);
 				// Call minimax function to find best move
 				compMove = compPlayer.h_minimaxDecision();
 				System.err.println("Computer Move: " + compMove[0] + " " + compMove[1]);
 					
 				//make move selected by heuristic minimax algorithm
-				game.board.makeMove(compChar, compMove[0], compMove[1]);
+				game.board.makeMove(game.compChar, compMove[0], compMove[1]);
 				
 				game.board.displayBoard();				
 				
