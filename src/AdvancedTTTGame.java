@@ -95,27 +95,14 @@ public class AdvancedTTTGame {
 				System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
 						+ " the position on that board(1-9) " + p1Char);
 				
-<<<<<<< HEAD
-				oppMove = input.nextLine();
-				int boardIndex = Character.getNumericValue(oppMove.charAt(0));
-				int position = Character.getNumericValue(oppMove.charAt(2));
-=======
-				System.out.println(p1Move);
+
 				
 				int boardIndex;
 				int boardPos;
->>>>>>> 90acfad7e6c6ff220575c8e305892fce2d7a4c62
+
 				
 				//check if entered move is valid
-<<<<<<< HEAD
 
-				while(game.board.isMoveAllowed(boardIndex, position) == false ) {
-
-					oppMove = input.nextLine();
-					boardIndex = Character.getNumericValue(oppMove.charAt(0));
-					position = Character.getNumericValue(oppMove.charAt(2));
-				}
-=======
 				do {
 					p1Move = input.nextLine();
 					boardIndex = Character.getNumericValue(p1Move.charAt(0));
@@ -124,7 +111,7 @@ public class AdvancedTTTGame {
 				} while(!game.board.isMoveAllowed( boardIndex, boardPos));
 				
 				game.board.moveResult(p1Char, boardIndex, boardPos);				
->>>>>>> 90acfad7e6c6ff220575c8e305892fce2d7a4c62
+
 				
 				
 				/*System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + game.compChar);
