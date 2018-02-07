@@ -91,15 +91,13 @@ public class AdvancedTTTGame {
 				game.board.displayBoard();
 				
 				//Human player plays
-<<<<<<< HEAD
+
 				
 				System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
 						+ " the position on that board(1-9) " + p1Char);
 				
 
-				
-=======
->>>>>>> 754ed018a4a7a1b5b461885bca4f5d8178abaebc
+			
 				int boardIndex;
 				int boardPos;
 
