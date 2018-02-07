@@ -3,7 +3,7 @@
 //CSC 442: AI Project 01 - Tic Tac Toe
 //Minimax without Alpha Beta Pruning
 
-public class basicMinimax {
+public class BasicMinimaxPlayer {
 
 	//Define the various class variables
 	//Note the minimax player must take a TTTBoard as an instance variable object
@@ -17,7 +17,7 @@ public class basicMinimax {
 	int totalStates;
 		
 	//Constructor
-	public basicMinimax(TTTBoard currGame) {
+	public BasicMinimaxPlayer(TTTBoard currGame) {
 		this.currentGame = currGame;
 		System.err.println("Computer Player Instantiated!");
 	}
