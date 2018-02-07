@@ -53,6 +53,8 @@ public abstract class TTT9Board implements Serializable{
 		}
 		this.moveCounter = 0;
 		
+		this.overallGameStatus = 'n';
+		
 	}
 	
 	//print board
