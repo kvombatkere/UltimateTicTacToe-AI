@@ -74,6 +74,9 @@ public class AdvancedMinimaxPlayer {
 	//function to compute the h-minimax decision
 	public int[] hMinimaxDecision() {
 		int[] bestMove = this.randomMove();
+		
+		boolean updatedUtility = false;
+		
 		int moveUtility = -100;
 		totalStates = 0;
 		
@@ -103,12 +106,16 @@ public class AdvancedMinimaxPlayer {
 					moveUtility = this.minValue((AdvancedTTTBoard) searchStateBoard.moveResult(searchStateBoard.nextPlayer, i, j),-100,100);
 										
 					//Choose the best utility action and return immediately - terminal states are favored
-					if(moveUtility >= v) {	
+					if(moveUtility >= v) {
+						updatedUtility = true;
 						bestMove[0] = i;
 						bestMove[1] = j;
 					}				
 				}
 			}	
+		}
+		if(!updatedUtility) {
+			System.err.println("Did not update utility - playing Random Move");
 		}
 		
 		System.err.println("Total Number of Terminal States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
