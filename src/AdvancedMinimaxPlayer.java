@@ -44,7 +44,7 @@ public class AdvancedMinimaxPlayer {
 	//Heuristic Evaluation Function
 	public int heuristicEvaluation(AdvancedTTTBoard stateBoard) {	
 		
-		return 10;
+		return 5;
 	}
 	
 	
