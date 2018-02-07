@@ -7,7 +7,7 @@ public class AdvancedMinimaxPlayer {
 	
 	AdvancedTTTBoard currentGame;
 	AdvancedTTTBoard searchStateBoard;
-	final int depthCutoff = 5;
+	final int depthCutoff = 7;
 	
 	AdvancedTTTGame game;
 	
@@ -102,8 +102,8 @@ public class AdvancedMinimaxPlayer {
 					//Call the recursive state space process
 					moveUtility = this.minValue((AdvancedTTTBoard) searchStateBoard.moveResult(searchStateBoard.nextPlayer, i, j),-100,100);
 										
-					//Choose the best utility action and return immediately
-					if(moveUtility == v) {
+					//Choose the best utility action and return immediately - terminal states are favored
+					if(moveUtility >= v) {
 						
 						bestMove[0] = i;
 						bestMove[1] = j;
@@ -220,6 +220,7 @@ public class AdvancedMinimaxPlayer {
 		return v;
 	}
 	
+	
 	//Method to generate random move
 		public int[] randomMove() {
 			int boardNum = currentGame.nextBoardIndex;
@@ -250,6 +251,5 @@ public class AdvancedMinimaxPlayer {
 			
 			return randomMove;
 		}
-	
 }
 
