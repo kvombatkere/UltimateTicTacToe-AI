@@ -128,7 +128,7 @@ public class AdvancedTTTGame {
 							legalInput = false;
 						}
 						else {
-							game.board.moveResult(p1Char, boardIndex, boardPos);				
+							game.board.moveResult(p1Char, boardIndex, boardPos);		
 							System.err.println( "You just made move " + boardIndex + " " + boardPos);
 							legalInput = true;
 						}
