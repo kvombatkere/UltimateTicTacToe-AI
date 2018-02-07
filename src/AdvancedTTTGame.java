@@ -92,12 +92,15 @@ public class AdvancedTTTGame {
 						+ "the position on that board(1-9) " + inputChar);
 				
 				oppMove = input.nextLine();
-				
+				int boardIndex = Character.getNumericValue(oppMove.charAt(0));
+				int position = Character.getNumericValue(oppMove.charAt(2));
 				
 				System.out.println(oppMove);
 				//check if entered move is valid
-				while(game.board.moveResult(inputChar, Character.getNumericValue(oppMove.charAt(0)), Character.getNumericValue(oppMove.charAt(2))) == false ) {
+				while(game.board.isMoveAllowed(boardIndex, position) == false ) {
 					oppMove = input.nextLine();
+					boardIndex = Character.getNumericValue(oppMove.charAt(0));
+					position = Character.getNumericValue(oppMove.charAt(2));
 				}
 				
 				System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + game.compChar);
