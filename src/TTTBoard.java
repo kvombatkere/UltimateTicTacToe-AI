@@ -341,17 +341,7 @@ public class TTTBoard implements Serializable{
 	 }
 	 
 	 
-	 public int getAdvantage(char player) {
-		 //differentiate between collllinear pairs with possibility of win and blocked collllinear pairs
-		 //check for board states where player can win in one move
-		 
-		 //return 8
-		 
-		 //check for board states where opp can win in one move
-		 
-		 //return -8
-		 
-		 
+	 public int getAdvantage(char player) {		 
 		 //if neither player can win in one move, estimate advantage based on # of pieces on the board
 		 if(player == 'X') {
 			 return this.numX - this.numO;
