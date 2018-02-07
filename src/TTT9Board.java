@@ -162,49 +162,34 @@ public abstract class TTT9Board implements Serializable{
 		}
 	}
 	
-	//Method to return set of applicable actions in a given state
-	//TODO resolve final applicableActions approach, commented this out for now to avoid error
-	//public abstract int[][] applicableActions();
-//	public int [][] applicableActions(){
-//		//each row has vector of applicable actions for corresponding board index following the convention set in TTTBoard
-//		int [][] possibleMoves = new int [10][10];
-//		
-//		for(int i=0; i<3; i++){
-//			for(int j=0; j<3; j++) {
-//				possibleMoves[i=j+1] = this.boardArray[i][j].applicableActions();
-//			}
-//		}
-//		
-//		return possibleMoves;
-//	}
 	
 	public int[][] applicableActions() {
-		int boardSentTo = this.nextBoardIndex;
+
+		//first index corresponds to board index, second corresponds to position on board
+		//value is set to one if move is possible
 		int[][] possibleMoves = new int [10][10];
-		int total = 0;
-		//
+
+		//if sent to board that is not full, moves are confined to that board
 		if((boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].isBoardFull() == false)) {
 			for(int i=0; i<3; i++) {
 				for(int j=0; j<3; j++) {
 					if(this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].mainBoard[i][j] == ' ') {
 						possibleMoves[this.nextBoardIndex][TTTBoard.getboardPosition(i, j)] = 1;
-						total++;
+				
 					}
 				}
 			}
 		}
 		
+		//if sent to full board, all empty squares are available
 		else {
 			//loop through all boards in 3x3 array of boards
-			System.out.println("BOARD WAS FULL");
 			for(int i=0; i<3; i++) {
 				for(int j=0; j<3; j++) {
 				//loop through all squares small board
 					for(int k=0; k<3; k++) {
 						for(int l=0; l<3; l++) {
 							if(boardArray[i][j].mainBoard[k][l] == ' ') {
-								total++;
-								int[] legalMove = {TTTBoard.getboardPosition(i, j), TTTBoard.getboardPosition(k,  l)};
 								possibleMoves[TTTBoard.getboardPosition(i, j)][TTTBoard.getboardPosition(k, l)] = 1;
 								
 							}
@@ -215,7 +200,6 @@ public abstract class TTT9Board implements Serializable{
 			}
 			
 		}
-	//	System.out.println(total);
 		return possibleMoves;	
 	}
 	
