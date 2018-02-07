@@ -91,18 +91,15 @@ public class AdvancedTTTGame {
 				game.board.displayBoard();
 				
 				//Human player plays
-				
-				System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
-						+ " the position on that board(1-9) " + p1Char);
-				
-				System.out.println(p1Move);
-				
 				int boardIndex;
 				int boardPos;
 				
 				//check if entered move is valid
 				do {
+					System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
+							+ " the position on that board(1-9) " + p1Char);
 					p1Move = input.nextLine();
+					//TODO better input cleaning
 					boardIndex = Character.getNumericValue(p1Move.charAt(0));
 					boardPos = Character.getNumericValue(p1Move.charAt(2));
 					
@@ -122,7 +119,7 @@ public class AdvancedTTTGame {
 				//Make random move
 				int [] computerMove = compPlayer.randomMove();
 				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
-				System.err.print("Computer player just played");
+				//System.err.print("Computer player just played");
 				
 				game.board.displayBoard();				
 				
