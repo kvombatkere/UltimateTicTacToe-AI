@@ -14,7 +14,6 @@ public class AdvancedTTTGame {
 		AdvancedTTTGame game = new AdvancedTTTGame();
 		
 		while(true) {
-			
 			//boolean to keep track of who plays first
 			boolean computerFirst = false;
 			

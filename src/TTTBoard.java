@@ -341,7 +341,7 @@ public class TTTBoard implements Serializable{
 	 }
 	 
 	 
-	 public int getAdvantage(char player, char opp) {
+	 public int getAdvantage(char player) {
 		 //differentiate between collllinear pairs with possibility of win and blocked collllinear pairs
 		 //check for board states where player can win in one move
 		 
