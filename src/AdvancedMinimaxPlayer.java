@@ -42,7 +42,7 @@ public class AdvancedMinimaxPlayer {
 		}
 
 		return 0;	
-	}
+	} 
 
 	
 	//Heuristic Evaluation Function

@@ -31,6 +31,16 @@ public abstract class TTT9Board implements Serializable{
 			}
 		}
 		this.clearBoard();
+	}
+	
+	//clear board
+	public void clearBoard() {
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++) {
+				this.boardArray[i][j].clearBoard();
+			}
+		}
+		this.moveCounter = 0;
 		
 		this.gameStatus = new char [3][3];
 		for(int i=0; i<3; i++) {
@@ -43,18 +53,6 @@ public abstract class TTT9Board implements Serializable{
 		this.overallGameStatus = 'n';
 		this.firstMove = true;
 		this.nextBoardIndex = 1;
-	}
-	
-	//clear board
-	public void clearBoard() {
-		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++) {
-				this.boardArray[i][j].clearBoard();
-			}
-		}
-		this.moveCounter = 0;
-		
-		this.overallGameStatus = 'n';
 		
 	}
 	
@@ -130,7 +128,7 @@ public abstract class TTT9Board implements Serializable{
 		this.moveCounter++;
 		
 		//check if you won
-		this.checkWin(this.nextPlayer, boardIndex);
+		this.checkWin(player, boardIndex);
 			
 		//if not, toggle nextPlayer and wait for another move
 		if(this.overallGameStatus == 'n') {
@@ -203,6 +201,7 @@ public abstract class TTT9Board implements Serializable{
 			}
 			
 		}
+
 		return possibleMoves;	
 	}
 	
@@ -273,10 +272,10 @@ public abstract class TTT9Board implements Serializable{
 		testBoard.moveResult('O', 1, 8);
 		testBoard.moveResult('O', 1, 9);
 		testBoard.nextBoardIndex = 1;
-		
+
 		System.out.println(testBoard.nextBoardIndex);
 		int[][] moves = testBoard.applicableActions();
-		for(int i=1; i<10; i++) {
+		for(int i=1 ;i<10; i++) {
 			for(int j=1; j<10; j++) {
 				System.out.print(moves[i][j] + " ");
 			}
