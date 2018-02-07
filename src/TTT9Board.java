@@ -80,6 +80,11 @@ public abstract class TTT9Board {
 		System.err.println("\n");
 	}
 	
+	//get next board
+	public TTTBoard getNextBoard() {
+		return this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3];
+	}
+	
 	//print status
 	public void printWinStatus() {
 		System.err.println("----------------------------------------------");
