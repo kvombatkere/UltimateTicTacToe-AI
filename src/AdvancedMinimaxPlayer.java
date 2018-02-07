@@ -28,20 +28,20 @@ public class AdvancedMinimaxPlayer {
 		}
 		
 		//Check if computer wins
-		else if(stateBoard.overallGameStatus == 'X' && this.game.compChar == 'X') {
+		else if(stateBoard.overallGameStatus == 'X' && this.game.p2Char == 'X') {
 			return 10;
 		}
 		
-		else if(stateBoard.overallGameStatus == 'O' && this.game.compChar == 'O') {
+		else if(stateBoard.overallGameStatus == 'O' && this.game.p2Char == 'O') {
 			return 10;
 		}
 		
 		//Check if human wins
-		else if(stateBoard.overallGameStatus == 'X' && this.game.compChar == 'O') {
+		else if(stateBoard.overallGameStatus == 'X' && this.game.p2Char == 'O') {
 			return -10;
 		}
 		
-		else if(stateBoard.overallGameStatus == 'O' && this.game.compChar == 'X') {
+		else if(stateBoard.overallGameStatus == 'O' && this.game.p2Char == 'X') {
 			return -10;
 		}
 		
