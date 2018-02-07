@@ -3,7 +3,7 @@ public class AdvancedMinimaxPlayer {
 	
 	AdvancedTTTBoard currentGame;
 	AdvancedTTTBoard searchStateBoard;
-	final int depthCutoff = 5;
+	final int depthCutoff = 8;
 	
 	AdvancedTTTGame game;
 	
@@ -28,23 +28,15 @@ public class AdvancedMinimaxPlayer {
 		}
 		
 		//Check if computer wins
-		else if(stateBoard.overallGameStatus == 'X' && this.game.p2Char == 'X') {
+		else if((stateBoard.overallGameStatus == 'X' && this.game.p2Char == 'X') || (stateBoard.overallGameStatus == 'O' && this.game.p2Char == 'O')){
 			return 10;
 		}
-		
-		else if(stateBoard.overallGameStatus == 'O' && this.game.p2Char == 'O') {
-			return 10;
-		}
-		
+
 		//Check if human wins
-		else if(stateBoard.overallGameStatus == 'X' && this.game.p2Char == 'O') {
+		else if((stateBoard.overallGameStatus == 'X' && this.game.p2Char == 'O') || (stateBoard.overallGameStatus == 'O' && this.game.p2Char == 'X')) {
 			return -10;
 		}
-		
-		else if(stateBoard.overallGameStatus == 'O' && this.game.p2Char == 'X') {
-			return -10;
-		}
-		
+
 		return 0;	
 	}
 
@@ -52,8 +44,13 @@ public class AdvancedMinimaxPlayer {
 	//Heuristic Evaluation Function
 	public int heuristicEvaluation(AdvancedTTTBoard stateBoard) {	
 		
-		//
-		return 0;
+		if(stateBoard.moveCounter >= 8) {
+			return 10;
+		}
+		
+		else {
+			return 0;
+		}
 	}
 	
 	
@@ -76,7 +73,7 @@ public class AdvancedMinimaxPlayer {
 		
 	}
 	
-	
+	//function to compute the h-minimax decision
 	public int[] hMinimaxDecision() {
 		int[] bestMove = new int[2];
 		int moveUtility = -100;
@@ -106,9 +103,7 @@ public class AdvancedMinimaxPlayer {
 	
 					//Call the recursive state space process
 					moveUtility = this.minValue((AdvancedTTTBoard) searchStateBoard.moveResult(searchStateBoard.nextPlayer, i, j),-100,100);
-					
-					//System.err.println("minimaxDecision Utility for move: " + possibleMoves[i]+ " is = " + moveUtility);
-					
+										
 					//Choose the best utility action and return immediately
 					if(moveUtility == v) {
 						
@@ -117,12 +112,14 @@ public class AdvancedMinimaxPlayer {
 						
 						System.err.println("Total Number of Terminal States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
 						System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
+						System.err.println("minimaxDecision Utility for move: " + i + " " + j + " is = " + moveUtility);
+
 						return bestMove;
 					}				
 				}
 			}	
 		}
-		
+		System.err.println("minimaxDecision Utility for move: " + bestMove[0]+ " "+bestMove[1]+ " is = " + moveUtility);
 		return bestMove;
 	}
 	
