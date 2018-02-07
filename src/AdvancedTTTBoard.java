@@ -3,7 +3,7 @@ public class AdvancedTTTBoard extends TTT9Board{
 
 	public char checkWin(char player, int boardIndex) {
 		//game will only terminate on the last board you played on
-		TTTBoard lastBoard = this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3];
+		TTTBoard lastBoard = this.getBoard(boardIndex);
 		
 		//if you win one board, you win the game
 		if(lastBoard.terminalState()) {

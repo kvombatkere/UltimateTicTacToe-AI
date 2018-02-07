@@ -133,15 +133,6 @@ public class AdvancedTTTGame {
 						}
 					}
 				}
-
-				
-				/*System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + game.compChar);
-				// Call minimax function to find best move
-				compMove = compPlayer.h_minimaxDecision();
-				System.err.println("Computer Move: " + compMove[0] + " " + compMove[1]);
-					
-				//make move selected by heuristic minimax algorithm
-				game.board.moveResult(game.compChar, compMove[0], compMove[1]); */
 				
 				//Computer makes move
 				int [] computerMove = compPlayer.hMinimaxDecision();
