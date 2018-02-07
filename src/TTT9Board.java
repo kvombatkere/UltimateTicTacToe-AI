@@ -31,6 +31,16 @@ public abstract class TTT9Board implements Serializable{
 			}
 		}
 		this.clearBoard();
+	}
+	
+	//clear board
+	public void clearBoard() {
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++) {
+				this.boardArray[i][j].clearBoard();
+			}
+		}
+		this.moveCounter = 0;
 		
 		this.gameStatus = new char [3][3];
 		for(int i=0; i<3; i++) {
@@ -43,18 +53,6 @@ public abstract class TTT9Board implements Serializable{
 		this.overallGameStatus = 'n';
 		this.firstMove = true;
 		this.nextBoardIndex = 1;
-	}
-	
-	//clear board
-	public void clearBoard() {
-		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++) {
-				this.boardArray[i][j].clearBoard();
-			}
-		}
-		this.moveCounter = 0;
-		
-		this.overallGameStatus = 'n';
 		
 	}
 	
