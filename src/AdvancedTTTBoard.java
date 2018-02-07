@@ -37,6 +37,7 @@ public class AdvancedTTTBoard extends TTT9Board{
 	//Method to return set of applicable actions in a given state
 	//If sent to board that isn't full, applicable actions are moves to any empty space on that board
 	//If sent to board that is full, applicable actions are moves to any empty space on any board
+	@Override
 	public int[][] applicableActions() {
 		int boardSentTo = this.nextBoardIndex;
 		int[][] possibleMoves = new int [10][10];

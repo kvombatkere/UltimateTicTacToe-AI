@@ -112,7 +112,7 @@ public abstract class TTT9Board {
 			}
 //		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && (boardIndex == this.nextBoardIndex)){ //|| (gameStatus[(nextBoardIndex-1)/3][(nextBoardIndex-1)%3] != 'n'))) {			
 			//check if move is available using TTTBoard check
-			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
+			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isMoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
 
@@ -169,10 +169,21 @@ public abstract class TTT9Board {
 		}
 	}
 	
-<<<<<<< HEAD
 	//Method to return set of applicable actions in a given state
-	public abstract int[][] applicableActions();
-	
+	//TODO resolve final applicableActions approach, commented this out for now to avoid error
+	//public abstract int[][] applicableActions();
+	public int [][] applicableActions(){
+		//each row has vector of applicable actions for corresponding board index following the convention set in TTTBoard
+		int [][] possibleMoves = new int [10][10];
+		
+		for(int i=0; i<3; i++){
+			for(int j=0; j<3; j++) {
+				possibleMoves[i=j+1] = this.boardArray[i][j].applicableActions();
+			}
+		}
+		
+		return possibleMoves;
+	}
 	
 	//Method to enable cloning of the object
 	//Code Source: https://alvinalexander.com/java/java-deep-clone-example-source-code
@@ -193,33 +204,20 @@ public abstract class TTT9Board {
 	     return null;
 	   }
 	 }
-=======
-	public int [][] applicableActions(){
-		//each row has vector of applicable actions for corresponding board index following the convention set in TTTBoard
-		int [][] possibleMoves = new int [10][10];
-		
-		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++) {
-				possibleMoves[i=j+1] = this.boardArray[i][j].applicableActions();
-			}
-		}
-		
-		return possibleMoves;
-	}
 	
 	public boolean isMoveAllowed(int boardIndex, int pos) {
 		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n') || this.firstMove)) {
 			if(this.firstMove) {
 				this.firstMove = false;
 			
-				if(this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(pos)) {
+				if(this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isMoveAllowed(pos)) {
 					return true;
 				}
 			}
 		}
 		return false;
 	}
->>>>>>> 3d9ddee3641feb942d0af7e5aefeacf7aeaa2f31
+
 	
 	//main method for testing
 	public static void main(String [] args) {

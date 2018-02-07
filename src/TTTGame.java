@@ -92,11 +92,11 @@ public class TTTGame {
 				oppMovePos = playerInput.nextInt();
 				
 				//Check if move is legal
-				isMoveLegal = Game.ismoveAllowed(oppMovePos);
+				isMoveLegal = Game.isMoveAllowed(oppMovePos);
 				while(!isMoveLegal) {
 					System.err.println("That is an illegal move, please choose another board position (1-9)");
 					oppMovePos = playerInput.nextInt();
-					isMoveLegal = Game.ismoveAllowed(oppMovePos);
+					isMoveLegal = Game.isMoveAllowed(oppMovePos);
 				}
 				
 				if(isMoveLegal) { //If the move is legal execute it on the board

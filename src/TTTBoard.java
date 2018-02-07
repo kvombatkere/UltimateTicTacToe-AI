@@ -24,6 +24,10 @@ public class TTTBoard implements Serializable{
 	//character to keep track of what the computer is playing
 	public char compChar;
 	
+	//keep running stats on moves played for 9-board versions
+	private int numX;
+	private int numO;
+	
 	
 	//Constructor to instantiate 3x3 board (always fixed size)
 	//Instantiates to initial state with all squares blank
@@ -38,7 +42,7 @@ public class TTTBoard implements Serializable{
 				this.mainBoard[i][j] = ' ';
 			}
 		}
-	}
+	} //end clearBoard()
 	
 	//Function to Reset the board and start a new game
 	//Takes the opponents character as the input
@@ -50,6 +54,8 @@ public class TTTBoard implements Serializable{
 		this.gameOver = false;
 		this.gameDrawn = false;
 		this.moveCounter = 0;
+		this.numX = 0;
+		this.numO = 0;
 		
 		//Character the computer plays with
 		if(oppChar == 'O') {
@@ -64,7 +70,7 @@ public class TTTBoard implements Serializable{
 		//Set up the new board and assign X to play first
 		this.nextPlayer = 'X';
 		
-	}
+	}//end newBoard()
 	
 	
 	//Method to Display the board with some basic board formatting
@@ -81,7 +87,7 @@ public class TTTBoard implements Serializable{
 		}
 		
 		System.err.println();
-	}
+	}//end displayBoard()
 	
 	public void printRow(int n) {
 		for(int j=0; j<3; j++) {
@@ -90,7 +96,7 @@ public class TTTBoard implements Serializable{
 				System.err.print("|");
 			}
 		}
-	}
+	} ///end printRow()
 	
 	
 	//Method to add an X or an O to position specified by digits 1-9
@@ -106,6 +112,11 @@ public class TTTBoard implements Serializable{
 		if(boardPos != null) {
 			this.mainBoard[boardPos.x][boardPos.y] = moveChar;
 			this.moveCounter++; //Increment move counter
+			//update X and O counts
+			if(moveChar == 'X') {
+				this.numX++;}
+			else{
+				this.numO++;}
 			
 			//Check if the last move won the game -> must be done after every move
 			//Check all possible terminal states and switch the next player + print I/O to System.err
@@ -119,7 +130,7 @@ public class TTTBoard implements Serializable{
 		
 		}
 		return this; //Return the resulting game state		
-	}
+	} //end moveResult()
 	
 	//Method to return the coordinates of the board position from a pos value of 1-9
 	//Mostly to detect errors and get easy calls from 
@@ -178,7 +189,7 @@ public class TTTBoard implements Serializable{
 		else {
 			System.err.println("Game Over! " + nextPlayer + " wins in "+ moveCounter +" moves!");
 		}			
-	}
+	} //end printGameResult()
 	
 	//Method to check terminal states separately
 	//Returns true if the current board state is terminal and false otherwise
@@ -198,7 +209,7 @@ public class TTTBoard implements Serializable{
 		}
 		
 		return gameTerminated;	
-	}
+	} //end terminalState()
 	
 	public static boolean check3InRow(char checkChar, char [][] board) {
 		//Define and check each of 8 terminal states that bring a win for nextPlayer
@@ -226,7 +237,7 @@ public class TTTBoard implements Serializable{
 			}
 		
 		return false;
-	}
+	} //end check3InRow()
 	
 	//checks if a win is still possible for the next player
 	public static boolean winPossible(char checkChar, char blankChar, char [][] board) {
@@ -254,7 +265,7 @@ public class TTTBoard implements Serializable{
 			}
 			
 		return false;
-	}
+	} //end winPossible()
 	
 	//Method to return set of applicable actions in a given state
 	//This basically returns all the empty board positions, since that is what the player must choose from
@@ -276,11 +287,11 @@ public class TTTBoard implements Serializable{
 		//Print out array to see non-zero values - comment out later
 		//System.err.println("Available Moves: " + Arrays.toString(possibleMoves));
 		return possibleMoves;	
-	}
+	} //end applicableActions()
 	
 	//Method to check if a board position (1-9) is legal/allowed
 	//Returns true or false
-	public boolean ismoveAllowed(int pos) {
+	public boolean isMoveAllowed(int pos) {
 		int [] possibilities = this.applicableActions();	
 		//Deal with illegal moves outside of 1-9 range first
 		if(pos < 1 || pos > 9) {
@@ -293,8 +304,14 @@ public class TTTBoard implements Serializable{
 		}
 		
 		return false;	
-	}
+	} //end isMoveAllowed()
 	
+	public boolean isBoardFull() {
+		if(this.moveCounter > 8) {
+			return true;
+		}
+		return false;
+	} ///end isBoardFull()
 	
 	//Method to enable cloning of the object
 	//Code Source: https://alvinalexander.com/java/java-deep-clone-example-source-code
@@ -314,6 +331,33 @@ public class TTTBoard implements Serializable{
 	     e.printStackTrace();
 	     return null;
 	   }
+	 } //end deepClone()
+	 
+	 //Section: Helper methods for calculating heuristic in 9-board versions
+	 
+	 public double getBoardFullness() {
+		 return (double)this.moveCounter/9;
+	 }
+	 
+	 
+	 public int getAdvantage(char player, char opp) {
+		 //check for board states where player can win in one move
+		 
+		 //return 8
+		 
+		 //check for board states where opp can win in one move
+		 
+		 //return -8
+		 
+		 
+		 //if neither player can win in one move, estimate advantage based on # of pieces on the board
+		 if(player == 'X') {
+			 return this.numX - this.numO;
+		 }
+		 else {
+			 return this.numO - this.numX;
+		 }
+		 
 	 }
 	
 }
