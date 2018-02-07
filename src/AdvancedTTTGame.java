@@ -96,7 +96,7 @@ public class AdvancedTTTGame {
 				
 				System.out.println(oppMove);
 				//check if entered move is valid
-				while(game.board.moveResult(inputChar, Character.getNumericValue(oppMove.charAt(0)), Character.getNumericValue(oppMove.charAt(2))) == false ) {
+				while(game.board.isMoveAllowed(Character.getNumericValue(oppMove.charAt(0)), Character.getNumericValue(oppMove.charAt(2))) == false ) {
 					oppMove = input.nextLine();
 				}
 				
