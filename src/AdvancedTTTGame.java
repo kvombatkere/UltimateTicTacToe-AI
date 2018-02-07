@@ -89,11 +89,8 @@ public class AdvancedTTTGame {
 			while(game.board.overallGameStatus == 'n') {
 				
 				game.board.displayBoard();
-				
 				//Human player plays					
-=======
-					
->>>>>>> f930b063e5ca9a262ab8ff6f026c650b46dd0c03
+
 				int boardIndex;
 				int boardPos;
 
