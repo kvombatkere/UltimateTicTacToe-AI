@@ -76,7 +76,7 @@ public class AdvancedTTTGame {
 			//AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
 			
 			//use random computer player for testing game functionality
-			AdvancedRandomPlayer compPlayer = new AdvancedRandomPlayer(game.board);
+			AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
 			
 			if(!p1First) {
 				//computer makes first move
@@ -91,12 +91,15 @@ public class AdvancedTTTGame {
 				game.board.displayBoard();
 				
 				//Human player plays
+<<<<<<< HEAD
 				
 				System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
 						+ " the position on that board(1-9) " + p1Char);
 				
 
 				
+=======
+>>>>>>> 754ed018a4a7a1b5b461885bca4f5d8178abaebc
 				int boardIndex;
 				int boardPos;
 
@@ -104,7 +107,10 @@ public class AdvancedTTTGame {
 				//check if entered move is valid
 
 				do {
+					System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
+							+ " the position on that board(1-9) " + p1Char);
 					p1Move = input.nextLine();
+					//TODO better input cleaning
 					boardIndex = Character.getNumericValue(p1Move.charAt(0));
 					boardPos = Character.getNumericValue(p1Move.charAt(2));
 					
@@ -123,9 +129,9 @@ public class AdvancedTTTGame {
 				game.board.moveResult(game.compChar, compMove[0], compMove[1]); */
 				
 				//Make random move
-				int [] computerMove = compPlayer.randomMove();
+				int [] computerMove = compPlayer.hMinimaxDecision();
 				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
-				System.err.print("Computer player just played");
+				//System.err.print("Computer player just played");
 				
 				game.board.displayBoard();				
 				

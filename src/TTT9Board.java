@@ -1,14 +1,16 @@
+//Rebecca Van Dyke, Avi Webberman, Karan Vombatkere
+//February 2018
+//CSC 442: AI Project 01 - Tic Tac Toe
+
 import java.awt.Point;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-//Rebecca Van Dyke, Avi Webberman, Karan Vombatkere
-//February 2018
-//CSC 442: AI Project 01 - Tic Tac Toe
-
-public abstract class TTT9Board {
+@SuppressWarnings("serial")
+public abstract class TTT9Board implements Serializable{
 	
 	//class variables
 	public TTTBoard [][] boardArray;
