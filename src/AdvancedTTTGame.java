@@ -151,6 +151,9 @@ public class AdvancedTTTGame {
 			//after loop terminates, print the game result
 			game.board.printGameResult();
 			game.board.displayBoard();
+			
+			//clear board for next game
+			game.board.clearBoard();
 
 		}
 		
