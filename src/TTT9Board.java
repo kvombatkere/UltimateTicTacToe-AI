@@ -85,7 +85,13 @@ public abstract class TTT9Board implements Serializable{
 	
 	//get board by index
 	public TTTBoard getBoard(int index) {
-		return this.boardArray[(index-1)/3][(index-1)%3];
+		if(index < 10 && index > 0) {
+			return this.boardArray[(index-1)/3][(index-1)%3];
+		}
+		else {
+			System.err.println("Invalid board number" + index + " entered.");
+			return null;
+		}
 	}
 	
 	//get next board
@@ -116,8 +122,6 @@ public abstract class TTT9Board implements Serializable{
 		
 		this.getBoard(boardIndex).moveResult(player, boardPos);
 		this.nextBoardIndex=boardPos;
-		
-		System.err.println(player + " just made move " + boardIndex + " " + boardPos);
 		
 		//increment move counter
 		this.moveCounter++;
@@ -220,6 +224,11 @@ public abstract class TTT9Board implements Serializable{
 	 }
 	
 	public boolean isMoveAllowed(int boardIndex, int pos) {
+		//make sure int values are in proper range
+		if(boardIndex < 1 || boardIndex > 9 || pos < 1 || pos > 9) {
+			return false;
+		}
+		
 		//if it's the first move, you can play on any board index
 		if(this.firstMove) {
 			//it's only the first move one time
@@ -227,7 +236,7 @@ public abstract class TTT9Board implements Serializable{
 			return true;
 		}
 		
-		
+		//otherwise check that it's playing on a board with space that's the specified next board, or that the specified board is full
 		if((!this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isBoardFull()) && ((boardIndex == this.nextBoardIndex) || (this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].isBoardFull()))) {
 			
 			if(this.getBoard(boardIndex).isMoveAllowed(pos)) {
@@ -236,7 +245,6 @@ public abstract class TTT9Board implements Serializable{
 			
 		}
 		
-		System.err.println("Invalid move");
 		return false;
 	}
 
