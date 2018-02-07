@@ -165,17 +165,58 @@ public abstract class TTT9Board implements Serializable{
 	//Method to return set of applicable actions in a given state
 	//TODO resolve final applicableActions approach, commented this out for now to avoid error
 	//public abstract int[][] applicableActions();
-	public int [][] applicableActions(){
-		//each row has vector of applicable actions for corresponding board index following the convention set in TTTBoard
-		int [][] possibleMoves = new int [10][10];
-		
-		for(int i=0; i<3; i++){
-			for(int j=0; j<3; j++) {
-				possibleMoves[i=j+1] = this.boardArray[i][j].applicableActions();
+//	public int [][] applicableActions(){
+//		//each row has vector of applicable actions for corresponding board index following the convention set in TTTBoard
+//		int [][] possibleMoves = new int [10][10];
+//		
+//		for(int i=0; i<3; i++){
+//			for(int j=0; j<3; j++) {
+//				possibleMoves[i=j+1] = this.boardArray[i][j].applicableActions();
+//			}
+//		}
+//		
+//		return possibleMoves;
+//	}
+	
+	public int[][] applicableActions() {
+		int boardSentTo = this.nextBoardIndex;
+		int[][] possibleMoves = new int [10][10];
+		int total = 0;
+		//
+		if((boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].isBoardFull() == false)) {
+			for(int i=0; i<3; i++) {
+				for(int j=0; j<3; j++) {
+					if(this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].mainBoard[i][j] == ' ') {
+						possibleMoves[this.nextBoardIndex][TTTBoard.getboardPosition(i, j)] = 1;
+						total++;
+					}
+				}
 			}
 		}
 		
-		return possibleMoves;
+		else {
+			//loop through all boards in 3x3 array of boards
+			System.out.println("BOARD WAS FULL");
+			for(int i=0; i<3; i++) {
+				for(int j=0; j<3; j++) {
+				//loop through all squares small board
+					for(int k=0; k<3; k++) {
+						for(int l=0; l<3; l++) {
+							if(boardArray[i][j].mainBoard[k][l] == ' ') {
+								total++;
+								int[] legalMove = {TTTBoard.getboardPosition(i, j), TTTBoard.getboardPosition(k,  l)};
+								possibleMoves[TTTBoard.getboardPosition(i, j)][TTTBoard.getboardPosition(k, l)] = 1;
+								
+							}
+						}
+					}
+					
+				}
+			}
+			
+		}
+	//	System.out.println(total);
+		return possibleMoves;	
 	}
 	
 	//Method to enable cloning of the object
@@ -233,6 +274,28 @@ public abstract class TTT9Board implements Serializable{
 		testBoard.displayBoard();
 		testBoard.makeMove('X', 8, 2);
 		testBoard.displayBoard(); */
+		
+		AdvancedTTTBoard testBoard = new AdvancedTTTBoard();
+		testBoard.moveResult('X', 1, 1);
+		testBoard.moveResult('X', 1, 2);
+		testBoard.moveResult('O', 1, 3);
+		testBoard.moveResult('O', 1, 4);
+		testBoard.moveResult('X', 1, 5);
+		testBoard.moveResult('X', 1, 6);
+		testBoard.moveResult('X', 1, 7);
+		testBoard.moveResult('O', 1, 8);
+		testBoard.moveResult('O', 1, 9);
+		testBoard.nextBoardIndex = 1;
+		
+		System.out.println(testBoard.nextBoardIndex);
+		int[][] moves = testBoard.applicableActions();
+		for(int i=1; i<10; i++) {
+			for(int j=1; j<10; j++) {
+				System.out.print(moves[i][j] + " ");
+			}
+			System.out.println();
+		}
+		
 	}
 	
 } //end class TTT9Board

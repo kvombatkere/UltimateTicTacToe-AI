@@ -115,7 +115,7 @@ public class AdvancedMinimaxPlayer {
 						bestMove[0] = i;
 						bestMove[1] = j;
 						
-						System.err.println("Total Number of States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
+						System.err.println("Total Number of Terminal States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
 						System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
 						return bestMove;
 					}				

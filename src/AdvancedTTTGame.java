@@ -73,10 +73,10 @@ public class AdvancedTTTGame {
 			
 			
 			//Instantiate Minimax computer player
-			//AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
+			AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
 			
 			//use random computer player for testing game functionality
-			AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
+			//AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
 			
 			if(!p1First) {
 				//computer makes first move
@@ -91,6 +91,9 @@ public class AdvancedTTTGame {
 				game.board.displayBoard();
 				
 				//Human player plays
+				System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
+						+ " the position on that board(1-9) " + p1Char);
+					
 				int boardIndex;
 				int boardPos;
 
@@ -144,7 +147,7 @@ public class AdvancedTTTGame {
 				//make move selected by heuristic minimax algorithm
 				game.board.moveResult(game.compChar, compMove[0], compMove[1]); */
 				
-				//Make random move
+				//Computer makes move
 				int [] computerMove = compPlayer.hMinimaxDecision();
 				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
 				System.err.println( "Computer player just made move " + computerMove[0] + " " + computerMove[1]);				

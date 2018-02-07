@@ -40,10 +40,6 @@ public class UltimateTTTBoard extends TTT9Board{
 		return this.overallGameStatus;
 	}
 	
-	public int[][] applicableActions(){
-		int[][] possibleMoves = new int [10][10];
-		return possibleMoves;
-	}
 
 	
 	
