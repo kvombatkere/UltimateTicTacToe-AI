@@ -1,3 +1,7 @@
+//Karan Vombatkere, Rebecca Ho Van Dyke + Avram Webberman
+//February 2018
+//CSC 442: AI Project 01 - Tic Tac Toe
+//Basic TTT Game
 
 public class AdvancedMinimaxPlayer {
 	
@@ -44,7 +48,7 @@ public class AdvancedMinimaxPlayer {
 	//Heuristic Evaluation Function
 	public int heuristicEvaluation(AdvancedTTTBoard stateBoard) {	
 		
-		return 10;
+		return 5;
 	}
 	
 	
