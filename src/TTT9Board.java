@@ -50,6 +50,7 @@ public abstract class TTT9Board {
 			}
 		}
 		this.moveCounter = 0;
+		
 	}
 	
 	//print board
@@ -80,6 +81,16 @@ public abstract class TTT9Board {
 		System.err.println("\n");
 	}
 	
+	//get board by index
+	public TTTBoard getBoard(int index) {
+		return this.boardArray[(index-1)/3][(index-1)%3];
+	}
+	
+	//get next board
+	public TTTBoard getNextBoard() {
+		return this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3];
+	}
+	
 	//print status
 	public void printWinStatus() {
 		System.err.println("----------------------------------------------");
@@ -98,52 +109,28 @@ public abstract class TTT9Board {
 	}
 	
 	
-	
-	//check if move is allowed in game class
-	//TODO make it return the board not a boolean
+	//check if move is allowed in game class, only legal moves will be entered into moveResult
 	public TTT9Board moveResult(char player, int boardIndex, int boardPos) {
-		boolean isValid = false;
-
-		//TODO change terminated to full (use applicable actions)
-		///if this board is not terminated and it's the correct board or if the correct board is already terminated
-		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n') || this.firstMove)) {
-			if(this.firstMove) {
-				this.firstMove = false;
-			}
-//		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && (boardIndex == this.nextBoardIndex)){ //|| (gameStatus[(nextBoardIndex-1)/3][(nextBoardIndex-1)%3] != 'n'))) {			
-			//check if move is available using TTTBoard check
-			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isMoveAllowed(boardPos)) {
-				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
-				this.nextBoardIndex=boardPos;
-
-				isValid = true;
-			}
-			
-			else {
-				isValid = false;
-				System.err.println("Move is invalid...please select a valid move...");
-			}
-		}
 		
-		if(isValid) {
-			//check if you won
-			System.err.println(player + " just moved");
-			System.err.println(boardIndex);
-			System.err.println(boardPos);
-			this.checkWin(this.nextPlayer, boardIndex);
+		this.getBoard(boardIndex).moveResult(player, boardPos);
+		this.nextBoardIndex=boardPos;
+		
+		System.err.println(player + " just made move " + boardIndex + " " + boardPos);
+		
+		//increment move counter
+		this.moveCounter++;
+		
+		//check if you won
+		this.checkWin(this.nextPlayer, boardIndex);
 			
-			//if not, toggle nextPlayer and wait for another move
+		//if not, toggle nextPlayer and wait for another move
+		if(this.overallGameStatus == 'n') {
 			if(this.nextPlayer=='X') {
 				this.nextPlayer = 'O';
 			}
 			else {
 				this.nextPlayer = 'X';
 			}
-		}
-		
-		else if(!isValid) {
-			System.err.println("Please enter a valid move");
-			
 		}
 		
 		return this;
@@ -206,15 +193,23 @@ public abstract class TTT9Board {
 	 }
 	
 	public boolean isMoveAllowed(int boardIndex, int pos) {
-		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n') || this.firstMove)) {
-			if(this.firstMove) {
-				this.firstMove = false;
-			
-				if(this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isMoveAllowed(pos)) {
-					return true;
-				}
-			}
+		//if it's the first move, you can play on any board index
+		if(this.firstMove) {
+			//it's only the first move one time
+			this.firstMove = false;
+			return true;
 		}
+		
+		
+		if((!this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isBoardFull()) && ((boardIndex == this.nextBoardIndex) || (this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].isBoardFull()))) {
+			
+			if(this.getBoard(boardIndex).isMoveAllowed(pos)) {
+				return true;
+			}
+			
+		}
+		
+		System.err.println("Invalid move");
 		return false;
 	}
 

@@ -336,11 +336,13 @@ public class TTTBoard implements Serializable{
 	 //Section: Helper methods for calculating heuristic in 9-board versions
 	 
 	 public double getBoardFullness() {
+		 //returns a value between 0 and 1
 		 return (double)this.moveCounter/9;
 	 }
 	 
 	 
-	 public int getAdvantage(char player, char opp) {
+	 public int getAdvantage(char player) {
+		 //differentiate between collllinear pairs with possibility of win and blocked collllinear pairs
 		 //check for board states where player can win in one move
 		 
 		 //return 8
