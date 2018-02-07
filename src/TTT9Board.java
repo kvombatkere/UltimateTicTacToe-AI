@@ -209,6 +209,7 @@ public abstract class TTT9Board {
 			
 		}
 		
+		System.err.println("Invalid move");
 		return false;
 	}
 

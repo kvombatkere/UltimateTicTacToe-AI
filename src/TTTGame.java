@@ -13,6 +13,7 @@ import java.awt.*;
 public class TTTGame {
 	
 	//Main method to run the game
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws CloneNotSupportedException {
 		
 		//Instantiate the board
