@@ -80,6 +80,11 @@ public abstract class TTT9Board {
 		System.err.println("\n");
 	}
 	
+	//get board by index
+	public TTTBoard getBoard(int index) {
+		return this.boardArray[(index-1)/3][(index-1)%3];
+	}
+	
 	//get next board
 	public TTTBoard getNextBoard() {
 		return this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3];
@@ -211,15 +216,23 @@ public abstract class TTT9Board {
 	 }
 	
 	public boolean isMoveAllowed(int boardIndex, int pos) {
-		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n') || this.firstMove)) {
-			if(this.firstMove) {
-				this.firstMove = false;
-			
-				if(this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isMoveAllowed(pos)) {
-					return true;
-				}
-			}
+		//if it's the first move, you can play on any board index
+		if(this.firstMove) {
+			//it's only the first move one time
+			this.firstMove = false;
+			return true;
 		}
+		
+		
+		//TODO change not terminated to not full
+		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && ((boardIndex == this.nextBoardIndex) || (gameStatus[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3] != 'n'))) {
+			
+			if(this.getBoard(boardIndex).isMoveAllowed(pos)) {
+				return true;
+			}
+			
+		}
+		
 		return false;
 	}
 
