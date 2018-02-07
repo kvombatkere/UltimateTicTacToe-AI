@@ -41,6 +41,7 @@ public abstract class TTT9Board implements Serializable{
 		this.nextPlayer = 'X';
 		
 		this.overallGameStatus = 'n';
+		this.firstMove = true;
 		this.nextBoardIndex = 1;
 	}
 	
@@ -52,6 +53,8 @@ public abstract class TTT9Board implements Serializable{
 			}
 		}
 		this.moveCounter = 0;
+		
+		this.overallGameStatus = 'n';
 		
 	}
 	
