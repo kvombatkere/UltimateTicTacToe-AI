@@ -89,7 +89,8 @@ public class AdvancedTTTGame {
 			while(game.board.overallGameStatus == 'n') {
 				
 				game.board.displayBoard();
-					
+				//Human player plays					
+
 				int boardIndex;
 				int boardPos;
 
@@ -136,9 +137,10 @@ public class AdvancedTTTGame {
 				
 				//Computer makes move
 				int [] computerMove = compPlayer.hMinimaxDecision();
-				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
-				System.err.println( "Computer player just made move " + computerMove[0] + " " + computerMove[1]);				
 				
+				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
+				
+				System.err.println( "Computer player just made move " + computerMove[0] + " " + computerMove[1]);				
 				
 			}
 
