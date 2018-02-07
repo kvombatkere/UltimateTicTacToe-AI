@@ -82,6 +82,7 @@ public class AdvancedTTTGame {
 				//computer makes first move
 				System.err.println("Computer playing first");
 				game.board.moveResult(game.p2Char, p2Move[0], p2Move[1]);
+				game.board.firstMove = false;
 				
 			}
 			
@@ -128,7 +129,7 @@ public class AdvancedTTTGame {
 							legalInput = false;
 						}
 						else {
-							game.board.moveResult(p1Char, boardIndex, boardPos);				
+							game.board.moveResult(p1Char, boardIndex, boardPos);		
 							System.err.println( "You just made move " + boardIndex + " " + boardPos);
 							legalInput = true;
 						}
