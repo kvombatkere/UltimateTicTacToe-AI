@@ -1,4 +1,3 @@
-
 //Rebecca Van Dyke, Avi Webberman, Karan Vombatkere
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
