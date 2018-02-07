@@ -93,20 +93,48 @@ public class AdvancedTTTGame {
 				//Human player plays
 				int boardIndex;
 				int boardPos;
+
+				//build string to tell you what board to play on
+				String helpfulHint = "";
+				if(game.board.firstMove || game.board.getNextBoard().isBoardFull()) {
+					helpfulHint = "You can play on any board.";
+				}
+				else {
+					helpfulHint = "You should play on board " + game.board.nextBoardIndex + ".";
+				}
 				
-				//check if entered move is valid
-				do {
-					System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
-							+ " the position on that board(1-9) " + p1Char);
-					p1Move = input.nextLine();
-					//TODO better input cleaning
-					boardIndex = Character.getNumericValue(p1Move.charAt(0));
-					boardPos = Character.getNumericValue(p1Move.charAt(2));
-					
-				} while(!game.board.isMoveAllowed( boardIndex, boardPos));
+				System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
+						+ " the position on that board(1-9). " + helpfulHint);
+				///read user input
+				p1Move = input.nextLine();
 				
-				game.board.moveResult(p1Char, boardIndex, boardPos);				
-				
+				//check that user input is in a valid move format
+				legalInput = false;
+				while(!legalInput) {
+					if(p1Move.length()<3) {
+						System.err.println("Invalid Input. Moves should be entered as two digits from 1-9 separated by a space");
+						p1Move = input.nextLine();
+						legalInput = false;
+					}
+					else {
+						//pull values from player input
+						boardIndex = Character.getNumericValue(p1Move.charAt(0));
+						boardPos = Character.getNumericValue(p1Move.charAt(2));
+						
+						//check if entered move is a valid move
+						if(!game.board.isMoveAllowed( boardIndex, boardPos)) {
+							System.err.println("Illegal Input. Please try again.");
+							p1Move = input.nextLine();
+							legalInput = false;
+						}
+						else {
+							game.board.moveResult(p1Char, boardIndex, boardPos);				
+							System.err.println( "You just made move " + boardIndex + " " + boardPos);
+							legalInput = true;
+						}
+					}
+				}
+
 				
 				/*System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + game.compChar);
 				// Call minimax function to find best move
@@ -119,10 +147,7 @@ public class AdvancedTTTGame {
 				//Make random move
 				int [] computerMove = compPlayer.hMinimaxDecision();
 				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
-				//System.err.print("Computer player just played");
-				
-				game.board.displayBoard();				
-				
+				System.err.println( "Computer player just made move " + computerMove[0] + " " + computerMove[1]);				
 				
 				
 			}
