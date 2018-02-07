@@ -89,10 +89,6 @@ public class AdvancedTTTGame {
 			while(game.board.overallGameStatus == 'n') {
 				
 				game.board.displayBoard();
-				
-				//Human player plays
-				System.err.println("It is your turn to play, please enter the board(1-9) you would like to play on followed by"
-						+ " the position on that board(1-9) " + p1Char);
 					
 				int boardIndex;
 				int boardPos;
