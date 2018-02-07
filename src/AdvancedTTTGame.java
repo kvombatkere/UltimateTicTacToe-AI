@@ -76,7 +76,7 @@ public class AdvancedTTTGame {
 			//AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
 			
 			//use random computer player for testing game functionality
-			AdvancedRandomPlayer compPlayer = new AdvancedRandomPlayer(game.board);
+			AdvancedMinimaxPlayer compPlayer = new AdvancedMinimaxPlayer(game);
 			
 			if(!p1First) {
 				//computer makes first move
@@ -120,7 +120,7 @@ public class AdvancedTTTGame {
 				game.board.moveResult(game.compChar, compMove[0], compMove[1]); */
 				
 				//Make random move
-				int [] computerMove = compPlayer.randomMove();
+				int [] computerMove = compPlayer.hMinimaxDecision();
 				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
 				System.err.print("Computer player just played");
 				
