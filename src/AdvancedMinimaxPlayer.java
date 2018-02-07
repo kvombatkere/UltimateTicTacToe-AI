@@ -3,7 +3,7 @@ public class AdvancedMinimaxPlayer {
 	
 	AdvancedTTTBoard currentGame;
 	AdvancedTTTBoard searchStateBoard;
-	final int depthCutoff = 8;
+	final int depthCutoff = 5;
 	
 	AdvancedTTTGame game;
 	
@@ -69,7 +69,7 @@ public class AdvancedMinimaxPlayer {
 	
 	//function to compute the h-minimax decision
 	public int[] hMinimaxDecision() {
-		int[] bestMove = new int[2];
+		int[] bestMove = this.randomMove();
 		int moveUtility = -100;
 		totalStates = 0;
 		
@@ -113,6 +113,7 @@ public class AdvancedMinimaxPlayer {
 				}
 			}	
 		}
+		
 		System.err.println("minimaxDecision Utility for move: " + bestMove[0]+ " "+bestMove[1]+ " is = " + moveUtility);
 		return bestMove;
 	}
@@ -214,6 +215,37 @@ public class AdvancedMinimaxPlayer {
 		}
 		return v;
 	}
+	
+	//Method to generate random move
+		public int[] randomMove() {
+			int boardNum = currentGame.nextBoardIndex;
+			int movePos=0;
+			
+			TTTBoard localBoard = currentGame.getNextBoard();
+			
+			//identify board to play on
+			if(localBoard.isBoardFull()) {
+				for(int i=1; i<10; i++) {
+					localBoard = currentGame.getBoard(i);
+					if(!localBoard.isBoardFull()) {
+						boardNum = i;
+						break;
+					}
+				}
+			}
+			
+			//identify position to play on
+			do {
+				movePos = (int) (Math.random()*9) + 1; //generate a random number between 1 and 9
+				//System.err.println(movePos);
+				
+			} while(!currentGame.isMoveAllowed(boardNum, movePos));
+			
+			
+			int[] randomMove = {boardNum, movePos};
+			
+			return randomMove;
+		}
 	
 }
 
