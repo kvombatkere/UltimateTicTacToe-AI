@@ -24,6 +24,10 @@ public class TTTBoard implements Serializable{
 	//character to keep track of what the computer is playing
 	public char compChar;
 	
+	//keep running stats on moves played for 9-board versions
+	private int numX;
+	private int numO;
+	
 	
 	//Constructor to instantiate 3x3 board (always fixed size)
 	//Instantiates to initial state with all squares blank
@@ -50,6 +54,8 @@ public class TTTBoard implements Serializable{
 		this.gameOver = false;
 		this.gameDrawn = false;
 		this.moveCounter = 0;
+		this.numX = 0;
+		this.numO = 0;
 		
 		//Character the computer plays with
 		if(oppChar == 'O') {
@@ -106,6 +112,11 @@ public class TTTBoard implements Serializable{
 		if(boardPos != null) {
 			this.mainBoard[boardPos.x][boardPos.y] = moveChar;
 			this.moveCounter++; //Increment move counter
+			//update X and O counts
+			if(moveChar == 'X') {
+				this.numX++;}
+			else{
+				this.numO++;}
 			
 			//Check if the last move won the game -> must be done after every move
 			//Check all possible terminal states and switch the next player + print I/O to System.err
@@ -300,7 +311,7 @@ public class TTTBoard implements Serializable{
 			return true;
 		}
 		return false;
-	}
+	} ///end isBoardFull()
 	
 	//Method to enable cloning of the object
 	//Code Source: https://alvinalexander.com/java/java-deep-clone-example-source-code
@@ -321,5 +332,32 @@ public class TTTBoard implements Serializable{
 	     return null;
 	   }
 	 } //end deepClone()
+	 
+	 //Section: Helper methods for calculating heuristic in 9-board versions
+	 
+	 public double getBoardFullness() {
+		 return (double)this.moveCounter/9;
+	 }
+	 
+	 
+	 public int getAdvantage(char player, char opp) {
+		 //check for board states where player can win in one move
+		 
+		 //return 8
+		 
+		 //check for board states where opp can win in one move
+		 
+		 //return -8
+		 
+		 
+		 //if neither player can win in one move, estimate advantage based on # of pieces on the board
+		 if(player == 'X') {
+			 return this.numX - this.numO;
+		 }
+		 else {
+			 return this.numO - this.numX;
+		 }
+		 
+	 }
 	
 }
