@@ -135,6 +135,10 @@ public class AdvancedTTTGame {
 					}
 				}
 				
+				if(game.board.overallGameStatus != 'n') {
+					break;
+				}
+				
 				//Computer makes move
 				int [] computerMove = compPlayer.hMinimaxDecision();
 				
