@@ -117,7 +117,7 @@ public class AdvancedMinimaxPlayer {
 				}
 			}	
 		}
-		
+		System.err.println("HI I CHOSE NOT TO SIEZE VICTORY AND PRINT A RANDOM CHOICE (WHICH MIGHT SIEZE VICTORY ANYWAY");
 		System.err.println("minimaxDecision Utility for move: " + bestMove[0]+ " "+bestMove[1]+ " is = " + moveUtility);
 		return bestMove;
 	}
