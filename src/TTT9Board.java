@@ -130,7 +130,7 @@ public abstract class TTT9Board implements Serializable{
 		this.moveCounter++;
 		
 		//check if you won
-		this.checkWin(this.nextPlayer, boardIndex);
+		this.checkWin(player, boardIndex);
 			
 		//if not, toggle nextPlayer and wait for another move
 		if(this.overallGameStatus == 'n') {
