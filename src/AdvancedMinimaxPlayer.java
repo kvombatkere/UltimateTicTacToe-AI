@@ -7,7 +7,7 @@ public class AdvancedMinimaxPlayer {
 	
 	AdvancedTTTBoard currentGame;
 	AdvancedTTTBoard searchStateBoard;
-	final int depthCutoff = 7;
+	final int depthCutoff = 10;
 	
 	AdvancedTTTGame game;
 	
@@ -103,22 +103,18 @@ public class AdvancedMinimaxPlayer {
 					moveUtility = this.minValue((AdvancedTTTBoard) searchStateBoard.moveResult(searchStateBoard.nextPlayer, i, j),-100,100);
 										
 					//Choose the best utility action and return immediately - terminal states are favored
-					if(moveUtility >= v) {
-						
+					if(moveUtility >= v) {	
 						bestMove[0] = i;
 						bestMove[1] = j;
-						
-						System.err.println("Total Number of Terminal States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
-						System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
-						System.err.println("minimaxDecision Utility for move: " + i + " " + j + " is = " + moveUtility);
-
-						return bestMove;
 					}				
 				}
 			}	
 		}
-		System.err.println("HI I CHOSE NOT TO SIEZE VICTORY AND PRINT A RANDOM CHOICE (WHICH MIGHT SIEZE VICTORY ANYWAY");
-		System.err.println("minimaxDecision Utility for move: " + bestMove[0]+ " "+bestMove[1]+ " is = " + moveUtility);
+		
+		System.err.println("Total Number of Terminal States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
+		System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
+		System.err.println("minimaxDecision Utility for move: " + bestMove[0] + " " + bestMove[1] + " is = " + moveUtility);
+
 		return bestMove;
 	}
 	
