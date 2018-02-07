@@ -112,7 +112,7 @@ public abstract class TTT9Board {
 			}
 //		if((gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] == 'n') && (boardIndex == this.nextBoardIndex)){ //|| (gameStatus[(nextBoardIndex-1)/3][(nextBoardIndex-1)%3] != 'n'))) {			
 			//check if move is available using TTTBoard check
-			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(boardPos)) {
+			if(boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isMoveAllowed(boardPos)) {
 				boardArray[(boardIndex-1)/3][(boardIndex-1)%3].moveResult(player, boardPos);
 				this.nextBoardIndex=boardPos;
 
@@ -210,7 +210,7 @@ public abstract class TTT9Board {
 			if(this.firstMove) {
 				this.firstMove = false;
 			
-				if(this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].ismoveAllowed(pos)) {
+				if(this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isMoveAllowed(pos)) {
 					return true;
 				}
 			}

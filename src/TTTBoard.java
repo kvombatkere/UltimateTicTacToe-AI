@@ -38,7 +38,7 @@ public class TTTBoard implements Serializable{
 				this.mainBoard[i][j] = ' ';
 			}
 		}
-	}
+	} //end clearBoard()
 	
 	//Function to Reset the board and start a new game
 	//Takes the opponents character as the input
@@ -64,7 +64,7 @@ public class TTTBoard implements Serializable{
 		//Set up the new board and assign X to play first
 		this.nextPlayer = 'X';
 		
-	}
+	}//end newBoard()
 	
 	
 	//Method to Display the board with some basic board formatting
@@ -81,7 +81,7 @@ public class TTTBoard implements Serializable{
 		}
 		
 		System.err.println();
-	}
+	}//end displayBoard()
 	
 	public void printRow(int n) {
 		for(int j=0; j<3; j++) {
@@ -90,7 +90,7 @@ public class TTTBoard implements Serializable{
 				System.err.print("|");
 			}
 		}
-	}
+	} ///end printRow()
 	
 	
 	//Method to add an X or an O to position specified by digits 1-9
@@ -119,7 +119,7 @@ public class TTTBoard implements Serializable{
 		
 		}
 		return this; //Return the resulting game state		
-	}
+	} //end moveResult()
 	
 	//Method to return the coordinates of the board position from a pos value of 1-9
 	//Mostly to detect errors and get easy calls from 
@@ -178,7 +178,7 @@ public class TTTBoard implements Serializable{
 		else {
 			System.err.println("Game Over! " + nextPlayer + " wins in "+ moveCounter +" moves!");
 		}			
-	}
+	} //end printGameResult()
 	
 	//Method to check terminal states separately
 	//Returns true if the current board state is terminal and false otherwise
@@ -198,7 +198,7 @@ public class TTTBoard implements Serializable{
 		}
 		
 		return gameTerminated;	
-	}
+	} //end terminalState()
 	
 	public static boolean check3InRow(char checkChar, char [][] board) {
 		//Define and check each of 8 terminal states that bring a win for nextPlayer
@@ -226,7 +226,7 @@ public class TTTBoard implements Serializable{
 			}
 		
 		return false;
-	}
+	} //end check3InRow()
 	
 	//checks if a win is still possible for the next player
 	public static boolean winPossible(char checkChar, char blankChar, char [][] board) {
@@ -254,7 +254,7 @@ public class TTTBoard implements Serializable{
 			}
 			
 		return false;
-	}
+	} //end winPossible()
 	
 	//Method to return set of applicable actions in a given state
 	//This basically returns all the empty board positions, since that is what the player must choose from
@@ -276,11 +276,11 @@ public class TTTBoard implements Serializable{
 		//Print out array to see non-zero values - comment out later
 		//System.err.println("Available Moves: " + Arrays.toString(possibleMoves));
 		return possibleMoves;	
-	}
+	} //end applicableActions()
 	
 	//Method to check if a board position (1-9) is legal/allowed
 	//Returns true or false
-	public boolean ismoveAllowed(int pos) {
+	public boolean isMoveAllowed(int pos) {
 		int [] possibilities = this.applicableActions();	
 		//Deal with illegal moves outside of 1-9 range first
 		if(pos < 1 || pos > 9) {
@@ -293,8 +293,14 @@ public class TTTBoard implements Serializable{
 		}
 		
 		return false;	
-	}
+	} //end isMoveAllowed()
 	
+	public boolean isBoardFull() {
+		if(this.moveCounter > 8) {
+			return true;
+		}
+		return false;
+	}
 	
 	//Method to enable cloning of the object
 	//Code Source: https://alvinalexander.com/java/java-deep-clone-example-source-code
@@ -314,6 +320,6 @@ public class TTTBoard implements Serializable{
 	     e.printStackTrace();
 	     return null;
 	   }
-	 }
+	 } //end deepClone()
 	
 }
