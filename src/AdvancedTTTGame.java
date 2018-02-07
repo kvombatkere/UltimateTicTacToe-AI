@@ -147,6 +147,9 @@ public class AdvancedTTTGame {
 				System.err.println( "Computer player just made move " + computerMove[0] + " " + computerMove[1]);				
 				
 			}
+			
+			//after loop terminates, print the game result
+			game.board.printGameResult();
 
 		}
 		

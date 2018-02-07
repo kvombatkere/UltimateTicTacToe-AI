@@ -10,7 +10,6 @@ public class AdvancedTTTBoard extends TTT9Board{
 			//if it terminated and it's not a draw, the player who just played must have won
 			if(!lastBoard.gameDrawn) {
 				this.overallGameStatus = player;
-				this.printGameResult();
 			}
 			
 			//if that board is a draw, check if there are still boards to be played on
@@ -25,7 +24,6 @@ public class AdvancedTTTBoard extends TTT9Board{
 					}
 				}
 				if(this.overallGameStatus != 'n') {
-					this.printGameResult();
 				}
 			}
 		}
