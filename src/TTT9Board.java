@@ -239,7 +239,7 @@ public abstract class TTT9Board implements Serializable{
 		}
 		
 		//otherwise check that it's playing on a board with space that's the specified next board, or that the specified board is full
-		if((!this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3].isBoardFull()) && ((boardIndex == this.nextBoardIndex) || (this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].isBoardFull()))) {
+		if((!this.getBoard(boardIndex).isBoardFull()) && ((boardIndex == this.nextBoardIndex) || (this.getNextBoard().isBoardFull()))) {
 			
 			if(this.getBoard(boardIndex).isMoveAllowed(pos)) {
 				return true;
