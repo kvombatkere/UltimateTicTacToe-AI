@@ -44,13 +44,7 @@ public class AdvancedMinimaxPlayer {
 	//Heuristic Evaluation Function
 	public int heuristicEvaluation(AdvancedTTTBoard stateBoard) {	
 		
-		if(stateBoard.moveCounter >= 8) {
-			return 10;
-		}
-		
-		else {
-			return 0;
-		}
+		return 10;
 	}
 	
 	
