@@ -14,7 +14,7 @@ public class UltimateAIPlayer {
 	
 	public int[] decision() {
 		searchStateBoard = (UltimateTTTBoard) UltimateTTTBoard.deepClone(game.board);
-//		int[][] possibleMoves = searchStateBoard.applicableActions();
+		int[][] possibleMoves = searchStateBoard.applicableActions();
 //		int[] bestMove = new int[2];
 		
 		//computer goes first
@@ -32,12 +32,14 @@ public class UltimateAIPlayer {
 				for(int i=0; i<3; i++) {
 					for(int j=0; j<3; j++) {
 						//try to send opponent to games that are already finished	
-						if((game.board.gameStatus[i][j] == 'X' ||game.board.gameStatus[i][j] == 'O') && !game.board.boardArray[i][j].isBoardFull()) {
+						if((game.board.gameStatus[i][j] == 'X' || game.board.gameStatus[i][j] == 'O') && game.board.isMoveAllowed(game.board.nextBoardIndex, TTTBoard.getboardPosition(i, j)) && !game.board.boardArray[i][j].isBoardFull()) {
+							System.out.println("LOOKING...");
 							int[] move = {game.board.nextBoardIndex, TTTBoard.getboardPosition(i, j)};
 							return move;
-							
 						}
-					}
+								
+							
+					}		
 				}
 				return this.randomMove();		
 			}	
@@ -48,15 +50,35 @@ public class UltimateAIPlayer {
 		//computer goes second.  currently: try to send opponent to full board, otherwise move randomly
 		else {
 			
+//			for(int i=0; i<3; i++) {
+//				for(int j=0; j<3; j++) {
+//					//try to send opponent to games that are already finished	
+//					if((game.board.gameStatus[i][j] == 'X' ||game.board.gameStatus[i][j] == 'O')) {
+//						for(int k=0; k<3;k++) {
+//							for(int l=0; l<3; l++) {
+//								if(game.board.boardArray[i][j].mainBoard[k][l] == ' ') {
+//									System.out.println("NOT RANDOM");
+//									System.out.println(k + " " + l);
+//									int[] move = {TTTBoard.getboardPosition(xval, yval), TTTBoard.getboardPosition(k, l)};
+//									return move;
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+			
 			for(int i=0; i<3; i++) {
 				for(int j=0; j<3; j++) {
-					//try to send opponent to games that are already finished
-					if((game.board.gameStatus[i][j] == 'X' ||game.board.gameStatus[i][j] == 'O') && !game.board.boardArray[i][j].isBoardFull()) {
+					//try to send opponent to games that are already finished	
+					if((game.board.gameStatus[i][j] == 'X' || game.board.gameStatus[i][j] == 'O') && game.board.isMoveAllowed(game.board.nextBoardIndex, TTTBoard.getboardPosition(i, j))) {
+						System.out.println("LOOKING...");
 						int[] move = {game.board.nextBoardIndex, TTTBoard.getboardPosition(i, j)};
 						return move;
-						
 					}
-				}
+							
+						
+				}		
 			}
 			
 			return this.randomMove();
