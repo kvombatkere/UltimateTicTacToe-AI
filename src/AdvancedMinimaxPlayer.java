@@ -24,37 +24,38 @@ public class AdvancedMinimaxPlayer {
 	
 	
 	//Returns terminal state utility -> method must only be called if board is in terminal state
-	public int getStateUtility(AdvancedTTTBoard stateBoard) {
+	public int getStateUtility(AdvancedTTTBoard stateBoardGSU) {
 		
 		//Check if game is drawn
-		if(stateBoard.overallGameStatus == 'd') {
+		if(stateBoardGSU.overallGameStatus == 'd') {
 			return 0;
 		}
 		
 		//Check if computer wins
-		else if((stateBoard.overallGameStatus == 'X' && this.game.p2Char == 'X') || (stateBoard.overallGameStatus == 'O' && this.game.p2Char == 'O')){
+		else if((stateBoardGSU.overallGameStatus == 'X' && this.game.p2Char == 'X') || (stateBoardGSU.overallGameStatus == 'O' && this.game.p2Char == 'O')){
 			return 10;
 		}
 
 		//Check if human wins
-		else if((stateBoard.overallGameStatus == 'X' && this.game.p2Char == 'O') || (stateBoard.overallGameStatus == 'O' && this.game.p2Char == 'X')) {
+		else if((stateBoardGSU.overallGameStatus == 'X' && this.game.p2Char == 'O') || (stateBoardGSU.overallGameStatus == 'O' && this.game.p2Char == 'X')) {
 			return -10;
 		}
-
-		return 0;	
+		
+		System.err.println("Overall Game Status: " + stateBoardGSU.overallGameStatus);
+		return 2;	
 	} 
 
 	
 	//Heuristic Evaluation Function
-	public int heuristicEvaluation(AdvancedTTTBoard stateBoard) {	
+	public int heuristicEvaluation(AdvancedTTTBoard stateBoardHF) {	
 		return 5;
 	}
 	
 	
 	//Cutoff Test Function
-	public boolean cutoffTest(AdvancedTTTBoard stateBoard) {
+	public boolean cutoffTest(AdvancedTTTBoard stateBoardCF) {
 		//Check if a terminal state has been reached
-		if(stateBoard.advancedTerminalState()) {
+		if(stateBoardCF.overallGameStatus != 'n') {
 			reachedTerminalState = true;
 			return true;
 		}
@@ -129,20 +130,20 @@ public class AdvancedMinimaxPlayer {
 	
 	
 	//Max value function for h_minimax
-	public int maxValue(AdvancedTTTBoard stateBoard, int alpha, int beta) {
+	public int maxValue(AdvancedTTTBoard stateBoardMax, int alpha, int beta) {
 		recursionNum++;
 
 		//Check the cut off test and return the utility value or heuristic evaluation
-		if(this.cutoffTest(stateBoard)) {
+		if(this.cutoffTest(stateBoardMax)) {
 			//If cut-off is reached due to terminal state, return utility value
 			if(reachedTerminalState) {
 				totalStates++;
-				return this.getStateUtility(stateBoard);
+				return this.getStateUtility(stateBoardMax);
 			}
 			
 			//If cutoff is reached due to depth-limit, call heuristic evaluation function
 			else {
-				return this.heuristicEvaluation(stateBoard);
+				return this.heuristicEvaluation(stateBoardMax);
 			}
 		}
 		
@@ -151,7 +152,7 @@ public class AdvancedMinimaxPlayer {
 		//iterate through all the applicable actions to create game tree
 		for(int i=1; i <10; i++) {
 			for(int j=1; j<10; j++) {
-				AdvancedTTTBoard tempBoard = (AdvancedTTTBoard) AdvancedTTTBoard.deepClone(stateBoard);
+				AdvancedTTTBoard tempBoard = (AdvancedTTTBoard) AdvancedTTTBoard.deepClone(stateBoardMax);
 				//First get the list of possible actions
 				int [][] possibleMoves = tempBoard.applicableActions();
 				
@@ -177,20 +178,20 @@ public class AdvancedMinimaxPlayer {
 	
 	
 	//Min value function for h_minimax
-	public int minValue(AdvancedTTTBoard stateBoard, int alpha, int beta){
+	public int minValue(AdvancedTTTBoard stateBoardMin, int alpha, int beta){
 		recursionNum++;
 
 		//Check the cut off test and return the utility value or heuristic evaluation
-		if(this.cutoffTest(stateBoard)) {
+		if(this.cutoffTest(stateBoardMin)) {
 			//If cut-off is reached due to terminal state, return utility value
 			if(reachedTerminalState) {
 				totalStates++;
-				return this.getStateUtility(stateBoard);
+				return this.getStateUtility(stateBoardMin);
 			}
 			
 			//If cutoff is reached due to depth-limit, call heuristic evaluation function
 			else {
-				return this.heuristicEvaluation(stateBoard);
+				return this.heuristicEvaluation(stateBoardMin);
 			}
 		}
 		
@@ -200,7 +201,7 @@ public class AdvancedMinimaxPlayer {
 		//iterate through all the applicable actions to create game tree
 		for(int i=1; i <10; i++) {
 			for(int j=1; j<10; j++) {
-				AdvancedTTTBoard tempBoard = (AdvancedTTTBoard) AdvancedTTTBoard.deepClone(stateBoard);
+				AdvancedTTTBoard tempBoard = (AdvancedTTTBoard) AdvancedTTTBoard.deepClone(stateBoardMin);
 				//First get the list of possible actions
 				int [][] possibleMoves = tempBoard.applicableActions();
 				

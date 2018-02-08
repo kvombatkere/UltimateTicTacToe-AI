@@ -22,13 +22,13 @@ public class AdvancedTTTBoard extends TTT9Board{
 				//if all boards are full, game is a draw
 				for(int i=0; i<3; i++) {
 					for(int j=0; j<3; j++) {
+						
 						if(this.gameStatus[i][j] == 'n') {
 							this.overallGameStatus = 'n';
 						}
 					}
 				}
-				if(this.overallGameStatus != 'n') {
-				}
+
 			}
 		}
 		
