@@ -77,6 +77,8 @@ public class AdvancedMinimaxPlayer {
 		boolean updatedUtility = false;
 		
 		int moveUtility = -100;
+		int bestMoveUtility = -100;
+		
 		totalStates = 0;
 		
 		searchStateBoard = (AdvancedTTTBoard) AdvancedTTTBoard.deepClone(currentGame);
@@ -106,6 +108,7 @@ public class AdvancedMinimaxPlayer {
 										
 					//Choose the best utility action and return immediately - terminal states are favored
 					if(moveUtility >= v) {
+						bestMoveUtility = moveUtility;
 						updatedUtility = true;
 						bestMove[0] = i;
 						bestMove[1] = j;
@@ -119,7 +122,7 @@ public class AdvancedMinimaxPlayer {
 		
 		System.err.println("Total Number of Terminal States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
 		System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
-		System.err.println("minimaxDecision Utility for move: " + bestMove[0] + " " + bestMove[1] + " is = " + moveUtility);
+		System.err.println("minimaxDecision Utility for move: " + bestMove[0] + " " + bestMove[1] + " is = " + bestMoveUtility);
 
 		return bestMove;
 	}
