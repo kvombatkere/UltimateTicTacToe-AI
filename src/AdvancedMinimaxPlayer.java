@@ -15,7 +15,7 @@ public class AdvancedMinimaxPlayer {
 	public int recursionNum;
 	public int totalStates;
 	
-	public boolean reachedTerminalState;
+	public boolean reachedTerminalState = false;
 	
 	public AdvancedMinimaxPlayer(AdvancedTTTGame game) {
 		this.currentGame = game.board;
@@ -41,7 +41,7 @@ public class AdvancedMinimaxPlayer {
 			return -10;
 		}
 		
-		System.err.println("Overall Game Status: " + stateBoardGSU.overallGameStatus);
+		System.err.println("Overall Game Status: " + stateBoardGSU.overallGameStatus); //This should never print and never return 2
 		return 2;	
 	} 
 
@@ -56,8 +56,10 @@ public class AdvancedMinimaxPlayer {
 	public boolean cutoffTest(AdvancedTTTBoard stateBoardCF) {
 		//Check if a terminal state has been reached
 		if(stateBoardCF.overallGameStatus != 'n') {
-			reachedTerminalState = true;
-			return true;
+			this.reachedTerminalState = true; //set the tracker to true
+			//stateBoardCF.displayBoard();
+			//System.err.println("reachedTerminalState from cutoff test: " + this.reachedTerminalState);
+			return this.reachedTerminalState;
 		}
 		
 		//Return false if the recursion count < cutoff depth
@@ -101,8 +103,8 @@ public class AdvancedMinimaxPlayer {
 					searchStateBoard = (AdvancedTTTBoard) AdvancedTTTBoard.deepClone(currentGame);
 					
 					//Initialize the bookkeeping for recursion
-					recursionNum = 0;
-					reachedTerminalState = false;
+					this.recursionNum = 0;
+					this.reachedTerminalState = false;
 	
 					//Call the recursive state space process
 					moveUtility = this.minValue((AdvancedTTTBoard) searchStateBoard.moveResult(searchStateBoard.nextPlayer, i, j),-100,100);
@@ -136,8 +138,9 @@ public class AdvancedMinimaxPlayer {
 		//Check the cut off test and return the utility value or heuristic evaluation
 		if(this.cutoffTest(stateBoardMax)) {
 			//If cut-off is reached due to terminal state, return utility value
-			if(reachedTerminalState) {
+			if(this.reachedTerminalState) {
 				totalStates++;
+				this.reachedTerminalState = false; //reset immediately to avoid future erroneous detection
 				return this.getStateUtility(stateBoardMax);
 			}
 			
@@ -184,8 +187,9 @@ public class AdvancedMinimaxPlayer {
 		//Check the cut off test and return the utility value or heuristic evaluation
 		if(this.cutoffTest(stateBoardMin)) {
 			//If cut-off is reached due to terminal state, return utility value
-			if(reachedTerminalState) {
+			if(this.reachedTerminalState) {
 				totalStates++;
+				this.reachedTerminalState = false; //reset immediately to avoid future erroneous detection
 				return this.getStateUtility(stateBoardMin);
 			}
 			
