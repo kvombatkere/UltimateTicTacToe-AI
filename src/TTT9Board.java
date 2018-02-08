@@ -271,7 +271,11 @@ public abstract class TTT9Board implements Serializable{
 		testBoard.moveResult('X', 1, 7);
 		testBoard.moveResult('O', 1, 8);
 		testBoard.moveResult('O', 1, 9);
-		testBoard.nextBoardIndex = 1;
+		testBoard.moveResult('X', 2, 6);
+		testBoard.moveResult('X', 2, 7);
+		testBoard.moveResult('O', 2, 8);
+		testBoard.moveResult('O', 9, 2);
+		testBoard.nextBoardIndex = 9;
 
 		System.out.println(testBoard.nextBoardIndex);
 		int[][] moves = testBoard.applicableActions();
