@@ -26,7 +26,7 @@ public class UltimateAIPlayer {
 				return move;
 			}
 			
-			//once stage 1 is complete, move on to new strategy (temporarily random)
+			//once stage 1 is complete, move on to new strategy. currently: try to send opponent to full board, otherwise move randomly
 			else {
 				
 				for(int i=0; i<3; i++) {
@@ -45,7 +45,7 @@ public class UltimateAIPlayer {
 		}		
 			
 	
-		//computer goes second (temporarily plays randomly)
+		//computer goes second.  currently: try to send opponent to full board, otherwise move randomly
 		else {
 			
 			for(int i=0; i<3; i++) {
