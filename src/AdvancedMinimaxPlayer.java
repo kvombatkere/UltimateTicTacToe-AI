@@ -12,10 +12,10 @@ public class AdvancedMinimaxPlayer {
 	AdvancedTTTGame game;
 	
 	//Keep track of recursive calls and total states examined
-	int recursionNum;
-	int totalStates;
+	public int recursionNum;
+	public int totalStates;
 	
-	boolean reachedTerminalState;
+	public boolean reachedTerminalState;
 	
 	public AdvancedMinimaxPlayer(AdvancedTTTGame game) {
 		this.currentGame = game.board;
