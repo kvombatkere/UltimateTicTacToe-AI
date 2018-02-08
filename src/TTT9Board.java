@@ -171,7 +171,7 @@ public abstract class TTT9Board implements Serializable{
 		int[][] possibleMoves = new int [10][10];
 
 		//if sent to board that is not full, moves are confined to that board
-		if((boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].isBoardFull() == false)) {
+		if((getBoard(nextBoardIndex).isBoardFull() == false)) {
 			for(int i=0; i<3; i++) {
 				for(int j=0; j<3; j++) {
 					if(this.boardArray[(this.nextBoardIndex-1)/3][(this.nextBoardIndex-1)%3].mainBoard[i][j] == ' ') {
