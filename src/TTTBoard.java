@@ -42,6 +42,14 @@ public class TTTBoard implements Serializable{
 				this.mainBoard[i][j] = ' ';
 			}
 		}
+		
+		//Reset required variables
+		this.gameOver = false;
+		this.gameDrawn = false;
+		this.moveCounter = 0;
+		this.numX = 0;
+		this.numO = 0;
+		
 	} //end clearBoard()
 	
 	//Function to Reset the board and start a new game
@@ -49,13 +57,7 @@ public class TTTBoard implements Serializable{
 	public void newBoard(char oppChar) {
 		System.err.println("\n----------------------------------------------");
 		System.err.println("Setting up new Tic Tac Toe Board!");
-		this.clearBoard();
-		//Reset required variables
-		this.gameOver = false;
-		this.gameDrawn = false;
-		this.moveCounter = 0;
-		this.numX = 0;
-		this.numO = 0;
+		this.clearBoard();		
 		
 		//Character the computer plays with
 		if(oppChar == 'O') {
