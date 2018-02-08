@@ -47,7 +47,6 @@ public class AdvancedMinimaxPlayer {
 	
 	//Heuristic Evaluation Function
 	public int heuristicEvaluation(AdvancedTTTBoard stateBoard) {	
-		
 		return 5;
 	}
 	
@@ -170,7 +169,6 @@ public class AdvancedMinimaxPlayer {
 				}
 			}
 		}
-		
 		return v;
 	}
 	
@@ -248,7 +246,6 @@ public class AdvancedMinimaxPlayer {
 				//System.err.println(movePos);
 				
 			} while(!currentGame.isMoveAllowed(boardNum, movePos));
-			
 			
 			int[] randomMove = {boardNum, movePos};
 			
