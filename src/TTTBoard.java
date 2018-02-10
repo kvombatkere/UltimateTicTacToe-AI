@@ -335,8 +335,7 @@ public class TTTBoard implements Serializable{
 	   }
 	 } //end deepClone()
 	 
-	 //Section: Helper methods for calculating heuristic in 9-board versions
-	 
+	 //Section: Helper methods for calculating heuristic in 9-board versions 
 	 public double getBoardFullness() {
 		 //returns a value between 0 and 1
 		 return (double)this.moveCounter/9;
@@ -351,6 +350,14 @@ public class TTTBoard implements Serializable{
 		 else {
 			 return this.numO - this.numX;
 		 }
+		 
+	 }
+	 
+	 public int getAdjacentPairs(char player) {
+		int numPairs = 0;
+		
+		return numPairs;
+		 
 		 
 	 }
 	

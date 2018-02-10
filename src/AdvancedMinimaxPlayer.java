@@ -33,12 +33,12 @@ public class AdvancedMinimaxPlayer {
 		
 		//Check if computer wins
 		else if((stateBoardGSU.overallGameStatus == 'X' && this.game.p2Char == 'X') || (stateBoardGSU.overallGameStatus == 'O' && this.game.p2Char == 'O')){
-			return 10;
+			return 50;
 		}
 
 		//Check if human wins
 		else if((stateBoardGSU.overallGameStatus == 'X' && this.game.p2Char == 'O') || (stateBoardGSU.overallGameStatus == 'O' && this.game.p2Char == 'X')) {
-			return -10;
+			return -50;
 		}
 		
 		System.err.println("Overall Game Status: " + stateBoardGSU.overallGameStatus); //This should never print and never return 2
@@ -48,7 +48,19 @@ public class AdvancedMinimaxPlayer {
 	
 	//Heuristic Evaluation Function
 	public int heuristicEvaluation(AdvancedTTTBoard stateBoardHF) {	
-		return 5;
+		int hVal = 0;
+		
+		for(int i=0; i<3; i++) {
+			for(int j=0; j<3; j++) {
+				//Increment heuristic for every board where a player has an advantage
+				int boardAdvantage = stateBoardHF.boardArray[i][j].getAdvantage(stateBoardHF.nextPlayer);
+				if(boardAdvantage > 0) {
+					hVal += boardAdvantage;
+				}
+			}
+		}
+		System.err.println("Computed Heuristic Value = " + hVal);
+		return hVal;
 	}
 	
 	
@@ -90,7 +102,7 @@ public class AdvancedMinimaxPlayer {
 		int [][] possibleMoves = searchStateBoard.applicableActions();
 		
 		int v = this.maxValue(searchStateBoard, -100, 100);
-		//System.err.println("Total States examined to find initial max v: " + totalStates);
+		System.err.println("Initial max v: " + v);
 
 		//iterate through all the applicable actions to create game tree
 		for(int i=1; i < possibleMoves.length; i++) {
@@ -112,6 +124,7 @@ public class AdvancedMinimaxPlayer {
 					//Choose the best utility action and return immediately - terminal states are favored
 					if(moveUtility >= v) {
 						bestMoveUtility = moveUtility;
+						v = moveUtility;
 						updatedUtility = true;
 						bestMove[0] = i;
 						bestMove[1] = j;
