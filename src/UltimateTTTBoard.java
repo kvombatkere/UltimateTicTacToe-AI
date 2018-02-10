@@ -11,8 +11,9 @@ public class UltimateTTTBoard extends TTT9Board{
 		//game will only terminate on the last board you played on
 		TTTBoard lastBoard = this.boardArray[(boardIndex-1)/3][(boardIndex-1)%3];
 		
-		//is the last board played on in a terminal state now?
+		//is the last board played on in a terminal state now and not already won?
 		if(lastBoard.terminalState() && this.gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] != 'X' && this.gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] != 'O') {
+		
 			//if it terminated and it's not a draw, the player who just played must have won
 			if(!lastBoard.gameDrawn) {
 				this.gameStatus[(boardIndex-1)/3][(boardIndex-1)%3] = player;
@@ -24,7 +25,7 @@ public class UltimateTTTBoard extends TTT9Board{
 				}
 				
 				else {
-					//if all boards are full, game is a draw
+					//if all boards are full and nobody won, game is a draw
 					boolean allFull = true;
 					for(int i=0; i<3; i++) {
 						for(int j=0; j<3; j++) {
@@ -34,6 +35,7 @@ public class UltimateTTTBoard extends TTT9Board{
 						}
 					}
 					if(allFull) {
+						System.out.println("Game is a Draw");
 						this.overallGameStatus = 'd';
 					}
 				}
@@ -62,85 +64,36 @@ public class UltimateTTTBoard extends TTT9Board{
 
 	
 	public static void main(String[] args) {
+		UltimateTTTGame game = new UltimateTTTGame();
+		UltimateAIPlayer p1 = new UltimateAIPlayer(game);
+		UltimateAIPlayer p2 = new UltimateAIPlayer(game);
+		int moveCounter = 0;
 		
-		UltimateTTTBoard board = new UltimateTTTBoard();
-		board.moveResult('X', 1, 1);
-		board.moveResult('X', 1, 2);
-		board.moveResult('X', 1, 3);
-		board.moveResult('X', 1, 4);
-		board.moveResult('X', 1, 5);
-		board.moveResult('X', 1, 6);
-		board.moveResult('X', 1, 7);
-		board.moveResult('X', 1, 8);
-		board.moveResult('X', 1, 9);
-		board.moveResult('X', 2, 1);
-		board.moveResult('X', 2, 2);
-		board.moveResult('X', 2, 3);
-		board.moveResult('X', 2, 4);
-		board.moveResult('X', 2, 5);
-		board.moveResult('X', 2, 6);
-		board.moveResult('X', 2, 7);
-		board.moveResult('X', 2, 8);
-		board.moveResult('X', 2, 9);
-		board.moveResult('O', 3, 1);
-		board.moveResult('O', 3, 2);
-		board.moveResult('O', 3, 3);
-		board.moveResult('O', 3, 4);
-		board.moveResult('O', 3, 5);
-		board.moveResult('O', 3, 6);
-		board.moveResult('O', 3, 7);
-		board.moveResult('O', 3, 8);
-		board.moveResult('O', 3, 9);
-		board.moveResult('O', 4, 1);
-		board.moveResult('O', 4, 2);
-		board.moveResult('O', 4, 3);
-		board.moveResult('O', 4, 4);
-		board.moveResult('O', 4, 5);
-		board.moveResult('O', 4, 6);
-		board.moveResult('O', 4, 7);
-		board.moveResult('O', 4, 8);
-		board.moveResult('O', 4, 9);
-		board.moveResult('X', 5, 1);
-		board.moveResult('X', 5, 2);
-		board.moveResult('X', 5, 3);
-		board.moveResult('X', 5, 4);
-		board.moveResult('X', 5, 5);
-		board.moveResult('X', 5, 6);
-		board.moveResult('X', 5, 7);
-		board.moveResult('X', 5, 8);
-		board.moveResult('X', 5, 9);
-		board.moveResult('X', 6, 1);
-		board.moveResult('X', 6, 2);
-		board.moveResult('X', 6, 3);
-		board.moveResult('X', 6, 4);
-		board.moveResult('X', 6, 5);
-		board.moveResult('X', 6, 6);
-		board.moveResult('X', 6, 7);
-		board.moveResult('X', 6, 8);
-		board.moveResult('X', 6, 9);
-		board.moveResult('X', 7, 1);
-		board.moveResult('X', 7, 2);
-		board.moveResult('X', 7, 3);
-		board.moveResult('X', 7, 4);
-		board.moveResult('X', 7, 5);
-		board.moveResult('X', 7, 6);
-		board.moveResult('X', 7, 7);
-		board.moveResult('X', 7, 8);
-		board.moveResult('X', 7, 9);
-		board.moveResult('O', 8, 2);
-		board.moveResult('O', 8, 3);
-		board.moveResult('O', 8, 4);
-		board.moveResult('O', 8, 5);
-		board.moveResult('O', 8, 6);
-		board.moveResult('O', 8, 7);
-		board.moveResult('O', 8, 8);
-		board.moveResult('O', 8, 9);
-
-
-		board.displayBoard();
-		board.printWinStatus();
+		while(game.board.overallGameStatus == 'n') {
+			game.board.printWinStatus();
+			game.board.displayBoard();
+			System.out.println(game.board.overallGameStatus);
+			System.out.println("-------------------------------");
+		//	System.out.println("check1");
+			int[] p1Move = p1.decision();
+			game.board.moveResult('X', p1Move[0], p1Move[1]);
+			System.out.println(game.board.checkWin('O', game.board.nextBoardIndex));
+			int[] p2Move = p2.decision();
+			System.out.println(p1Move[0] + " " + p1Move[1]);
+			System.out.println(p2Move[0] + " " + p2Move[1]);
+		//	System.out.println("check2");
+		//	System.out.println(moveCounter++ );
+			game.board.moveResult('O', p2Move[0], p2Move[1]);
+		//	System.out.println("check3");
+			//game.board.displayBoard();
+	//		System.out.println("check4");
+			System.out.println(game.board.checkWin('O', game.board.nextBoardIndex));
+		}
+		System.out.println("GAME OVER");
+		game.board.displayBoard();
+		game.board.printWinStatus();
 		System.out.println();
-		System.out.println(board.overallGameStatus);
+		System.out.println(game.board.overallGameStatus);
 		
 		
 		

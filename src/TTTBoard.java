@@ -352,9 +352,68 @@ public class TTTBoard implements Serializable{
 		 }
 		 
 	 }
-	 
+	
+	 //Avi wrote this and knows its dumb, sorry. Please calm down rebecca. 
 	 public int getAdjacentPairs(char player) {
 		int numPairs = 0;
+		
+		//check horizontal adjacency
+		
+		if(this.mainBoard[0][0] == player && this.mainBoard[1][0] == player) {
+			numPairs++;
+		}
+		
+		if(this.mainBoard[1][0] == player && this.mainBoard[2][0] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[0][1] == player && this.mainBoard[1][1] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[1][1] == player && this.mainBoard[2][1] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[0][2] == player && this.mainBoard[1][2] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[1][2] == player && this.mainBoard[2][2] == player) {
+			numPairs++;
+		}
+		
+		//check vertical adjacency
+		if(this.mainBoard[0][0] == player && this.mainBoard[0][1] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[0][1] == player && this.mainBoard[0][2] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[1][0] == player && this.mainBoard[1][1] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[1][1] == player && this.mainBoard[1][2] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[2][0] == player && this.mainBoard[2][1] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[2][1] == player && this.mainBoard[2][2] == player) {
+			numPairs++;
+		}
+		
+		//check diagonal adjacency
+		if(this.mainBoard[0][0] == player && this.mainBoard[1][1] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[1][1] == player && this.mainBoard[2][2] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[2][0] == player && this.mainBoard[1][1] == player) {
+			numPairs++;
+		}
+		if(this.mainBoard[0][2] == player && this.mainBoard[1][2] == player) {
+			numPairs++;
+		}
+		
+		
 		
 		return numPairs;
 		 
