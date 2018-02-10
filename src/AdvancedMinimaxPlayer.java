@@ -59,7 +59,7 @@ public class AdvancedMinimaxPlayer {
 				}
 			}
 		}
-		System.err.println("Computed Heuristic Value = " + hVal);
+		//System.err.println("Computed Heuristic Value = " + hVal);
 		return hVal;
 	}
 	
@@ -103,6 +103,7 @@ public class AdvancedMinimaxPlayer {
 		
 		int v = this.maxValue(searchStateBoard, -100, 100);
 		System.err.println("Initial max v: " + v);
+		bestMoveUtility = v;
 
 		//iterate through all the applicable actions to create game tree
 		for(int i=1; i < possibleMoves.length; i++) {
@@ -120,11 +121,11 @@ public class AdvancedMinimaxPlayer {
 	
 					//Call the recursive state space process
 					moveUtility = this.minValue((AdvancedTTTBoard) searchStateBoard.moveResult(searchStateBoard.nextPlayer, i, j),-100,100);
-										
+					System.err.println("Computed Move Utility Value = " + moveUtility);
+			
 					//Choose the best utility action and return immediately - terminal states are favored
-					if(moveUtility >= v) {
+					if(moveUtility >= bestMoveUtility) {
 						bestMoveUtility = moveUtility;
-						v = moveUtility;
 						updatedUtility = true;
 						bestMove[0] = i;
 						bestMove[1] = j;
@@ -178,7 +179,6 @@ public class AdvancedMinimaxPlayer {
 					//System.err.println("maxValue function, evaluating move: " + a + ". Current utility value = " + v);
 	
 					//Note that moveResult automatically toggles the nextplayer state
-					//if problem with type look at casting
 					v = Math.max(v, this.minValue((AdvancedTTTBoard) tempBoard.moveResult(tempBoard.nextPlayer, i, j), alpha, beta));
 					
 					if(v >= beta) {
@@ -228,7 +228,6 @@ public class AdvancedMinimaxPlayer {
 					//System.err.println("maxValue function, evaluating move: " + a + ". Current utility value = " + v);
 	
 					//Note that moveResult automatically toggles the nextplayer state
-					//if problem with type look at casting
 					v = Math.min(v, this.maxValue((AdvancedTTTBoard) tempBoard.moveResult(tempBoard.nextPlayer, i, j), alpha, beta));
 					
 					if(v >= beta) {
