@@ -3,7 +3,8 @@
 //CSC 442: AI Project 01 - Tic Tac Toe
 //Minimax Computer Player for Advanced TTT
 
-public class AdvancedMinimaxPlayer {
+//Same as Advanced MinimaxPlayer but returns 5 for the heuristic
+public class AdvancedMinimaxR5 {
 	
 	AdvancedTTTBoard currentGame;
 	AdvancedTTTBoard searchStateBoard;
@@ -17,7 +18,7 @@ public class AdvancedMinimaxPlayer {
 	
 	public boolean reachedTerminalState = false;
 	
-	public AdvancedMinimaxPlayer(AdvancedTTTGame game) {
+	public AdvancedMinimaxR5(AdvancedTTTGame game) {
 		this.currentGame = game.board;
 		this.game = game;
 	}
@@ -33,12 +34,12 @@ public class AdvancedMinimaxPlayer {
 		
 		//Check if computer wins
 		else if((stateBoardGSU.overallGameStatus == 'X' && this.game.p2Char == 'X') || (stateBoardGSU.overallGameStatus == 'O' && this.game.p2Char == 'O')){
-			return 50;
+			return -50;
 		}
 
 		//Check if human wins
 		else if((stateBoardGSU.overallGameStatus == 'X' && this.game.p2Char == 'O') || (stateBoardGSU.overallGameStatus == 'O' && this.game.p2Char == 'X')) {
-			return -50;
+			return 50;
 		}
 		
 		System.err.println("Overall Game Status: " + stateBoardGSU.overallGameStatus); //This should never print and never return 2
@@ -48,19 +49,7 @@ public class AdvancedMinimaxPlayer {
 	
 	//Heuristic Evaluation Function
 	public int heuristicEvaluation(AdvancedTTTBoard stateBoardHF) {	
-		int hVal = 0;
-		
-		for(int i=0; i<3; i++) {
-			for(int j=0; j<3; j++) {
-				//Increment heuristic for every board where a player has an advantage
-				int boardAdvantage = stateBoardHF.boardArray[i][j].getAdvantage(stateBoardHF.nextPlayer);
-				int adjacencyAdvantage = stateBoardHF.boardArray[i][j].getAdjacentPairs(stateBoardHF.nextPlayer);
-				
-				hVal += boardAdvantage*adjacencyAdvantage;
-			}
-		}
-		//System.err.println("Computed Heuristic Value = " + hVal);
-		return hVal;
+		return 5;
 	}
 	
 	
@@ -272,4 +261,3 @@ public class AdvancedMinimaxPlayer {
 			return randomMove;
 		}
 }
-
