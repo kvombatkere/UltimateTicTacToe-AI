@@ -139,6 +139,9 @@ public class UltimateTTTGame {
 							game.board.moveResult(p1Char, boardIndex, boardPos);		
 							System.err.println( "You just made move " + boardIndex + " " + boardPos);
 							legalInput = true;
+							if(game.board.overallGameStatus != 'n') {
+								break;
+							}
 						}
 					}
 				}
@@ -151,6 +154,10 @@ public class UltimateTTTGame {
 				int [] computerMove = compPlayer.decision();
 				
 				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
+				
+				if(game.board.overallGameStatus != 'n') {
+					break;
+				}
 			
 				System.err.println( "Computer player just made move " + computerMove[0] + " " + computerMove[1]);		
 				
