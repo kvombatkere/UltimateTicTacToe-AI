@@ -40,7 +40,7 @@ public class AdvancedTTTGame {
 			
 			//Print Basic Introduction messages
 			System.err.println("===============================================================================================================");
-			System.err.println("Initialized a new game of Tic Tac Toe! (Note that X always plays first)");
+			System.err.println("Initialized a new game of Advanced Tic Tac Toe! (Note that X always plays first)");
 			System.err.println("Please choose if you want to play \"X\" or \"O\" by typing the desired character:");
 
 			char p1Char = playerInput.next().charAt(0); //Read the first character of any input string
@@ -88,6 +88,8 @@ public class AdvancedTTTGame {
 				System.err.println("Computer playing first");
 				game.board.moveResult(game.p2Char, p2Move[0], p2Move[1]);
 				game.board.firstMove = false;
+				//Print computers move to system out
+				System.out.println(p2Move[0]+" "+p2Move[1]);
 				
 			}
 			
@@ -147,7 +149,8 @@ public class AdvancedTTTGame {
 				
 				//Computer makes move
 				int [] computerMove = compPlayer.hMinimaxDecision();
-				
+				//Print computers move to system out
+				System.out.println(computerMove[0]+" "+computerMove[1]);
 				game.board.moveResult(game.p2Char, computerMove[0], computerMove[1]);
 				
 				System.err.println( "Computer player just made move " + computerMove[0] + " " + computerMove[1]);				

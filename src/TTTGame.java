@@ -79,6 +79,7 @@ public class TTTGame {
 			if(computerFirst) {
 				System.err.println("\nNow the computer will play. Using minimax to Search for position (1-9) to place a " + Game.compChar);
 				compMovePos = 9;
+				System.out.println(compMovePos);
 				Game.moveResult(Game.compChar, compMovePos);
 			}
 			
@@ -115,7 +116,7 @@ public class TTTGame {
 				
 				//Output move
 				System.err.println("Computer Move: " + compMovePos);
-				//System.out.println(compMovePos);
+				System.out.println(compMovePos);
 
 				Game.moveResult(Game.compChar, compMovePos);	
 				

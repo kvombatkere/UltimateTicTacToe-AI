@@ -137,9 +137,9 @@ public class AdvancedMinimaxPlayer {
 			System.err.println("Did not update utility - playing Random Move");
 		}
 		
-		System.err.println("Total Number of Terminal States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
-		System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
-		System.err.println("minimaxDecision Utility for move: " + bestMove[0] + " " + bestMove[1] + " is = " + bestMoveUtility);
+//		System.err.println("Total Number of Terminal States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
+//		System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
+//		System.err.println("minimaxDecision Utility for move: " + bestMove[0] + " " + bestMove[1] + " is = " + bestMoveUtility);
 
 		return bestMove;
 	}
