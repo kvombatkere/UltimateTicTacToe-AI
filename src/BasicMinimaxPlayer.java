@@ -45,9 +45,14 @@ public class BasicMinimaxPlayer {
 	
 	//Method to find the optimal move using state-space search and return position
 	public int minimaxDecision(){
+		//Measure start time
+		long startTime = System.nanoTime();
+		
 		int bestMove = 0;
 		int bestmoveUtility = -100;
 		int moveUtility = -100;
+		
+		recursionNum = 0;
 		totalStates = 0;
 		
 		searchStateBoard = (TTTBoard) TTTBoard.deepClone(currentGame);
@@ -59,7 +64,6 @@ public class BasicMinimaxPlayer {
 		for(int i=1; i < possibleMoves.length; i++) {
 			//Make a copy of the current game state to perform State Space Search on - this needs to be done for each action considered
 			if(possibleMoves[i] != 0) { //We consider only legal moves
-				recursionNum = 0;
 
 				searchStateBoard = (TTTBoard) TTTBoard.deepClone(currentGame);
 				
@@ -79,7 +83,12 @@ public class BasicMinimaxPlayer {
 			
 		}
 		
-		System.err.println("Total Number of States Searched = " + totalStates);
+		long elapsedTime = System.nanoTime() - startTime;
+		
+		System.err.println("Total execution time for Minimax to find move:" + elapsedTime/1000000 + " ms");
+		System.err.println("Total Number of States Searched by Minimax = " + totalStates);
+		System.err.println("Total Number of Recursive Calls by Minimax = " + recursionNum);
+		
 		return bestMove;
 	}
 	
