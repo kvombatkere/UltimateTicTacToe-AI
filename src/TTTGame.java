@@ -72,7 +72,7 @@ public class TTTGame {
 				}
 			
 			//Instantiate Minimax computer player
-			BasicMinimaxPlayer compPlayer = new BasicMinimaxPlayer(Game);
+			MinimaxPlayer compPlayer = new MinimaxPlayer(Game);
 					
 			
 			//Check if computer plays first -> preprogrammed first move
