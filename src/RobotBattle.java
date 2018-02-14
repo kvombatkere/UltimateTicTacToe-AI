@@ -22,11 +22,11 @@ public class RobotBattle {
 			
 			System.out.println("Instantiated Robot Battle " + (i+1));
 
-			AdvancedTTTGame robotGame = new AdvancedTTTGame();
+			UltimateTTTGame robotGame = new UltimateTTTGame();
 			
-			AdvancedMinimaxPlayer heuristicBot = new AdvancedMinimaxPlayer(robotGame);
+			UltimateAIPlayer heuristicBot = new UltimateAIPlayer(robotGame);
 			
-			AdvancedRandomPlayer rBot = new AdvancedRandomPlayer(robotGame.board);
+			UltimateAIPlayer rBot = new UltimateAIPlayer(robotGame);
 			
 			//Initialize with randomBot playing X
 			char randChar = 'X';
@@ -38,7 +38,7 @@ public class RobotBattle {
 			while(robotGame.board.overallGameStatus == 'n') {
 				//robotGame.board.displayBoard();
 				
-				int[] hMove = heuristicBot.hMinimaxDecision();
+				int[] hMove = heuristicBot.decision();
 				robotGame.board.moveResult(robotGame.p2Char, hMove[0], hMove[1]);
 				
 				int[] randMove = rBot.randomMove();
@@ -73,11 +73,11 @@ public class RobotBattle {
 			
 			System.out.println("Instantiated Robot Battle " + (i+1));
 
-			AdvancedTTTGame robotGame = new AdvancedTTTGame();
+			UltimateTTTGame robotGame = new UltimateTTTGame();
 			
-			AdvancedMinimaxPlayer heuristicBot = new AdvancedMinimaxPlayer(robotGame);
+			UltimateAIPlayer heuristicBot = new UltimateAIPlayer(robotGame);
 			
-			AdvancedRandomPlayer rBot = new AdvancedRandomPlayer(robotGame.board);
+			UltimateAIPlayer rBot = new UltimateAIPlayer(robotGame);
 			
 			//Initialize with randomBot playing O
 			char randChar = 'O';
@@ -91,7 +91,7 @@ public class RobotBattle {
 				int[] randMove = rBot.randomMove();
 				robotGame.board.moveResult(randChar, randMove[0], randMove[1]);
 				
-				int[] hMove = heuristicBot.hMinimaxDecision();
+				int[] hMove = heuristicBot.decision();
 				robotGame.board.moveResult(robotGame.p2Char, hMove[0], hMove[1]);				
 			}	
 			
