@@ -1,6 +1,7 @@
 //Rebecca Van Dyke, Avi Webberman, Karan Vombatkere
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
+//Ultimate TTT Board
 
 public class UltimateTTTBoard extends TTT9Board{
 	static int counter = 0;

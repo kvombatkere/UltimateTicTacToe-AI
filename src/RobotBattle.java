@@ -1,6 +1,7 @@
 //Karan Vombatkere, Rebecca Ho Van Dyke + Avram Webberman
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
+//Plays two AIs against each other
 
 
 //Automate 100 games between bots - Random and AdvancedMinimaxPlayer

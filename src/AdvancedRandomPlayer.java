@@ -1,7 +1,7 @@
 //Karan Vombatkere, Rebecca Ho Van Dyke + Avram Webberman
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
-//Basic TTT Game
+//Computer Player that generates random moves for AdvancedTTT
 
 //Imports
 import java.io.*;

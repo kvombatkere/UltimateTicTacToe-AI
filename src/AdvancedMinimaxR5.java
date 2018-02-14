@@ -1,7 +1,7 @@
 //Karan Vombatkere, Rebecca Ho Van Dyke + Avram Webberman
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
-//Minimax Computer Player for Advanced TTT
+//Constant Heuristic Minimax Computer Player for Advanced TTT
 
 //Same as Advanced MinimaxPlayer but returns 5 for the heuristic
 public class AdvancedMinimaxR5 {

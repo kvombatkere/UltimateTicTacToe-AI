@@ -1,8 +1,8 @@
 //Rebecca Van Dyke, Avi Webberman, Karan Vombatkere
 //February 2018
 //CSC 442: AI Project 01 - Tic Tac Toe
+//TTT 9-Board parent abstract class
 
-import java.awt.Point;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
