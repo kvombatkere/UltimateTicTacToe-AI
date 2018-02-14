@@ -44,6 +44,8 @@ public class MinimaxPlayer{
 	
 	//Method to find the optimal move using state-space search and return position
 	public int minimaxDecision(){
+        long startTime = System.nanoTime();
+
 		int bestMove = 0;
 		int moveUtility = -100;
 		totalStates = 0;
@@ -76,6 +78,9 @@ public class MinimaxPlayer{
 					
 					bestMove = possibleMoves[i];
 					
+					long elapsedTime = System.nanoTime() - startTime;
+					System.err.println("Total execution time for Minimax (with Alpha Beta Pruning) to find move:" + elapsedTime/1000000 + " ms");
+
 					System.err.println("Total Number of States Searched by Minimax (with Alpha Beta Pruning) = " + totalStates);
 					System.err.println("Total Number of Recursive Calls by Minimax (with Alpha Beta Pruning) = " + recursionNum);
 					return bestMove;
