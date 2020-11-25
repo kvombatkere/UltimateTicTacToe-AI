@@ -2,7 +2,7 @@
 
 Ultimate Tic Tac Toe framework in Java, implementing adversarial search using MiniMax with Alpha-Beta pruning. Ultimate Tic Tac Toe comprises nine 3x3 Tic Tac Toe boards, and the goal is to win 3 boards. I also developed a heuristic AI player, which was tested to beat random play in 99 out of 100 games.
 
-![TTTgame]
+![TTTgame]](https://github.com/kvombatkere/UltimateTicTacToe-AI/blob/master/images/AdvancedTTTWinX.png)
 
 
 
