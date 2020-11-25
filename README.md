@@ -1,10 +1,30 @@
 ## Ultimate Tic Tac Toe AI Framework
 
-#### A Tic Tac Toe implementation in Java that implements adversarial search using the Minimax algorithm with Alpha-Beta pruning. The snapshot below shows the command-line UI, however the implementation also allows for 2 AI players to play each other. There are 3 main components in this project:
+#### A Tic Tac Toe implementation in Java that implements adversarial search using the Minimax algorithm with Alpha-Beta pruning. There are 3 main components in this project:
 1. Regular 3x3 Tic Tac Toe AI player. This AI never loses and will always beat a sub-optimal opponent. 
 2. Advanced Tic Tac Toe with a heuristic AI player.  Advanced Tic Tac Toe comprises nine 3x3 Tic Tac Toe boards, and the goal is to win __1 board__.
 2. Ultimate Tic Tac Toe framework with a heuristic AI player. Ultimate Tic Tac Toe comprises nine 3x3 Tic Tac Toe boards, and the goal is to win __3 boards__ in a row.
    The heuristic AI searches promising game states upto a certain recursive depth, and was tested to beat a control player in 99 out of 100 games.
+   
+This framework is fully playable and ready to use. The project can be cloned and the code compiled
+```
+git clone https://github.com/kvombatkere/UltimateTicTacToe-AI
+./compile.sh
+```
+To play the regular Tic Tac Toe game, against the regular AI:
+```
+java TTTGame
+```
+To play the Advanced Tic Tac Toe game, against the heuristic AI:
+```
+java AdvancedTTTGame
+```
+To play the Ultimate Tic Tac Toe game, against the heuristic AI:
+```
+java UltimateTTTGame
+```
+
+The snapshot below shows the command-line UI for the regular Tic Tac Toe game, however the implementation also allows for 2 AI players to play each other
    
 ![TTTgame](/images/TTTXwin.PNG)
 
@@ -44,21 +64,19 @@ algorithm are detailed below:
 
 ![AdvancedTTTgame](/images/AdvancedTTTXwin.PNG)
 
+#### Here is a brief overview of the logic used in implementing the heuristic AI Player:
+A depth-limited search that uses a heuristic evaluation of state utility when unable to find a terminal
+state was implemented in the class **AdvancedMinimaxPlayer**. The heuristic that we used was based on
+a combination of the number of pieces that a player had on each small board in a given state and the
+total number of adjacent pairs (two-in-a-rows) on each board. We found that this heuristic consistently
+outperformed an AI algorithm that used a constant heuristic value as well as a player that moved randomly.
+One component of the heuristic we used was a property of the local boards we called \advantage". Unlike
+the plain version of Tic Tac Toe, each board will not necessarily have even numbers of X's and O's. The
+advantage of a board for player X is the difference in the number of X's and O's on that board and vice
+versa.
 
 
 
-CSC 442, Artificial Intelligence Course Project, Spring 2018
+##### CSC 442, Artificial Intelligence Course Project, Spring 2018 (University of Rochester)
+###### Contributors: Rebecca Ho Van Dyke, Karan Vombatkere, Avram Webberman
 
-Contributors: Rebecca Ho Van Dyke, Karan Vombatkere, Avram Webberman
-
-To build project:
-./compile.sh
-
-To run part 1:
-java TTTGame
-
-To run part 2:
-java AdvancedTTTGame
-
-To run part 3:
-java UltimateTTTGame
