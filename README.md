@@ -3,10 +3,10 @@
 #### A Tic Tac Toe implementation in Java that implements adversarial search using the Minimax algorithm with Alpha-Beta pruning. There are 3 main components in this project:
 1. Regular 3x3 Tic Tac Toe AI player. This AI never loses and will always beat a sub-optimal opponent. 
 2. Advanced Tic Tac Toe with a heuristic AI player.  Advanced Tic Tac Toe comprises nine 3x3 Tic Tac Toe boards, and the goal is to win __1 board__.
-2. Ultimate Tic Tac Toe framework with a heuristic AI player. Ultimate Tic Tac Toe comprises nine 3x3 Tic Tac Toe boards, and the goal is to win __3 boards__ in a row.
+3. Ultimate Tic Tac Toe framework with a heuristic AI player. Ultimate Tic Tac Toe comprises nine 3x3 Tic Tac Toe boards, and the goal is to win __3 boards__ in a row.
    The heuristic AI searches promising game states upto a certain recursive depth, and was tested to beat a control player in 99 out of 100 games.
    
-This framework is fully playable and ready to use. The project can be cloned and the code compiled
+This framework is fully playable and ready to use. The project can be cloned and the code compiled and run as follows:
 ```
 git clone https://github.com/kvombatkere/UltimateTicTacToe-AI
 ./compile.sh
