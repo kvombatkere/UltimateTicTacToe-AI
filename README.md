@@ -78,5 +78,5 @@ versa.
 
 
 ##### CSC 442, Artificial Intelligence Course Project, Spring 2018 (University of Rochester)
-###### Contributors: Rebecca Ho Van Dyke, Karan Vombatkere, Avram Webberman
+###### Contributors: Karan Vombatkere, Rebecca Ho Van Dyke, Avram Webberman
 
